@@ -118,21 +118,35 @@ variable "elasticsearch_allowed_actions" {
 variable "direct_lambda_request_template" {
   description = "VTL request template for the direct lambda integrations"
   type        = string
-  default     = <<EOF
-{
-  "version" : "2017-02-28",
-  "operation": "Invoke",
-  "payload": $util.toJson($context.args)
-}
-EOF
+  default     = <<-EOF
+  {
+    "version" : "2017-02-28",
+    "operation": "Invoke",
+    "payload": {
+      "arguments": $util.toJson($ctx.arguments),
+      "identity": $util.toJson($ctx.identity),
+      "source": $util.toJson($ctx.source),
+      "request": $util.toJson($ctx.request),
+      "prev": $util.toJson($ctx.prev),
+      "info": {
+          "selectionSetList": $util.toJson($ctx.info.selectionSetList),
+          "selectionSetGraphQL": $util.toJson($ctx.info.selectionSetGraphQL),
+          "parentTypeName": $util.toJson($ctx.info.parentTypeName),
+          "fieldName": $util.toJson($ctx.info.fieldName),
+          "variables": $util.toJson($ctx.info.variables)
+      },
+      "stash": $util.toJson($ctx.stash)
+    }
+  }
+  EOF
 }
 
 variable "direct_lambda_response_template" {
   description = "VTL response template for the direct lambda integrations"
   type        = string
-  default     = <<EOF
-$util.toJson($context.result)
-EOF
+  default     = <<-EOF
+  $util.toJson($ctx.result)
+  EOF
 }
 
 variable "resolver_caching_ttl" {
