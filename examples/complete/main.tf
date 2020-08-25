@@ -63,17 +63,17 @@ module "appsync" {
   }
 
   resolvers = {
-    "Mutation putPost" = {
+    "Mutation.putPost" = {
       data_source   = "lambda1"
       direct_lambda = true
     }
 
-    "Post id" = {
+    "Post.id" = {
       data_source   = "lambda2"
       direct_lambda = true
     }
 
-    "Post title" = {
+    "Post.title" = {
       data_source      = "registry_terraform_io"
       request_template = <<EOF
 {
@@ -95,7 +95,7 @@ EOF
 EOF
     }
 
-    "Query singlePost" = {
+    "Query.singlePost" = {
       data_source   = "lambda1"
       direct_lambda = true
       caching_keys = [
@@ -115,15 +115,15 @@ EOF
 resource "random_pet" "this" {
   length = 2
 }
-
-module "aws_lambda_function1" {
-  source = "terraform-aws-modules/cloudwatch/aws//examples/fixtures/aws_lambda_function"
-}
-
-module "aws_lambda_function2" {
-  source = "terraform-aws-modules/cloudwatch/aws//examples/fixtures/aws_lambda_function"
-}
-
+//
+//module "aws_lambda_function1" {
+//  source = "terraform-aws-modules/cloudwatch/aws//examples/fixtures/aws_lambda_function"
+//}
+//
+//module "aws_lambda_function2" {
+//  source = "terraform-aws-modules/cloudwatch/aws//examples/fixtures/aws_lambda_function"
+//}
+//
 //module "dynamodb_table1" {
 //  source = "terraform-aws-modules/dynamodb-table/aws"
 //

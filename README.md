@@ -57,12 +57,12 @@ module "appsync" {
   }
 
   resolvers = {
-    "Query getZip" = {
+    "Query.getZip" = {
       data_source   = "lambda_create_zip"
       direct_lambda = true
     }
 
-    "Query getModuleFromRegistry" = {
+    "Query.getModuleFromRegistry" = {
       data_source       = "registry_terraform_io"
       request_template  = file("vtl-templates/request.Query.getModuleFromRegistry.vtl")
       response_template = file("vtl-templates/response.Query.getModuleFromRegistry.vtl")
@@ -120,8 +120,8 @@ module "appsync" {
 | create\_graphql\_api | Whether to create GraphQL API | `bool` | `true` | no |
 | create\_logs\_role | Whether to create service role for Cloudwatch logs | `bool` | `true` | no |
 | datasources | Map of datasources to create | `any` | `{}` | no |
-| direct\_lambda\_request\_template | VTL request template for the direct lambda integrations | `string` | `"{\n  \"version\" : \"2017-02-28\",\n  \"operation\": \"Invoke\",\n  \"payload\": $util.toJson($context.args)\n}\n"` | no |
-| direct\_lambda\_response\_template | VTL response template for the direct lambda integrations | `string` | `"$util.toJson($context.result)\n"` | no |
+| direct\_lambda\_request\_template | VTL request template for the direct lambda integrations | `string` | `"{\n  \"version\" : \"2017-02-28\",\n  \"operation\": \"Invoke\",\n  \"payload\": {\n    \"arguments\": $util.toJson($ctx.arguments),\n    \"identity\": $util.toJson($ctx.identity),\n    \"source\": $util.toJson($ctx.source),\n    \"request\": $util.toJson($ctx.request),\n    \"prev\": $util.toJson($ctx.prev),\n    \"info\": {\n        \"selectionSetList\": $util.toJson($ctx.info.selectionSetList),\n        \"selectionSetGraphQL\": $util.toJson($ctx.info.selectionSetGraphQL),\n        \"parentTypeName\": $util.toJson($ctx.info.parentTypeName),\n        \"fieldName\": $util.toJson($ctx.info.fieldName),\n        \"variables\": $util.toJson($ctx.info.variables)\n    },\n    \"stash\": $util.toJson($ctx.stash)\n  }\n}\n"` | no |
+| direct\_lambda\_response\_template | VTL response template for the direct lambda integrations | `string` | `"$util.toJson($ctx.result)\n"` | no |
 | dynamodb\_allowed\_actions | List of allowed IAM actions for datasources type AMAZON\_DYNAMODB | `list(string)` | <pre>[<br>  "dynamodb:GetItem",<br>  "dynamodb:PutItem",<br>  "dynamodb:DeleteItem",<br>  "dynamodb:UpdateItem",<br>  "dynamodb:Query",<br>  "dynamodb:Scan",<br>  "dynamodb:BatchGetItem",<br>  "dynamodb:BatchWriteItem"<br>]</pre> | no |
 | elasticsearch\_allowed\_actions | List of allowed IAM actions for datasources type AMAZON\_ELASTICSEARCH | `list(string)` | <pre>[<br>  "es:ESHttpDelete",<br>  "es:ESHttpHead",<br>  "es:ESHttpGet",<br>  "es:ESHttpPost",<br>  "es:ESHttpPut"<br>]</pre> | no |
 | graphql\_api\_tags | Map of tags to add to GraphQL API | `map(string)` | `{}` | no |
