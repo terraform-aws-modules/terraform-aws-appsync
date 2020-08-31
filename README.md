@@ -86,6 +86,19 @@ module "appsync" {
 }
 ```
 
+## Relationship between Data-Source and Resolver resources
+
+`datasources` define keys which can be referenced in `resolvers`. For initial configuration and parameters updates Terraform is able to understand the order of resources correctly.
+
+In order to change name of keys in both places (eg from `lambda-old` to `lambda-new`), you will need to change key in both variables, and then run Terraform with partial configuration (using `-target`) to handle the migration in the `aws_appsync_resolver` resource (eg, `Post.id`):
+
+```shell
+# Create new resources and update resolver
+$ terraform apply -target="module.appsync.aws_appsync_resolver.this[\"Post.id\"]" -target="module.appsync.aws_appsync_datasource.this[\"lambda-new\"]" -target="module.appsync.aws_iam_role.service_role[\"lambda-new\"]" -target="module.appsync.aws_iam_role_policy.this[\"lambda-new\"]"
+
+# Delete orphan resources ("lambda-old")
+$ terraform apply
+```
 
 ## Limitations
 
