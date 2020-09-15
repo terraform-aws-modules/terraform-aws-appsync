@@ -36,3 +36,9 @@ output "this_appsync_resolver_arn" {
   description = "Map of ARNs of resolvers"
   value       = module.appsync.this_appsync_resolver_arn
 }
+
+# Extra
+output "this_appsync_graphql_api_fqdns" {
+  description = "Map of FQDNs associated with the API (no protocol and path)"
+  value       = module.appsync.this_appsync_graphql_api_fqdns
+}

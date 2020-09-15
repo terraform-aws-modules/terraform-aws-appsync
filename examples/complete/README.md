@@ -38,6 +38,7 @@ No input.
 | this\_appsync\_api\_key\_key | Map of API Keys |
 | this\_appsync\_datasource\_arn | Map of ARNs of datasources |
 | this\_appsync\_graphql\_api\_arn | ARN of GraphQL API |
+| this\_appsync\_graphql\_api\_fqdns | Map of FQDNs associated with the API (no protocol and path) |
 | this\_appsync\_graphql\_api\_id | ID of GraphQL API |
 | this\_appsync\_graphql\_api\_uris | Map of URIs associated with the API |
 | this\_appsync\_resolver\_arn | Map of ARNs of resolvers |
