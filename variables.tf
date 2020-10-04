@@ -64,11 +64,23 @@ variable "log_exclude_verbose_content" {
   default     = false
 }
 
-//variable "additional_authentication_provider_authentication_type" {
-//  description = ""
-//  type = string
-//  default = null
-//}
+variable "openid_connect_config" {
+  description = "Nested argument containing OpenID Connect configuration."
+  type        = map(string)
+  default     = {}
+}
+
+variable "user_pool_config" {
+  description = "The Amazon Cognito User Pool configuration."
+  type        = map(string)
+  default     = {}
+}
+
+variable "additional_authentication_provider" {
+  description = "One or more additional authentication providers for the GraphqlApi."
+  type        = any
+  default     = {}
+}
 
 variable "graphql_api_tags" {
   description = "Map of tags to add to GraphQL API"

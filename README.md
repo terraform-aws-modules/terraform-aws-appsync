@@ -32,6 +32,21 @@ module "appsync" {
     default = null # such key will expire in 7 days
   }
 
+  additional_authentication_provider = {
+    iam = {
+      authentication_type = "AWS_IAM"
+    }
+  
+    openid_connect_1 = {
+      authentication_type = "OPENID_CONNECT"
+  
+      openid_connect_config = {
+        issuer    = "https://www.issuer1.com/"
+        client_id = "client_id1"
+      }
+    }
+  }
+
   datasources = {
     registry_terraform_io = {
       type     = "HTTP"
@@ -100,14 +115,10 @@ $ terraform apply -target="module.appsync.aws_appsync_resolver.this[\"Post.id\"]
 $ terraform apply
 ```
 
-## Limitations
-
-- [ ] Missing support for several authentication providers in GraphQL API resource
-
 
 ## Examples
 
-* [Complete](https://github.com/terraform-aws-modules/terraform-aws-appsync/tree/master/examples/complete) - Create AppSync with datasources and resolvers in various combinations
+* [Complete](https://github.com/terraform-aws-modules/terraform-aws-appsync/tree/master/examples/complete) - Create AppSync with datasources, resolvers, and authorization providers in various combinations.
 
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -117,6 +128,7 @@ $ terraform apply
 |------|---------|
 | terraform | >= 0.12.6, < 0.14 |
 | aws | >= 2.46, < 4.0 |
+| random | ~> 2 |
 
 ## Providers
 
@@ -128,6 +140,7 @@ $ terraform apply
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| additional\_authentication\_provider | One or more additional authentication providers for the GraphqlApi. | `any` | `{}` | no |
 | api\_keys | Map of API keys to create | `map(string)` | `{}` | no |
 | authentication\_type | The authentication type to use by GraphQL API | `string` | `"API_KEY"` | no |
 | create\_graphql\_api | Whether to create GraphQL API | `bool` | `true` | no |
@@ -146,10 +159,12 @@ $ terraform apply
 | logs\_role\_name | Name of IAM role to create for Cloudwatch logs | `string` | `null` | no |
 | logs\_role\_tags | Map of tags to add to Cloudwatch logs IAM role | `map(string)` | `{}` | no |
 | name | Name of GraphQL API | `string` | `""` | no |
+| openid\_connect\_config | Nested argument containing OpenID Connect configuration. | `map(string)` | `{}` | no |
 | resolver\_caching\_ttl | Default caching TTL for resolvers when caching is enabled | `number` | `60` | no |
 | resolvers | Map of resolvers to create | `any` | `{}` | no |
 | schema | The schema definition, in GraphQL schema language format. Terraform cannot perform drift detection of this configuration. | `string` | `""` | no |
 | tags | Map of tags to add to all GraphQL resources created by this module | `map(string)` | `{}` | no |
+| user\_pool\_config | The Amazon Cognito User Pool configuration. | `map(string)` | `{}` | no |
 | xray\_enabled | Whether tracing with X-ray is enabled. | `bool` | `false` | no |
 
 ## Outputs

@@ -24,6 +24,57 @@ resource "aws_appsync_graphql_api" "this" {
     }
   }
 
+  dynamic "openid_connect_config" {
+    for_each = length(keys(var.openid_connect_config)) == 0 ? [] : [true]
+
+    content {
+      issuer    = var.openid_connect_config["issuer"]
+      client_id = lookup(var.openid_connect_config, "client_id", null)
+      auth_ttl  = lookup(var.openid_connect_config, "auth_ttl", null)
+      iat_ttl   = lookup(var.openid_connect_config, "iat_ttl", null)
+    }
+  }
+
+  dynamic "user_pool_config" {
+    for_each = length(keys(var.user_pool_config)) == 0 ? [] : [true]
+
+    content {
+      default_action      = var.user_pool_config["default_action"]
+      user_pool_id        = var.user_pool_config["user_pool_id"]
+      app_id_client_regex = lookup(var.openid_connect_config, "app_id_client_regex", null)
+      aws_region          = lookup(var.openid_connect_config, "aws_region", null)
+    }
+  }
+
+  dynamic "additional_authentication_provider" {
+    for_each = var.additional_authentication_provider
+
+    content {
+      authentication_type = additional_authentication_provider.value.authentication_type
+
+      dynamic "openid_connect_config" {
+        for_each = length(keys(lookup(additional_authentication_provider.value, "openid_connect_config", {}))) == 0 ? [] : [additional_authentication_provider.value.openid_connect_config]
+
+        content {
+          issuer    = openid_connect_config.value.issuer
+          client_id = lookup(openid_connect_config.value, "client_id", null)
+          auth_ttl  = lookup(openid_connect_config.value, "auth_ttl", null)
+          iat_ttl   = lookup(openid_connect_config.value, "iat_ttl", null)
+        }
+      }
+
+      dynamic "user_pool_config" {
+        for_each = length(keys(lookup(additional_authentication_provider.value, "user_pool_config", {}))) == 0 ? [] : [additional_authentication_provider.value.user_pool_config]
+
+        content {
+          user_pool_id        = user_pool_config.value.user_pool_id
+          app_id_client_regex = lookup(user_pool_config.value, "app_id_client_regex", null)
+          aws_region          = lookup(user_pool_config.value, "aws_region", null)
+        }
+      }
+    }
+  }
+
   tags = merge({ Name = var.name }, var.graphql_api_tags)
 }
 
