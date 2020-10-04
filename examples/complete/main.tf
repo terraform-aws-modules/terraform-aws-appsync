@@ -23,6 +23,38 @@ module "appsync" {
     default = null
   }
 
+  authentication_type = "OPENID_CONNECT"
+
+  openid_connect_config = {
+    issuer    = "https://www.issuer1.com/"
+    client_id = "client_id1"
+    auth_ttl  = 100
+    iat_ttl   = 200
+  }
+
+  additional_authentication_provider = {
+    iam = {
+      authentication_type = "AWS_IAM"
+    }
+
+    openid_connect_2 = {
+      authentication_type = "OPENID_CONNECT"
+
+      openid_connect_config = {
+        issuer    = "https://www.issuer2.com/"
+        client_id = "client_id2"
+      }
+    }
+
+    my_user_pool = {
+      authentication_type = "AMAZON_COGNITO_USER_POOLS"
+
+      user_pool_config = {
+        user_pool_id = aws_cognito_user_pool.this.id
+      }
+    }
+  }
+
   datasources = {
     registry_terraform_io = {
       type     = "HTTP"
@@ -41,7 +73,7 @@ module "appsync" {
 
       # Note: dynamic references (module.aws_lambda_function2.this_lambda_function_arn) do not work unless you create this resource in advance
       function_arn = "arn:aws:lambda:eu-west-1:835367859851:function:index_2"
-      // service_role_arn = "arn:aws:iam::835367859851:role/lambda1-service"
+      # service_role_arn = "arn:aws:iam::835367859851:role/lambda1-service"
     }
 
     dynamodb1 = {
@@ -115,25 +147,29 @@ EOF
 resource "random_pet" "this" {
   length = 2
 }
-//
-//module "aws_lambda_function1" {
-//  source = "terraform-aws-modules/cloudwatch/aws//examples/fixtures/aws_lambda_function"
-//}
-//
-//module "aws_lambda_function2" {
-//  source = "terraform-aws-modules/cloudwatch/aws//examples/fixtures/aws_lambda_function"
-//}
-//
-//module "dynamodb_table1" {
-//  source = "terraform-aws-modules/dynamodb-table/aws"
-//
-//  name     = random_pet.this.id
-//  hash_key = "id"
-//
-//  attributes = [
-//    {
-//      name = "id"
-//      type = "N"
-//    }
-//  ]
-//}
+
+resource "aws_cognito_user_pool" "this" {
+  name = "user-pool-${random_pet.this.id}"
+}
+
+#module "aws_lambda_function1" {
+#  source = "terraform-aws-modules/cloudwatch/aws//examples/fixtures/aws_lambda_function"
+#}
+#
+#module "aws_lambda_function2" {
+#  source = "terraform-aws-modules/cloudwatch/aws//examples/fixtures/aws_lambda_function"
+#}
+#
+#module "dynamodb_table1" {
+#  source = "terraform-aws-modules/dynamodb-table/aws"
+#
+#  name     = random_pet.this.id
+#  hash_key = "id"
+#
+#  attributes = [
+#    {
+#      name = "id"
+#      type = "N"
+#    }
+#  ]
+#}
