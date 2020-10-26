@@ -19,7 +19,7 @@ locals {
         dynamodb = {
           effect    = "Allow"
           actions   = lookup(v, "policy_actions", null) == null ? var.dynamodb_allowed_actions : v.policy_actions
-          resources = [format("arn:aws:dynamodb:%v::table/%v", v.region, v.table_name)]
+          resources = [format("arn:aws:dynamodb:%v:%v:table/%v", v.region, lookup(v, "aws_account_id", data.aws_caller_identity.this.account_id), v.table_name)]
         }
       }
     }
@@ -43,6 +43,8 @@ locals {
     local.service_roles_with_policies_elasticsearch,
   )
 }
+
+data "aws_caller_identity" "this" {}
 
 data "aws_iam_policy_document" "assume_role" {
   statement {
