@@ -7,6 +7,14 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v0.6.0"></a>
+## [v0.6.0] - 2020-11-16
+
+- fix: terraform output after the resources are destroyed without any error ([#5](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/5))
+- Added disabled example
+- Update outputs.tf
+
+
 <a name="v0.5.0"></a>
 ## [v0.5.0] - 2020-10-26
 
@@ -38,7 +46,8 @@ All notable changes to this project will be documented in this file.
 - Add all the code for AppSync module
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.6.0...HEAD
+[v0.6.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.5.0...v0.6.0
 [v0.5.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.4.0...v0.5.0
 [v0.4.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.2.0...v0.3.0
