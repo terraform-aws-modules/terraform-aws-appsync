@@ -173,3 +173,12 @@ resource "aws_cognito_user_pool" "this" {
 #    }
 #  ]
 #}
+
+###########
+# Disabled
+###########
+module "disabled" {
+  source = "../../"
+
+  create_graphql_api = false
+}
