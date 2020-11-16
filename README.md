@@ -126,15 +126,15 @@ $ terraform apply
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.6, < 0.14 |
-| aws | >= 2.46, < 4.0 |
-| random | ~> 2 |
+| terraform | >= 0.12.6 |
+| aws | >= 2.46 |
+| random | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 2.46, < 4.0 |
+| aws | >= 2.46 |
 
 ## Inputs
 
