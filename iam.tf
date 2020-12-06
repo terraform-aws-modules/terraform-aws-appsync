@@ -19,7 +19,7 @@ locals {
         dynamodb = {
           effect    = "Allow"
           actions   = lookup(v, "policy_actions", null) == null ? var.dynamodb_allowed_actions : v.policy_actions
-          resources = [format("arn:aws:dynamodb:%v:%v:table/%v", v.region, lookup(v, "aws_account_id", data.aws_caller_identity.this.account_id), v.table_name)]
+          resources = [for _, f in ["arn:aws:dynamodb:%v:%v:table/%v", "arn:aws:dynamodb:%v:%v:table/%v/*"] : format(f, v.region, lookup(v, "aws_account_id", data.aws_caller_identity.this.account_id), v.table_name)]
         }
       }
     }
