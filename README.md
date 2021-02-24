@@ -136,6 +136,24 @@ $ terraform apply
 |------|---------|
 | aws | >= 2.46 |
 
+## Modules
+
+No Modules.
+
+## Resources
+
+| Name |
+|------|
+| [aws_appsync_api_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_key) |
+| [aws_appsync_datasource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_datasource) |
+| [aws_appsync_graphql_api](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_graphql_api) |
+| [aws_appsync_resolver](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_resolver) |
+| [aws_caller_identity](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) |
+| [aws_iam_policy_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) |
+| [aws_iam_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) |
+| [aws_iam_role_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) |
+| [aws_iam_role_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -179,7 +197,6 @@ $ terraform apply
 | this\_appsync\_graphql\_api\_id | ID of GraphQL API |
 | this\_appsync\_graphql\_api\_uris | Map of URIs associated with the API |
 | this\_appsync\_resolver\_arn | Map of ARNs of resolvers |
-
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Authors
