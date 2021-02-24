@@ -31,6 +31,20 @@ Note that this example may create resources which cost money. Run `terraform des
 | aws | >= 2.46 |
 | random | >= 2.0 |
 
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| appsync | ../../ |  |
+| disabled | ../../ |  |
+
+## Resources
+
+| Name |
+|------|
+| [aws_cognito_user_pool](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_user_pool) |
+| [random_pet](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) |
+
 ## Inputs
 
 No input.
@@ -47,5 +61,4 @@ No input.
 | this\_appsync\_graphql\_api\_id | ID of GraphQL API |
 | this\_appsync\_graphql\_api\_uris | Map of URIs associated with the API |
 | this\_appsync\_resolver\_arn | Map of ARNs of resolvers |
-
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
