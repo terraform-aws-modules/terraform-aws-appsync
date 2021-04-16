@@ -180,3 +180,10 @@ variable "resolvers" {
   type        = any
   default     = {}
 }
+
+# Functions
+variable "functions" {
+  description = "Map of functions to create"
+  type        = any
+  default     = {}
+}

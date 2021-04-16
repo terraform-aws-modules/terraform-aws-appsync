@@ -9,6 +9,7 @@ type Post {
 
 type Query {
   singlePost(id: ID!): Post
+  none(dummyString: String!): String!
 }
 
 schema {

@@ -36,7 +36,6 @@ module "appsync" {
     iam = {
       authentication_type = "AWS_IAM"
     }
-
     openid_connect_2 = {
       authentication_type = "OPENID_CONNECT"
 
@@ -55,10 +54,28 @@ module "appsync" {
     }
   }
 
+  functions = {
+    None = {
+      kind                      = "PIPELINE"
+      type                      = "Query"
+      data_source               = "None"
+      request_mapping_template  = <<EOF
+{
+    "payload": $util.toJson($context.args)
+}
+EOF
+      response_mapping_template = "$util.toJson($context.result)"
+    }
+  }
+
   datasources = {
     registry_terraform_io = {
       type     = "HTTP"
       endpoint = "https://registry.terraform.io"
+    }
+
+    None = {
+      type = "NONE"
     }
 
     lambda1 = {
@@ -136,8 +153,17 @@ EOF
       ]
     }
 
+    "Query.none" = {
+      response_template = "{}"
+      request_template  = "$util.toJson($context.result)"
+      kind              = "PIPELINE"
+      type              = "Query"
+      field             = "none"
+      functions = [
+        "None",
+      ]
+    }
   }
-
 }
 
 ##################
