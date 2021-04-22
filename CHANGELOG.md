@@ -7,6 +7,15 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v0.9.0"></a>
+## [v0.9.0] - 2021-04-22
+
+- feat: add support for functions ([#13](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/13))
+- chore: update documentation and pin `terraform_docs` version to avoid future changes ([#12](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/12))
+- chore: align ci-cd static checks to use individual minimum Terraform versions ([#11](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/11))
+- chore: add ci-cd workflow for pre-commit checks ([#10](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/10))
+
+
 <a name="v0.8.0"></a>
 ## [v0.8.0] - 2020-12-06
 
@@ -58,7 +67,8 @@ All notable changes to this project will be documented in this file.
 - Add all the code for AppSync module
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.9.0...HEAD
+[v0.9.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.8.0...v0.9.0
 [v0.8.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.7.0...v0.8.0
 [v0.7.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.6.0...v0.7.0
 [v0.6.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.5.0...v0.6.0
