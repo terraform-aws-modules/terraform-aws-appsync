@@ -151,7 +151,8 @@ resource "aws_appsync_resolver" "this" {
     for_each = lookup(each.value, "functions", null) != null ? [true] : []
 
     content {
-      functions = each.value.functions
+      functions = [for k in each.value.functions :
+      contains(keys(aws_appsync_function.this), k) ? aws_appsync_function.this[k].function_id : k]
     }
   }
 
@@ -163,4 +164,18 @@ resource "aws_appsync_resolver" "this" {
       ttl          = lookup(each.value, "caching_ttl", var.resolver_caching_ttl)
     }
   }
+}
+
+# Functions
+resource "aws_appsync_function" "this" {
+  for_each = var.create_graphql_api ? var.functions : {}
+
+  api_id           = aws_appsync_graphql_api.this[0].id
+  data_source      = lookup(each.value, "data_source", null)
+  name             = each.key
+  description      = lookup(each.value, "description", null)
+  function_version = lookup(each.value, "function_version", "2018-05-29")
+
+  request_mapping_template  = lookup(each.value, "request_mapping_template", null)
+  response_mapping_template = lookup(each.value, "response_mapping_template", null)
 }

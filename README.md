@@ -8,10 +8,7 @@ These types of resources supported:
 * [API Key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_key)
 * [DataSource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_datasource)
 * [Resolver](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_resolver)
-
-Not supported, yet:
 * [Function](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_function)
-
 
 This Terraform module is part of [serverless.tf framework](https://serverless.tf), which aims to simplify all operations when working with the serverless in Terraform.
 
@@ -146,6 +143,7 @@ No modules.
 |------|------|
 | [aws_appsync_api_key.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_key) | resource |
 | [aws_appsync_datasource.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_datasource) | resource |
+| [aws_appsync_function.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_function) | resource |
 | [aws_appsync_graphql_api.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_graphql_api) | resource |
 | [aws_appsync_resolver.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_resolver) | resource |
 | [aws_iam_role.logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
@@ -170,6 +168,7 @@ No modules.
 | <a name="input_direct_lambda_response_template"></a> [direct\_lambda\_response\_template](#input\_direct\_lambda\_response\_template) | VTL response template for the direct lambda integrations | `string` | `"$util.toJson($ctx.result)\n"` | no |
 | <a name="input_dynamodb_allowed_actions"></a> [dynamodb\_allowed\_actions](#input\_dynamodb\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_DYNAMODB | `list(string)` | <pre>[<br>  "dynamodb:GetItem",<br>  "dynamodb:PutItem",<br>  "dynamodb:DeleteItem",<br>  "dynamodb:UpdateItem",<br>  "dynamodb:Query",<br>  "dynamodb:Scan",<br>  "dynamodb:BatchGetItem",<br>  "dynamodb:BatchWriteItem"<br>]</pre> | no |
 | <a name="input_elasticsearch_allowed_actions"></a> [elasticsearch\_allowed\_actions](#input\_elasticsearch\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_ELASTICSEARCH | `list(string)` | <pre>[<br>  "es:ESHttpDelete",<br>  "es:ESHttpHead",<br>  "es:ESHttpGet",<br>  "es:ESHttpPost",<br>  "es:ESHttpPut"<br>]</pre> | no |
+| <a name="input_functions"></a> [functions](#input\_functions) | Map of functions to create | `any` | `{}` | no |
 | <a name="input_graphql_api_tags"></a> [graphql\_api\_tags](#input\_graphql\_api\_tags) | Map of tags to add to GraphQL API | `map(string)` | `{}` | no |
 | <a name="input_lambda_allowed_actions"></a> [lambda\_allowed\_actions](#input\_lambda\_allowed\_actions) | List of allowed IAM actions for datasources type AWS\_LAMBDA | `list(string)` | <pre>[<br>  "lambda:invokeFunction"<br>]</pre> | no |
 | <a name="input_log_cloudwatch_logs_role_arn"></a> [log\_cloudwatch\_logs\_role\_arn](#input\_log\_cloudwatch\_logs\_role\_arn) | Amazon Resource Name of the service role that AWS AppSync will assume to publish to Amazon CloudWatch logs in your account. | `string` | `null` | no |
@@ -194,6 +193,9 @@ No modules.
 | <a name="output_this_appsync_api_key_id"></a> [this\_appsync\_api\_key\_id](#output\_this\_appsync\_api\_key\_id) | Map of API Key ID (Formatted as ApiId:Key) |
 | <a name="output_this_appsync_api_key_key"></a> [this\_appsync\_api\_key\_key](#output\_this\_appsync\_api\_key\_key) | Map of API Keys |
 | <a name="output_this_appsync_datasource_arn"></a> [this\_appsync\_datasource\_arn](#output\_this\_appsync\_datasource\_arn) | Map of ARNs of datasources |
+| <a name="output_this_appsync_function_arn"></a> [this\_appsync\_function\_arn](#output\_this\_appsync\_function\_arn) | Map of ARNs of functions |
+| <a name="output_this_appsync_function_function_id"></a> [this\_appsync\_function\_function\_id](#output\_this\_appsync\_function\_function\_id) | Map of function IDs of functions |
+| <a name="output_this_appsync_function_id"></a> [this\_appsync\_function\_id](#output\_this\_appsync\_function\_id) | Map of IDs of functions |
 | <a name="output_this_appsync_graphql_api_arn"></a> [this\_appsync\_graphql\_api\_arn](#output\_this\_appsync\_graphql\_api\_arn) | ARN of GraphQL API |
 | <a name="output_this_appsync_graphql_api_fqdns"></a> [this\_appsync\_graphql\_api\_fqdns](#output\_this\_appsync\_graphql\_api\_fqdns) | Map of FQDNs associated with the API (no protocol and path) |
 | <a name="output_this_appsync_graphql_api_id"></a> [this\_appsync\_graphql\_api\_id](#output\_this\_appsync\_graphql\_api\_id) | ID of GraphQL API |

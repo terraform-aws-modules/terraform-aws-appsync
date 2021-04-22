@@ -37,6 +37,22 @@ output "this_appsync_resolver_arn" {
   value       = { for k, v in aws_appsync_resolver.this : k => v.arn }
 }
 
+# Functions
+output "this_appsync_function_arn" {
+  description = "Map of ARNs of functions"
+  value       = { for k, v in aws_appsync_function.this : k => v.arn }
+}
+
+output "this_appsync_function_id" {
+  description = "Map of IDs of functions"
+  value       = { for k, v in aws_appsync_function.this : k => v.id }
+}
+
+output "this_appsync_function_function_id" {
+  description = "Map of function IDs of functions"
+  value       = { for k, v in aws_appsync_function.this : k => v.function_id }
+}
+
 # Extra
 output "this_appsync_graphql_api_fqdns" {
   description = "Map of FQDNs associated with the API (no protocol and path)"
