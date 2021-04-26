@@ -190,17 +190,17 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_this_appsync_api_key_id"></a> [this\_appsync\_api\_key\_id](#output\_this\_appsync\_api\_key\_id) | Map of API Key ID (Formatted as ApiId:Key) |
-| <a name="output_this_appsync_api_key_key"></a> [this\_appsync\_api\_key\_key](#output\_this\_appsync\_api\_key\_key) | Map of API Keys |
-| <a name="output_this_appsync_datasource_arn"></a> [this\_appsync\_datasource\_arn](#output\_this\_appsync\_datasource\_arn) | Map of ARNs of datasources |
-| <a name="output_this_appsync_function_arn"></a> [this\_appsync\_function\_arn](#output\_this\_appsync\_function\_arn) | Map of ARNs of functions |
-| <a name="output_this_appsync_function_function_id"></a> [this\_appsync\_function\_function\_id](#output\_this\_appsync\_function\_function\_id) | Map of function IDs of functions |
-| <a name="output_this_appsync_function_id"></a> [this\_appsync\_function\_id](#output\_this\_appsync\_function\_id) | Map of IDs of functions |
-| <a name="output_this_appsync_graphql_api_arn"></a> [this\_appsync\_graphql\_api\_arn](#output\_this\_appsync\_graphql\_api\_arn) | ARN of GraphQL API |
-| <a name="output_this_appsync_graphql_api_fqdns"></a> [this\_appsync\_graphql\_api\_fqdns](#output\_this\_appsync\_graphql\_api\_fqdns) | Map of FQDNs associated with the API (no protocol and path) |
-| <a name="output_this_appsync_graphql_api_id"></a> [this\_appsync\_graphql\_api\_id](#output\_this\_appsync\_graphql\_api\_id) | ID of GraphQL API |
-| <a name="output_this_appsync_graphql_api_uris"></a> [this\_appsync\_graphql\_api\_uris](#output\_this\_appsync\_graphql\_api\_uris) | Map of URIs associated with the API |
-| <a name="output_this_appsync_resolver_arn"></a> [this\_appsync\_resolver\_arn](#output\_this\_appsync\_resolver\_arn) | Map of ARNs of resolvers |
+| <a name="output_appsync_api_key_id"></a> [appsync\_api\_key\_id](#output\_appsync\_api\_key\_id) | Map of API Key ID (Formatted as ApiId:Key) |
+| <a name="output_appsync_api_key_key"></a> [appsync\_api\_key\_key](#output\_appsync\_api\_key\_key) | Map of API Keys |
+| <a name="output_appsync_datasource_arn"></a> [appsync\_datasource\_arn](#output\_appsync\_datasource\_arn) | Map of ARNs of datasources |
+| <a name="output_appsync_function_arn"></a> [appsync\_function\_arn](#output\_appsync\_function\_arn) | Map of ARNs of functions |
+| <a name="output_appsync_function_function_id"></a> [appsync\_function\_function\_id](#output\_appsync\_function\_function\_id) | Map of function IDs of functions |
+| <a name="output_appsync_function_id"></a> [appsync\_function\_id](#output\_appsync\_function\_id) | Map of IDs of functions |
+| <a name="output_appsync_graphql_api_arn"></a> [appsync\_graphql\_api\_arn](#output\_appsync\_graphql\_api\_arn) | ARN of GraphQL API |
+| <a name="output_appsync_graphql_api_fqdns"></a> [appsync\_graphql\_api\_fqdns](#output\_appsync\_graphql\_api\_fqdns) | Map of FQDNs associated with the API (no protocol and path) |
+| <a name="output_appsync_graphql_api_id"></a> [appsync\_graphql\_api\_id](#output\_appsync\_graphql\_api\_id) | ID of GraphQL API |
+| <a name="output_appsync_graphql_api_uris"></a> [appsync\_graphql\_api\_uris](#output\_appsync\_graphql\_api\_uris) | Map of URIs associated with the API |
+| <a name="output_appsync_resolver_arn"></a> [appsync\_resolver\_arn](#output\_appsync\_resolver\_arn) | Map of ARNs of resolvers |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Authors
