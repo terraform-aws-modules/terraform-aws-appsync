@@ -81,14 +81,14 @@ EOF
     lambda1 = {
       type = "AWS_LAMBDA"
 
-      # Note: dynamic references (module.aws_lambda_function1.this_lambda_function_arn) do not work unless you create this resource in advance
+      # Note: dynamic references (module.aws_lambda_function1.lambda_function_arn) do not work unless you create this resource in advance
       function_arn = "arn:aws:lambda:eu-west-1:835367859851:function:index_1"
     }
 
     lambda2 = {
       type = "AWS_LAMBDA"
 
-      # Note: dynamic references (module.aws_lambda_function2.this_lambda_function_arn) do not work unless you create this resource in advance
+      # Note: dynamic references (module.aws_lambda_function2.lambda_function_arn) do not work unless you create this resource in advance
       function_arn = "arn:aws:lambda:eu-west-1:835367859851:function:index_2"
       # service_role_arn = "arn:aws:iam::835367859851:role/lambda1-service"
     }
@@ -96,7 +96,7 @@ EOF
     dynamodb1 = {
       type = "AMAZON_DYNAMODB"
 
-      # Note: dynamic references (module.dynamodb_table1.this_dynamodb_table_id) do not work unless you create this resource in advance
+      # Note: dynamic references (module.dynamodb_table1.dynamodb_table_id) do not work unless you create this resource in advance
       table_name = "my-table"
       region     = "eu-west-1"
     }
