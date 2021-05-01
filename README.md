@@ -2,16 +2,7 @@
 
 Terraform module which creates AWS AppSync resources and connects them together.
 
-These types of resources supported:
-
-* [GraphQL API](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_graphql_api)
-* [API Key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_key)
-* [DataSource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_datasource)
-* [Resolver](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_resolver)
-* [Function](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_function)
-
 This Terraform module is part of [serverless.tf framework](https://serverless.tf), which aims to simplify all operations when working with the serverless in Terraform.
-
 
 ## Usage
 
@@ -33,10 +24,10 @@ module "appsync" {
     iam = {
       authentication_type = "AWS_IAM"
     }
-  
+
     openid_connect_1 = {
       authentication_type = "OPENID_CONNECT"
-  
+
       openid_connect_config = {
         issuer    = "https://www.issuer1.com/"
         client_id = "client_id1"
@@ -83,7 +74,6 @@ module "appsync" {
 }
 ```
 
-
 ## Conditional creation
 
 Sometimes you need to have a way to create resources conditionally but Terraform 0.12 does not allow usage of `count` inside `module` block, so the solution is to specify `create_graphql_api` argument.
@@ -112,11 +102,9 @@ $ terraform apply -target="module.appsync.aws_appsync_resolver.this[\"Post.id\"]
 $ terraform apply
 ```
 
-
 ## Examples
 
-* [Complete](https://github.com/terraform-aws-modules/terraform-aws-appsync/tree/master/examples/complete) - Create AppSync with datasources, resolvers, and authorization providers in various combinations.
-
+- [Complete](https://github.com/terraform-aws-modules/terraform-aws-appsync/tree/master/examples/complete) - Create AppSync with datasources, resolvers, and authorization providers in various combinations.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -209,7 +197,6 @@ Module managed by [Anton Babenko](https://github.com/antonbabenko). Check out [s
 
 Please reach out to [Betajob](https://www.betajob.com/) if you are looking for commercial support for your Terraform, AWS, or serverless project.
 
-
 ## License
 
-Apache 2 Licensed. See LICENSE for full details.
+Apache 2 Licensed. See [LICENSE](https://github.com/terraform-aws-modules/terraform-aws-appsync/tree/master/LICENSE) for full details.
