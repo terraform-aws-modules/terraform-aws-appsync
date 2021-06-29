@@ -23,6 +23,7 @@ output "appsync_api_key_id" {
 output "appsync_api_key_key" {
   description = "Map of API Keys"
   value       = { for k, v in aws_appsync_api_key.this : k => v.key }
+  sensitive   = true
 }
 
 # Datasources
