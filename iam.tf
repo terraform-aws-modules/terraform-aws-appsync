@@ -64,6 +64,9 @@ resource "aws_iam_role" "logs" {
 
   name               = coalesce(var.logs_role_name, "${var.name}-logs")
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
+
+  permissions_boundary = var.iam_permissions_boundary
+
   tags               = merge(var.tags, var.logs_role_tags)
 }
 
@@ -79,6 +82,8 @@ resource "aws_iam_role" "service_role" {
   for_each = local.service_roles_with_specific_policies
 
   name = lookup(each.value, "service_role_name", "${each.key}-role")
+
+  permissions_boundary = var.iam_permissions_boundary
 
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }

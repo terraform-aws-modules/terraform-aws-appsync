@@ -187,3 +187,11 @@ variable "functions" {
   type        = any
   default     = {}
 }
+
+variable "iam_permissions_boundary" {
+  type = string
+  description = "ARN for iam permissions boundary"
+  default = null
+
+}
+
