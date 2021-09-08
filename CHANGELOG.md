@@ -7,6 +7,14 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v1.1.0"></a>
+## [v1.1.0] - 2021-09-08
+
+- feat: Add iam_permission_boundary to IAM role ([#18](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/18))
+- chore: update CI/CD to use stable `terraform-docs` release artifact and discoverable Apache2.0 license ([#15](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/15))
+- chore: Updated versions&comments in examples
+
+
 <a name="v1.0.0"></a>
 ## [v1.0.0] - 2021-04-26
 
@@ -73,7 +81,8 @@ All notable changes to this project will be documented in this file.
 - Add all the code for AppSync module
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.1.0...HEAD
+[v1.1.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.9.0...v1.0.0
 [v0.9.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.8.0...v0.9.0
 [v0.8.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.7.0...v0.8.0
@@ -83,4 +92,3 @@ All notable changes to this project will be documented in this file.
 [v0.4.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v0.1.0...v0.2.0
-
