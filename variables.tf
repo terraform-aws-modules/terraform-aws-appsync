@@ -126,6 +126,12 @@ variable "elasticsearch_allowed_actions" {
   default     = ["es:ESHttpDelete", "es:ESHttpHead", "es:ESHttpGet", "es:ESHttpPost", "es:ESHttpPut"]
 }
 
+variable "iam_permissions_boundary" {
+  description = "ARN for iam permissions boundary"
+  type        = string
+  default     = null
+}
+
 # VTL request/response templates
 variable "direct_lambda_request_template" {
   description = "VTL request template for the direct lambda integrations"

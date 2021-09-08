@@ -62,9 +62,11 @@ data "aws_iam_policy_document" "assume_role" {
 resource "aws_iam_role" "logs" {
   count = var.logging_enabled && var.create_logs_role ? 1 : 0
 
-  name               = coalesce(var.logs_role_name, "${var.name}-logs")
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
-  tags               = merge(var.tags, var.logs_role_tags)
+  name                 = coalesce(var.logs_role_name, "${var.name}-logs")
+  assume_role_policy   = data.aws_iam_policy_document.assume_role.json
+  permissions_boundary = var.iam_permissions_boundary
+
+  tags = merge(var.tags, var.logs_role_tags)
 }
 
 resource "aws_iam_role_policy_attachment" "logs" {
@@ -78,9 +80,9 @@ resource "aws_iam_role_policy_attachment" "logs" {
 resource "aws_iam_role" "service_role" {
   for_each = local.service_roles_with_specific_policies
 
-  name = lookup(each.value, "service_role_name", "${each.key}-role")
-
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  name                 = lookup(each.value, "service_role_name", "${each.key}-role")
+  permissions_boundary = var.iam_permissions_boundary
+  assume_role_policy   = data.aws_iam_policy_document.assume_role.json
 }
 
 resource "aws_iam_role_policy" "this" {

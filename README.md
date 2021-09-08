@@ -111,7 +111,7 @@ $ terraform apply
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12.6 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.1 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 2.46 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.0 |
 
@@ -158,6 +158,7 @@ No modules.
 | <a name="input_elasticsearch_allowed_actions"></a> [elasticsearch\_allowed\_actions](#input\_elasticsearch\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_ELASTICSEARCH | `list(string)` | <pre>[<br>  "es:ESHttpDelete",<br>  "es:ESHttpHead",<br>  "es:ESHttpGet",<br>  "es:ESHttpPost",<br>  "es:ESHttpPut"<br>]</pre> | no |
 | <a name="input_functions"></a> [functions](#input\_functions) | Map of functions to create | `any` | `{}` | no |
 | <a name="input_graphql_api_tags"></a> [graphql\_api\_tags](#input\_graphql\_api\_tags) | Map of tags to add to GraphQL API | `map(string)` | `{}` | no |
+| <a name="input_iam_permissions_boundary"></a> [iam\_permissions\_boundary](#input\_iam\_permissions\_boundary) | ARN for iam permissions boundary | `string` | `null` | no |
 | <a name="input_lambda_allowed_actions"></a> [lambda\_allowed\_actions](#input\_lambda\_allowed\_actions) | List of allowed IAM actions for datasources type AWS\_LAMBDA | `list(string)` | <pre>[<br>  "lambda:invokeFunction"<br>]</pre> | no |
 | <a name="input_log_cloudwatch_logs_role_arn"></a> [log\_cloudwatch\_logs\_role\_arn](#input\_log\_cloudwatch\_logs\_role\_arn) | Amazon Resource Name of the service role that AWS AppSync will assume to publish to Amazon CloudWatch logs in your account. | `string` | `null` | no |
 | <a name="input_log_exclude_verbose_content"></a> [log\_exclude\_verbose\_content](#input\_log\_exclude\_verbose\_content) | Set to TRUE to exclude sections that contain information such as headers, context, and evaluated mapping templates, regardless of logging level. | `bool` | `false` | no |
