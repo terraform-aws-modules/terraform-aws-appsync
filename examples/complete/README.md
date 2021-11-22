@@ -35,8 +35,8 @@ Note that this example may create resources which cost money. Run `terraform des
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_appsync"></a> [appsync](#module\_appsync) | ../../ |  |
-| <a name="module_disabled"></a> [disabled](#module\_disabled) | ../../ |  |
+| <a name="module_appsync"></a> [appsync](#module\_appsync) | ../../ | n/a |
+| <a name="module_disabled"></a> [disabled](#module\_disabled) | ../../ | n/a |
 
 ## Resources
 
