@@ -1,3 +1,14 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [1.1.1](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.1.0...v1.1.1) (2021-11-22)
+
+
+### Bug Fixes
+
+* update CI/CD process to enable auto-release workflow ([#22](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/22)) ([6cedbdf](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/6cedbdf0c1fe8051a90b7cbb4a0963c75dc26aba))
+
 <a name="v1.1.0"></a>
 ## [v1.1.0] - 2021-09-08
 
