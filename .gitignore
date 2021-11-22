@@ -32,3 +32,4 @@ terraform.rc
 # Lambda directories
 builds/
 __pycache__/
+*.zip
