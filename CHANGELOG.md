@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.2](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.1.1...v1.1.2) (2022-01-07)
+
+
+### Bug Fixes
+
+* Fixed mixed resolvers ([#25](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/25)) ([d6bc2ce](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/d6bc2cebec4e0f495462a534fbf2c0d19363a266))
+
 ## [1.1.1](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.1.0...v1.1.1) (2021-11-22)
 
 
