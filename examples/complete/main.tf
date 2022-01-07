@@ -25,6 +25,10 @@ module "appsync" {
 
   authentication_type = "OPENID_CONNECT"
 
+  lambda_authorizer_config = {
+    authorizer_uri = "arn:aws:lambda:eu-west-1:835367859851:function:appsync_auth_1"
+  }
+
   openid_connect_config = {
     issuer    = "https://www.issuer1.com/"
     client_id = "client_id1"
