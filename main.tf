@@ -1,8 +1,8 @@
 locals {
-  resolvers = var.create_graphql_api ? { for k, v in var.resolvers : k => merge(v, {
+  resolvers = { for k, v in var.resolvers : k => merge(v, {
     type  = split(".", k)[0]
     field = join(".", slice(split(".", k), 1, length(split(".", k))))
-  }) } : tomap({})
+  }) if var.create_graphql_api }
 }
 
 # GraphQL API
