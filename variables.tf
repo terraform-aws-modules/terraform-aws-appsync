@@ -64,6 +64,12 @@ variable "log_exclude_verbose_content" {
   default     = false
 }
 
+variable "lambda_authorizer_config" {
+  description = "Nested argument containing Lambda authorizer configuration."
+  type        = map(string)
+  default     = {}
+}
+
 variable "openid_connect_config" {
   description = "Nested argument containing OpenID Connect configuration."
   type        = map(string)

@@ -24,6 +24,16 @@ resource "aws_appsync_graphql_api" "this" {
     }
   }
 
+  dynamic "lambda_authorizer_config" {
+    for_each = length(keys(var.lambda_authorizer_config)) == 0 ? [] : [true]
+
+    content {
+      authorizer_uri                   = var.lambda_authorizer_config["authorizer_uri"]
+      authorizer_result_ttl_in_seconds = lookup(var.lambda_authorizer_config, "authorizer_result_ttl_in_seconds", null)
+      identity_validation_expression   = lookup(var.lambda_authorizer_config, "identity_validation_expression", null)
+    }
+  }
+
   dynamic "openid_connect_config" {
     for_each = length(keys(var.openid_connect_config)) == 0 ? [] : [true]
 
