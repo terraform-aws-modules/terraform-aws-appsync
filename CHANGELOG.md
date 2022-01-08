@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.2.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.1.2...v1.2.0) (2022-01-08)
+
+
+### Features
+
+* Added support for lambda_authorization_config ([#24](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/24)) ([626d03f](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/626d03fb5c25447cacc6a143384935c5d7409369))
+
 ## [1.1.2](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.1.1...v1.1.2) (2022-01-07)
 
 
