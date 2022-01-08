@@ -112,14 +112,14 @@ $ terraform apply
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.1 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 2.46 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.70 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.46 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.70 |
 
 ## Modules
 
@@ -160,6 +160,7 @@ No modules.
 | <a name="input_graphql_api_tags"></a> [graphql\_api\_tags](#input\_graphql\_api\_tags) | Map of tags to add to GraphQL API | `map(string)` | `{}` | no |
 | <a name="input_iam_permissions_boundary"></a> [iam\_permissions\_boundary](#input\_iam\_permissions\_boundary) | ARN for iam permissions boundary | `string` | `null` | no |
 | <a name="input_lambda_allowed_actions"></a> [lambda\_allowed\_actions](#input\_lambda\_allowed\_actions) | List of allowed IAM actions for datasources type AWS\_LAMBDA | `list(string)` | <pre>[<br>  "lambda:invokeFunction"<br>]</pre> | no |
+| <a name="input_lambda_authorizer_config"></a> [lambda\_authorizer\_config](#input\_lambda\_authorizer\_config) | Nested argument containing Lambda authorizer configuration. | `map(string)` | `{}` | no |
 | <a name="input_log_cloudwatch_logs_role_arn"></a> [log\_cloudwatch\_logs\_role\_arn](#input\_log\_cloudwatch\_logs\_role\_arn) | Amazon Resource Name of the service role that AWS AppSync will assume to publish to Amazon CloudWatch logs in your account. | `string` | `null` | no |
 | <a name="input_log_exclude_verbose_content"></a> [log\_exclude\_verbose\_content](#input\_log\_exclude\_verbose\_content) | Set to TRUE to exclude sections that contain information such as headers, context, and evaluated mapping templates, regardless of logging level. | `bool` | `false` | no |
 | <a name="input_log_field_log_level"></a> [log\_field\_log\_level](#input\_log\_field\_log\_level) | Field logging level. Valid values: ALL, ERROR, NONE. | `string` | `null` | no |
