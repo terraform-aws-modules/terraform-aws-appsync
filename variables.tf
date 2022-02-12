@@ -106,12 +106,26 @@ variable "tags" {
   default     = {}
 }
 
+# API Association & Domain Name
+variable "domain_name" {
+  description = "value"
+  type        = string
+  default     = ""
+}
+
+variable "certificate_arn" {
+  description = "value"
+  type        = string
+  default     = ""
+}
+
 # API Keys
 variable "api_keys" {
   description = "Map of API keys to create"
   type        = map(string)
   default     = {}
 }
+
 
 # IAM service roles
 variable "lambda_allowed_actions" {
