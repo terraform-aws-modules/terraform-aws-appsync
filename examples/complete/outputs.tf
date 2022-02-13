@@ -14,6 +14,22 @@ output "appsync_graphql_api_uris" {
   value       = module.appsync.appsync_graphql_api_uris
 }
 
+#Domain
+output "appsync_domain_id" {
+  description = "The Appsync Domain name"
+  value       = module.appsync.appsync_domain_id
+}
+
+output "appsync_domain_name" {
+  description = "The domain name AppSync provides"
+  value       = module.appsync.appsync_domain_name
+}
+
+output "appsync_domain_hosted_zone_id" {
+  description = "The ID of your Amazon Route 53 hosted zone"
+  value       = module.appsync.appsync_domain_hosted_zone_id
+}
+
 # API Key
 output "appsync_api_key_id" {
   description = "Map of API Key ID (Formatted as ApiId:Key)"

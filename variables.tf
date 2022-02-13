@@ -10,6 +10,12 @@ variable "logging_enabled" {
   default     = false
 }
 
+variable "domain_name_association_enabled" {
+  description = "Whether to enable domain name association on GraphQL API"
+  type        = bool
+  default     = false
+}
+
 variable "xray_enabled" {
   description = "Whether tracing with X-ray is enabled."
   type        = bool

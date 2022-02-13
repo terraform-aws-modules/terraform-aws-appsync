@@ -47,6 +47,14 @@ resource "aws_route53_zone" "this" {
   name  = local.domain_name
 }
 
+resource "aws_route53_record" "api" {
+  zone_id = data.aws_route53_zone.this[0].zone_id
+  name    = "api.${local.domain}"
+  type    = "CNAME"
+  ttl     = "300"
+  records = [module.appsync.appsync_domain_name]
+}
+
 module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "~> 3"
@@ -78,6 +86,8 @@ module "appsync" {
   name = random_pet.this.id
 
   schema = file("schema.graphql")
+
+  domain_name_association_enabled = true
 
   domain_name     = "api.${local.domain}"
   certificate_arn = module.acm.acm_certificate_arn

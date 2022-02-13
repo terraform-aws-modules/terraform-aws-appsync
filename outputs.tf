@@ -53,6 +53,22 @@ output "appsync_function_function_id" {
   value       = { for k, v in aws_appsync_function.this : k => v.function_id }
 }
 
+# Domain
+output "appsync_domain_id" {
+  description = "The Appsync Domain Name."
+  value       = var.domain_name_association_enabled ? aws_appsync_domain_name.this[0].id : null
+}
+
+output "appsync_domain_name" {
+  description = "The domain name that AppSync provides."
+  value       = var.domain_name_association_enabled ? aws_appsync_domain_name.this[0].appsync_domain_name : null
+}
+
+output "appsync_domain_hosted_zone_id" {
+  description = "The ID of your Amazon Route 53 hosted zone."
+  value       = var.domain_name_association_enabled ? aws_appsync_domain_name.this[0].hosted_zone_id : null
+}
+
 # Extra
 output "appsync_graphql_api_fqdns" {
   description = "Map of FQDNs associated with the API (no protocol and path)"
