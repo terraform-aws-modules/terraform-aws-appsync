@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.3.0...v1.4.0) (2022-02-14)
+
+
+### Features
+
+* API & Domain Association ([#27](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/27)) ([4879911](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/487991160784d310de1ea4df9eaf9b32a07f0599))
+
 ## [1.3.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.2.0...v1.3.0) (2022-02-14)
 
 
