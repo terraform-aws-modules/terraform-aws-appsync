@@ -132,6 +132,8 @@ No modules.
 | [aws_appsync_api_cache.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_cache) | resource |
 | [aws_appsync_api_key.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_key) | resource |
 | [aws_appsync_datasource.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_datasource) | resource |
+| [aws_appsync_domain_name.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_domain_name) | resource |
+| [aws_appsync_domain_name_api_association.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_domain_name_api_association) | resource |
 | [aws_appsync_function.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_function) | resource |
 | [aws_appsync_graphql_api.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_graphql_api) | resource |
 | [aws_appsync_resolver.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_resolver) | resource |
@@ -156,11 +158,15 @@ No modules.
 | <a name="input_cache_type"></a> [cache\_type](#input\_cache\_type) | The cache instance type. | `string` | `"SMALL"` | no |
 | <a name="input_caching_behavior"></a> [caching\_behavior](#input\_caching\_behavior) | Caching behavior. | `string` | `"FULL_REQUEST_CACHING"` | no |
 | <a name="input_caching_enabled"></a> [caching\_enabled](#input\_caching\_enabled) | Whether caching with Elasticache is enabled. | `bool` | `false` | no |
+| <a name="input_certificate_arn"></a> [certificate\_arn](#input\_certificate\_arn) | The Amazon Resource Name (ARN) of the certificate. | `string` | `""` | no |
 | <a name="input_create_graphql_api"></a> [create\_graphql\_api](#input\_create\_graphql\_api) | Whether to create GraphQL API | `bool` | `true` | no |
 | <a name="input_create_logs_role"></a> [create\_logs\_role](#input\_create\_logs\_role) | Whether to create service role for Cloudwatch logs | `bool` | `true` | no |
 | <a name="input_datasources"></a> [datasources](#input\_datasources) | Map of datasources to create | `any` | `{}` | no |
 | <a name="input_direct_lambda_request_template"></a> [direct\_lambda\_request\_template](#input\_direct\_lambda\_request\_template) | VTL request template for the direct lambda integrations | `string` | `"{\n  \"version\" : \"2017-02-28\",\n  \"operation\": \"Invoke\",\n  \"payload\": {\n    \"arguments\": $util.toJson($ctx.arguments),\n    \"identity\": $util.toJson($ctx.identity),\n    \"source\": $util.toJson($ctx.source),\n    \"request\": $util.toJson($ctx.request),\n    \"prev\": $util.toJson($ctx.prev),\n    \"info\": {\n        \"selectionSetList\": $util.toJson($ctx.info.selectionSetList),\n        \"selectionSetGraphQL\": $util.toJson($ctx.info.selectionSetGraphQL),\n        \"parentTypeName\": $util.toJson($ctx.info.parentTypeName),\n        \"fieldName\": $util.toJson($ctx.info.fieldName),\n        \"variables\": $util.toJson($ctx.info.variables)\n    },\n    \"stash\": $util.toJson($ctx.stash)\n  }\n}\n"` | no |
 | <a name="input_direct_lambda_response_template"></a> [direct\_lambda\_response\_template](#input\_direct\_lambda\_response\_template) | VTL response template for the direct lambda integrations | `string` | `"$util.toJson($ctx.result)\n"` | no |
+| <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | The domain name that AppSync gets associated with. | `string` | `""` | no |
+| <a name="input_domain_name_association_enabled"></a> [domain\_name\_association\_enabled](#input\_domain\_name\_association\_enabled) | Whether to enable domain name association on GraphQL API | `bool` | `false` | no |
+| <a name="input_domain_name_description"></a> [domain\_name\_description](#input\_domain\_name\_description) | A description of the Domain Name. | `string` | `null` | no |
 | <a name="input_dynamodb_allowed_actions"></a> [dynamodb\_allowed\_actions](#input\_dynamodb\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_DYNAMODB | `list(string)` | <pre>[<br>  "dynamodb:GetItem",<br>  "dynamodb:PutItem",<br>  "dynamodb:DeleteItem",<br>  "dynamodb:UpdateItem",<br>  "dynamodb:Query",<br>  "dynamodb:Scan",<br>  "dynamodb:BatchGetItem",<br>  "dynamodb:BatchWriteItem"<br>]</pre> | no |
 | <a name="input_elasticsearch_allowed_actions"></a> [elasticsearch\_allowed\_actions](#input\_elasticsearch\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_ELASTICSEARCH | `list(string)` | <pre>[<br>  "es:ESHttpDelete",<br>  "es:ESHttpHead",<br>  "es:ESHttpGet",<br>  "es:ESHttpPost",<br>  "es:ESHttpPut"<br>]</pre> | no |
 | <a name="input_functions"></a> [functions](#input\_functions) | Map of functions to create | `any` | `{}` | no |
@@ -190,6 +196,9 @@ No modules.
 | <a name="output_appsync_api_key_id"></a> [appsync\_api\_key\_id](#output\_appsync\_api\_key\_id) | Map of API Key ID (Formatted as ApiId:Key) |
 | <a name="output_appsync_api_key_key"></a> [appsync\_api\_key\_key](#output\_appsync\_api\_key\_key) | Map of API Keys |
 | <a name="output_appsync_datasource_arn"></a> [appsync\_datasource\_arn](#output\_appsync\_datasource\_arn) | Map of ARNs of datasources |
+| <a name="output_appsync_domain_hosted_zone_id"></a> [appsync\_domain\_hosted\_zone\_id](#output\_appsync\_domain\_hosted\_zone\_id) | The ID of your Amazon Route 53 hosted zone. |
+| <a name="output_appsync_domain_id"></a> [appsync\_domain\_id](#output\_appsync\_domain\_id) | The Appsync Domain Name. |
+| <a name="output_appsync_domain_name"></a> [appsync\_domain\_name](#output\_appsync\_domain\_name) | The domain name that AppSync provides. |
 | <a name="output_appsync_function_arn"></a> [appsync\_function\_arn](#output\_appsync\_function\_arn) | Map of ARNs of functions |
 | <a name="output_appsync_function_function_id"></a> [appsync\_function\_function\_id](#output\_appsync\_function\_function\_id) | Map of function IDs of functions |
 | <a name="output_appsync_function_id"></a> [appsync\_function\_id](#output\_appsync\_function\_id) | Map of IDs of functions |

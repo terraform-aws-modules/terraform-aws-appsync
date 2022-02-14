@@ -10,6 +10,11 @@ variable "logging_enabled" {
   default     = false
 }
 
+variable "domain_name_association_enabled" {
+  description = "Whether to enable domain name association on GraphQL API"
+  type        = bool
+  default     = false
+}
 variable "caching_enabled" {
   description = "Whether caching with Elasticache is enabled."
   type        = bool
@@ -112,6 +117,25 @@ variable "tags" {
   default     = {}
 }
 
+# API Association & Domain Name
+variable "domain_name" {
+  description = "The domain name that AppSync gets associated with."
+  type        = string
+  default     = ""
+}
+
+variable "domain_name_description" {
+  description = "A description of the Domain Name."
+  type        = string
+  default     = null
+}
+
+variable "certificate_arn" {
+  description = "The Amazon Resource Name (ARN) of the certificate."
+  type        = string
+  default     = ""
+}
+
 # API Cache
 variable "caching_behavior" {
   description = "Caching behavior."
@@ -178,6 +202,7 @@ variable "api_keys" {
   type        = map(string)
   default     = {}
 }
+
 
 # IAM service roles
 variable "lambda_allowed_actions" {
