@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.2.0...v1.3.0) (2022-02-14)
+
+
+### Features
+
+* API Caching ([#29](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/29)) ([4ab6567](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/4ab656775e6c9c2d8130a51e811cc1a332b639eb))
+
 # [1.2.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.1.2...v1.2.0) (2022-01-08)
 
 
