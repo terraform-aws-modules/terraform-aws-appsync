@@ -104,6 +104,19 @@ resource "aws_appsync_domain_name_api_association" "this" {
   domain_name = aws_appsync_domain_name.this[0].domain_name
 }
 
+# API Cache
+resource "aws_appsync_api_cache" "example" {
+  count = var.create_graphql_api && var.caching_enabled ? 1 : 0
+
+  api_id = aws_appsync_graphql_api.this[0].id
+
+  api_caching_behavior       = var.caching_behavior
+  type                       = var.cache_type
+  ttl                        = var.cache_ttl
+  at_rest_encryption_enabled = var.cache_at_rest_encryption_enabled
+  transit_encryption_enabled = var.cache_transit_encryption_enabled
+}
+
 # API Key
 resource "aws_appsync_api_key" "this" {
   for_each = var.create_graphql_api && var.authentication_type == "API_KEY" ? var.api_keys : {}
