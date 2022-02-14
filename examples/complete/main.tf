@@ -89,8 +89,9 @@ module "appsync" {
 
   domain_name_association_enabled = true
 
-  domain_name     = "api.${local.domain}"
-  certificate_arn = module.acm.acm_certificate_arn
+  domain_name             = "api.${local.domain}"
+  domain_name_description = "My ${random_pet.this.id} AppSync Domain"
+  certificate_arn         = module.acm.acm_certificate_arn
 
   api_keys = {
     future  = "2021-08-20T15:00:00Z"

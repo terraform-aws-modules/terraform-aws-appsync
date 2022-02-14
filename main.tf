@@ -93,6 +93,7 @@ resource "aws_appsync_domain_name" "this" {
   count = var.create_graphql_api && var.domain_name_association_enabled ? 1 : 0
 
   domain_name     = var.domain_name
+  description     = var.domain_name_description
   certificate_arn = var.certificate_arn
 }
 

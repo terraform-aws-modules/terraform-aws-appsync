@@ -114,13 +114,19 @@ variable "tags" {
 
 # API Association & Domain Name
 variable "domain_name" {
-  description = "value"
+  description = "The domain name that AppSync gets associated with."
+  type        = string
+  default     = ""
+}
+
+variable "domain_name_description" {
+  description = "A description of the Domain Name."
   type        = string
   default     = ""
 }
 
 variable "certificate_arn" {
-  description = "value"
+  description = "The Amazon Resource Name (ARN) of the certificate."
   type        = string
   default     = ""
 }

@@ -112,14 +112,14 @@ $ terraform apply
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.1 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.70 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.73 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.70 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.73 |
 
 ## Modules
 
@@ -151,14 +151,15 @@ No modules.
 | <a name="input_additional_authentication_provider"></a> [additional\_authentication\_provider](#input\_additional\_authentication\_provider) | One or more additional authentication providers for the GraphqlApi. | `any` | `{}` | no |
 | <a name="input_api_keys"></a> [api\_keys](#input\_api\_keys) | Map of API keys to create | `map(string)` | `{}` | no |
 | <a name="input_authentication_type"></a> [authentication\_type](#input\_authentication\_type) | The authentication type to use by GraphQL API | `string` | `"API_KEY"` | no |
-| <a name="input_certificate_arn"></a> [certificate\_arn](#input\_certificate\_arn) | value | `string` | `""` | no |
+| <a name="input_certificate_arn"></a> [certificate\_arn](#input\_certificate\_arn) | The Amazon Resource Name (ARN) of the certificate. | `string` | `""` | no |
 | <a name="input_create_graphql_api"></a> [create\_graphql\_api](#input\_create\_graphql\_api) | Whether to create GraphQL API | `bool` | `true` | no |
 | <a name="input_create_logs_role"></a> [create\_logs\_role](#input\_create\_logs\_role) | Whether to create service role for Cloudwatch logs | `bool` | `true` | no |
 | <a name="input_datasources"></a> [datasources](#input\_datasources) | Map of datasources to create | `any` | `{}` | no |
 | <a name="input_direct_lambda_request_template"></a> [direct\_lambda\_request\_template](#input\_direct\_lambda\_request\_template) | VTL request template for the direct lambda integrations | `string` | `"{\n  \"version\" : \"2017-02-28\",\n  \"operation\": \"Invoke\",\n  \"payload\": {\n    \"arguments\": $util.toJson($ctx.arguments),\n    \"identity\": $util.toJson($ctx.identity),\n    \"source\": $util.toJson($ctx.source),\n    \"request\": $util.toJson($ctx.request),\n    \"prev\": $util.toJson($ctx.prev),\n    \"info\": {\n        \"selectionSetList\": $util.toJson($ctx.info.selectionSetList),\n        \"selectionSetGraphQL\": $util.toJson($ctx.info.selectionSetGraphQL),\n        \"parentTypeName\": $util.toJson($ctx.info.parentTypeName),\n        \"fieldName\": $util.toJson($ctx.info.fieldName),\n        \"variables\": $util.toJson($ctx.info.variables)\n    },\n    \"stash\": $util.toJson($ctx.stash)\n  }\n}\n"` | no |
 | <a name="input_direct_lambda_response_template"></a> [direct\_lambda\_response\_template](#input\_direct\_lambda\_response\_template) | VTL response template for the direct lambda integrations | `string` | `"$util.toJson($ctx.result)\n"` | no |
-| <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | value | `string` | `""` | no |
+| <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | The domain name that AppSync gets associated with. | `string` | `""` | no |
 | <a name="input_domain_name_association_enabled"></a> [domain\_name\_association\_enabled](#input\_domain\_name\_association\_enabled) | Whether to enable domain name association on GraphQL API | `bool` | `false` | no |
+| <a name="input_domain_name_description"></a> [domain\_name\_description](#input\_domain\_name\_description) | A description of the Domain Name. | `string` | `""` | no |
 | <a name="input_dynamodb_allowed_actions"></a> [dynamodb\_allowed\_actions](#input\_dynamodb\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_DYNAMODB | `list(string)` | <pre>[<br>  "dynamodb:GetItem",<br>  "dynamodb:PutItem",<br>  "dynamodb:DeleteItem",<br>  "dynamodb:UpdateItem",<br>  "dynamodb:Query",<br>  "dynamodb:Scan",<br>  "dynamodb:BatchGetItem",<br>  "dynamodb:BatchWriteItem"<br>]</pre> | no |
 | <a name="input_elasticsearch_allowed_actions"></a> [elasticsearch\_allowed\_actions](#input\_elasticsearch\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_ELASTICSEARCH | `list(string)` | <pre>[<br>  "es:ESHttpDelete",<br>  "es:ESHttpHead",<br>  "es:ESHttpGet",<br>  "es:ESHttpPost",<br>  "es:ESHttpPut"<br>]</pre> | no |
 | <a name="input_functions"></a> [functions](#input\_functions) | Map of functions to create | `any` | `{}` | no |
