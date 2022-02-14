@@ -112,14 +112,14 @@ $ terraform apply
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.1 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.70 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.73 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.70 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.73 |
 
 ## Modules
 
@@ -129,6 +129,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [aws_appsync_api_cache.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_cache) | resource |
 | [aws_appsync_api_key.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_key) | resource |
 | [aws_appsync_datasource.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_datasource) | resource |
 | [aws_appsync_function.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_function) | resource |
@@ -149,6 +150,12 @@ No modules.
 | <a name="input_additional_authentication_provider"></a> [additional\_authentication\_provider](#input\_additional\_authentication\_provider) | One or more additional authentication providers for the GraphqlApi. | `any` | `{}` | no |
 | <a name="input_api_keys"></a> [api\_keys](#input\_api\_keys) | Map of API keys to create | `map(string)` | `{}` | no |
 | <a name="input_authentication_type"></a> [authentication\_type](#input\_authentication\_type) | The authentication type to use by GraphQL API | `string` | `"API_KEY"` | no |
+| <a name="input_cache_at_rest_encryption_enabled"></a> [cache\_at\_rest\_encryption\_enabled](#input\_cache\_at\_rest\_encryption\_enabled) | At-rest encryption flag for cache. | `bool` | `false` | no |
+| <a name="input_cache_transit_encryption_enabled"></a> [cache\_transit\_encryption\_enabled](#input\_cache\_transit\_encryption\_enabled) | Transit encryption flag when connecting to cache. | `bool` | `false` | no |
+| <a name="input_cache_ttl"></a> [cache\_ttl](#input\_cache\_ttl) | TTL in seconds for cache entries | `number` | `1` | no |
+| <a name="input_cache_type"></a> [cache\_type](#input\_cache\_type) | The cache instance type. | `string` | `"SMALL"` | no |
+| <a name="input_caching_behavior"></a> [caching\_behavior](#input\_caching\_behavior) | Caching behavior. | `string` | `"FULL_REQUEST_CACHING"` | no |
+| <a name="input_caching_enabled"></a> [caching\_enabled](#input\_caching\_enabled) | Whether caching with Elasticache is enabled. | `bool` | `false` | no |
 | <a name="input_create_graphql_api"></a> [create\_graphql\_api](#input\_create\_graphql\_api) | Whether to create GraphQL API | `bool` | `true` | no |
 | <a name="input_create_logs_role"></a> [create\_logs\_role](#input\_create\_logs\_role) | Whether to create service role for Cloudwatch logs | `bool` | `true` | no |
 | <a name="input_datasources"></a> [datasources](#input\_datasources) | Map of datasources to create | `any` | `{}` | no |

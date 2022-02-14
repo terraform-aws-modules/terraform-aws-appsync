@@ -18,6 +18,14 @@ module "appsync" {
 
   schema = file("schema.graphql")
 
+  caching_enabled = true
+
+  caching_behavior                 = "PER_RESOLVER_CACHING"
+  cache_type                       = "SMALL"
+  cache_ttl                        = 60
+  cache_at_rest_encryption_enabled = true
+  cache_transit_encryption_enabled = true
+
   api_keys = {
     future  = "2021-08-20T15:00:00Z"
     default = null
