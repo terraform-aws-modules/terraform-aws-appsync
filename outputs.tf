@@ -1,17 +1,17 @@
 # GraphQL API
 output "appsync_graphql_api_id" {
   description = "ID of GraphQL API"
-  value       = element(concat(aws_appsync_graphql_api.this.*.id, [""]), 0)
+  value       = try(aws_appsync_graphql_api.this[0].id, null)
 }
 
 output "appsync_graphql_api_arn" {
   description = "ARN of GraphQL API"
-  value       = element(concat(aws_appsync_graphql_api.this.*.arn, [""]), 0)
+  value       = try(aws_appsync_graphql_api.this[0].arn, null)
 }
 
 output "appsync_graphql_api_uris" {
   description = "Map of URIs associated with the API"
-  value       = element(concat(aws_appsync_graphql_api.this.*.uris, [""]), 0)
+  value       = try(aws_appsync_graphql_api.this.*.uris, null)
 }
 
 # API Key
