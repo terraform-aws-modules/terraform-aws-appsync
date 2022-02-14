@@ -127,7 +127,7 @@ variable "domain_name" {
 variable "domain_name_description" {
   description = "A description of the Domain Name."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "certificate_arn" {
