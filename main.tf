@@ -207,6 +207,7 @@ resource "aws_appsync_resolver" "this" {
 
 # Functions
 resource "aws_appsync_function" "this" {
+  depends_on = [aws_appsync_datasource.this]
   for_each = var.create_graphql_api ? var.functions : {}
 
   api_id           = aws_appsync_graphql_api.this[0].id
