@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.4.0...v1.5.0) (2022-04-06)
+
+
+### Features
+
+* Set api_key_key output to be sensitive ([#33](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/33)) ([b834488](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/b834488c07e882d84766f0a06b052dcdf02f3372))
+
 ## [1.4.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.3.0...v1.4.0) (2022-02-14)
 
 
