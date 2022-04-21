@@ -209,7 +209,6 @@ resource "aws_appsync_resolver" "this" {
 resource "aws_appsync_function" "this" {
   for_each = var.create_graphql_api ? var.functions : {}
 
-  depends_on       = [aws_appsync_datasource.this]
   api_id           = aws_appsync_graphql_api.this[0].id
   data_source      = lookup(each.value, "data_source", null)
   name             = each.key
@@ -218,4 +217,6 @@ resource "aws_appsync_function" "this" {
 
   request_mapping_template  = lookup(each.value, "request_mapping_template", null)
   response_mapping_template = lookup(each.value, "response_mapping_template", null)
+
+  depends_on = [aws_appsync_datasource.this]
 }
