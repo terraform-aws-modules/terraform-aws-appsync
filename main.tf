@@ -217,4 +217,6 @@ resource "aws_appsync_function" "this" {
 
   request_mapping_template  = lookup(each.value, "request_mapping_template", null)
   response_mapping_template = lookup(each.value, "response_mapping_template", null)
+
+  depends_on = [aws_appsync_datasource.this]
 }
