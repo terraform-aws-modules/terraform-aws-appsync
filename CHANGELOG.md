@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.5.1](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.5.0...v1.5.1) (2022-04-21)
+
+
+### Bug Fixes
+
+* Fixed datasource not found in functions ([#34](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/34)) ([b4d121a](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/b4d121afca2fe0347160a48d729c2b84698dc31b))
+
 ## [1.5.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.4.0...v1.5.0) (2022-04-06)
 
 
