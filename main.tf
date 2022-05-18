@@ -51,8 +51,8 @@ resource "aws_appsync_graphql_api" "this" {
     content {
       default_action      = var.user_pool_config["default_action"]
       user_pool_id        = var.user_pool_config["user_pool_id"]
-      app_id_client_regex = lookup(var.openid_connect_config, "app_id_client_regex", null)
-      aws_region          = lookup(var.openid_connect_config, "aws_region", null)
+      app_id_client_regex = lookup(var.user_pool_config, "app_id_client_regex", null)
+      aws_region          = lookup(var.user_pool_config, "aws_region", null)
     }
   }
 
