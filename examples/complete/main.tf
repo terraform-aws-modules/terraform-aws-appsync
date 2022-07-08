@@ -135,7 +135,8 @@ module "appsync" {
       authentication_type = "AMAZON_COGNITO_USER_POOLS"
 
       user_pool_config = {
-        user_pool_id = aws_cognito_user_pool.this.id
+        user_pool_id        = aws_cognito_user_pool.this.id
+        app_id_client_regex = aws_cognito_user_pool_client.this.id
       }
     }
   }
@@ -262,6 +263,11 @@ resource "random_pet" "this" {
 
 resource "aws_cognito_user_pool" "this" {
   name = "user-pool-${random_pet.this.id}"
+}
+
+resource "aws_cognito_user_pool_client" "this" {
+  name         = "user-pool-client-${random_pet.this.id}"
+  user_pool_id = aws_cognito_user_pool.this.id
 }
 
 #module "aws_lambda_function1" {
