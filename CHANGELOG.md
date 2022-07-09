@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.5.2](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.5.1...v1.5.2) (2022-07-09)
+
+
+### Bug Fixes
+
+* Take app_id_client_regex from user_pool_config ([#35](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/35)) ([#38](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/38)) ([0e37ae7](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/0e37ae758ca22f38e9a3d021451e29e92cb96eb7))
+
 ### [1.5.1](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.5.0...v1.5.1) (2022-04-21)
 
 
