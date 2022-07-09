@@ -39,6 +39,7 @@ output "appsync_api_key_id" {
 output "appsync_api_key_key" {
   description = "Map of API Keys"
   value       = module.appsync.appsync_api_key_key
+  sensitive   = true
 }
 
 # Datasources
