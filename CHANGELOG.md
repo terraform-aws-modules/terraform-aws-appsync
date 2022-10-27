@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.5.3](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.5.2...v1.5.3) (2022-10-27)
+
+
+### Bug Fixes
+
+* Update CI configuration files to use latest version ([#39](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/39)) ([33f0955](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/33f0955391f2e88744ce4a3612233875b583e162))
+
 ### [1.5.2](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.5.1...v1.5.2) (2022-07-09)
 
 
