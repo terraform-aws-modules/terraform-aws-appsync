@@ -11,7 +11,7 @@ output "appsync_graphql_api_arn" {
 
 output "appsync_graphql_api_uris" {
   description = "Map of URIs associated with the API"
-  value       = try(aws_appsync_graphql_api.this.*.uris, null)
+  value       = try(aws_appsync_graphql_api.this[0].uris, null)
 }
 
 # API Key
@@ -73,5 +73,5 @@ output "appsync_domain_hosted_zone_id" {
 # Extra
 output "appsync_graphql_api_fqdns" {
   description = "Map of FQDNs associated with the API (no protocol and path)"
-  value       = length(aws_appsync_graphql_api.this) != 0 ? { for k, v in element(concat(aws_appsync_graphql_api.this.*.uris, [""]), 0) : k => regex("://([^/?#]*)?", v)[0] } : {}
+  value       = { for k, v in try(aws_appsync_graphql_api.this[0].uris, "") : k => regex("://([^/?#]*)?", v)[0] if length(aws_appsync_graphql_api.this) > 0 }
 }

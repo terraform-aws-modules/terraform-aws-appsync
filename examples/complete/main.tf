@@ -60,7 +60,7 @@ module "acm" {
   version = "~> 3"
 
   domain_name = local.domain_name
-  zone_id     = coalescelist(data.aws_route53_zone.this.*.zone_id, aws_route53_zone.this.*.zone_id)[0]
+  zone_id     = try(data.aws_route53_zone.this[0].zone_id, aws_route53_zone.this[0].zone_id)
 
   subject_alternative_names = [
     "*.alerts.${local.domain_name}",
