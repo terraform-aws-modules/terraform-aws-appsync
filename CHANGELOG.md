@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.5.3...v1.6.0) (2022-11-10)
+
+
+### Features
+
+* Add support to configure batch resolvers ([#41](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/41)) ([6274e94](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/6274e948d8a0054a063dfa7b0c5c69dec02fef26))
+
 ### [1.5.3](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.5.2...v1.5.3) (2022-10-27)
 
 
