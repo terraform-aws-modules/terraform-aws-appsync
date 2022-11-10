@@ -203,6 +203,8 @@ resource "aws_appsync_resolver" "this" {
       ttl          = lookup(each.value, "caching_ttl", var.resolver_caching_ttl)
     }
   }
+
+  max_batch_size = lookup(each.value, "max_batch_size", 0)
 }
 
 # Functions
