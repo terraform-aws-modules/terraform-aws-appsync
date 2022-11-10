@@ -204,7 +204,7 @@ resource "aws_appsync_resolver" "this" {
     }
   }
 
-  max_batch_size = lookup(each.value, "max_batch_size", 0)
+  max_batch_size = lookup(each.value, "max_batch_size", null)
 }
 
 # Functions
