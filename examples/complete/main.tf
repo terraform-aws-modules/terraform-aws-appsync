@@ -205,8 +205,9 @@ EOF
     }
 
     "Post.id" = {
-      data_source   = "lambda2"
-      direct_lambda = true
+      data_source    = "lambda2"
+      direct_lambda  = true
+      max_batch_size = 10
     }
 
     "Post.title" = {
