@@ -182,11 +182,11 @@ resource "aws_appsync_resolver" "this" {
   kind   = lookup(each.value, "kind", null)
 
   dynamic "runtime" {
-    for_each = toset(lookup(each.value, "kind", null) == "PIPELINE" && lookup(each.value, "runtime", null) == "APPSYNC_JS" ? [true] : [])
+    for_each = try([each.value.runtime], [])
 
     content {
-      name            = "APPSYNC_JS"
-      runtime_version = lookup(each.value, "runtime_version", "1.0.0")
+      name            = runtime.value.name
+      runtime_version = try(runtime.value.runtime_version, "1.0.0")
     }
   }
 

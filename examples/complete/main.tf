@@ -252,16 +252,18 @@ EOF
       ]
     }
 
-    # "Query.user" = {
-    #   kind    = "PIPELINE"
-    #   type    = "Query"
-    #   field   = "user"
-    #   runtime = "APPSYNC_JS"
-    #   code    = file("src/index.js")
-    #   functions = [
-    #     "None",
-    #   ]
-    # }
+    "Query.user" = {
+      kind  = "PIPELINE"
+      type  = "Query"
+      field = "user"
+      runtime = {
+        name = "APPSYNC_JS"
+      }
+      code = file("src/index.js")
+      functions = [
+        "None",
+      ]
+    }
   }
 }
 
