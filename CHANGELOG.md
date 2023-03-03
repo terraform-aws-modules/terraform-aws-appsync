@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.2](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.6.1...v1.6.2) (2023-03-03)
+
+
+### Bug Fixes
+
+* Replace hardcoded "aws" parition with data lookup ([#47](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/47)) ([d6c8501](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/d6c8501b8abd31576c3db4932fdbf99932ce3347))
+
 ### [1.6.1](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.6.0...v1.6.1) (2023-01-24)
 
 
