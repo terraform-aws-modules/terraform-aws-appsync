@@ -1,3 +1,5 @@
+data "aws_partition" "this" {}
+
 locals {
   service_roles_with_policies = var.create_graphql_api ? { for k, v in var.datasources : k => v if contains(["AWS_LAMBDA", "AMAZON_DYNAMODB", "AMAZON_ELASTICSEARCH"], v.type) && tobool(lookup(v, "create_service_role", true)) } : {}
 
@@ -19,7 +21,7 @@ locals {
         dynamodb = {
           effect    = "Allow"
           actions   = lookup(v, "policy_actions", null) == null ? var.dynamodb_allowed_actions : v.policy_actions
-          resources = [for _, f in ["arn:aws:dynamodb:%v:%v:table/%v", "arn:aws:dynamodb:%v:%v:table/%v/*"] : format(f, v.region, lookup(v, "aws_account_id", data.aws_caller_identity.this.account_id), v.table_name)]
+          resources = [for _, f in ["arn:${data.aws_partition.this.partition}:dynamodb:%v:%v:table/%v", "arn:${data.aws_partition.this.partition}:dynamodb:%v:%v:table/%v/*"] : format(f, v.region, lookup(v, "aws_account_id", data.aws_caller_identity.this.account_id), v.table_name)]
         }
       }
     }
@@ -31,7 +33,7 @@ locals {
         elasticsearch = {
           effect    = "Allow"
           actions   = lookup(v, "policy_actions", null) == null ? var.elasticsearch_allowed_actions : v.policy_actions
-          resources = [format("arn:aws:es:%v::domain/%v/*", v.region, v.endpoint)]
+          resources = [format("arn:${data.aws_partition.this.partition}:es:%v::domain/%v/*", v.region, v.endpoint)]
         }
       }
     }
@@ -72,7 +74,7 @@ resource "aws_iam_role" "logs" {
 resource "aws_iam_role_policy_attachment" "logs" {
   count = var.logging_enabled && var.create_logs_role ? 1 : 0
 
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppSyncPushToCloudWatchLogs"
+  policy_arn = "arn:${data.aws_partition.this.partition}:iam::aws:policy/service-role/AWSAppSyncPushToCloudWatchLogs"
   role       = aws_iam_role.logs[0].name
 }
 
