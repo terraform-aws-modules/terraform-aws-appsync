@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.6.2...v1.7.0) (2023-03-11)
+
+
+### Features
+
+* Added support for js pipeline resolver ([#46](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/46)) ([d660ffb](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/d660ffb50881fb13067742c26fc4b63b76da425b))
+
 ### [1.6.2](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.6.1...v1.6.2) (2023-03-03)
 
 
