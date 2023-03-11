@@ -7,9 +7,15 @@ type Post {
   title: String!
 }
 
+type User {
+  id: ID!
+  name: String
+}
+
 type Query {
   singlePost(id: ID!): Post
   none(dummyString: String!): String!
+  user(id: ID!): User
 }
 
 schema {

@@ -73,5 +73,5 @@ output "appsync_domain_hosted_zone_id" {
 # Extra
 output "appsync_graphql_api_fqdns" {
   description = "Map of FQDNs associated with the API (no protocol and path)"
-  value       = { for k, v in try(aws_appsync_graphql_api.this[0].uris, "") : k => regex("://([^/?#]*)?", v)[0] if length(aws_appsync_graphql_api.this) > 0 }
+  value       = { for k, v in try(aws_appsync_graphql_api.this[0].uris, []) : k => regex("://([^/?#]*)?", v)[0] if length(aws_appsync_graphql_api.this) > 0 }
 }

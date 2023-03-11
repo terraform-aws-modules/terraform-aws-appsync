@@ -181,8 +181,20 @@ resource "aws_appsync_resolver" "this" {
   field  = each.value.field
   kind   = lookup(each.value, "kind", null)
 
-  request_template  = lookup(each.value, "request_template", tobool(lookup(each.value, "direct_lambda", false)) ? var.direct_lambda_request_template : "{}")
-  response_template = lookup(each.value, "response_template", tobool(lookup(each.value, "direct_lambda", false)) ? var.direct_lambda_response_template : "{}")
+  dynamic "runtime" {
+    for_each = try([each.value.runtime], [])
+
+    content {
+      name            = runtime.value.name
+      runtime_version = try(runtime.value.runtime_version, "1.0.0")
+    }
+  }
+
+  # code is required when runtime is APPSYNC_JS
+  code = try(each.value.kind == "PIPELINE" && each.value.runtime.name == "APPSYNC_JS", false) ? each.value.code : null
+
+  request_template  = lookup(each.value, "request_template", tobool(lookup(each.value, "direct_lambda", false)) ? var.direct_lambda_request_template : try(each.value.kind == "PIPELINE" && each.value.runtime.name == "APPSYNC_JS", false) ? null : "{}")
+  response_template = lookup(each.value, "response_template", tobool(lookup(each.value, "direct_lambda", false)) ? var.direct_lambda_response_template : try(each.value.kind == "PIPELINE" && each.value.runtime.name == "APPSYNC_JS", false) ? null : "{}")
 
   data_source = lookup(each.value, "data_source", null) != null ? aws_appsync_datasource.this[each.value.data_source].name : lookup(each.value, "data_source_arn", null)
 
