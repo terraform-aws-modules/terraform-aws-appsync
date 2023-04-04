@@ -221,16 +221,44 @@ resource "aws_appsync_resolver" "this" {
 
 # Functions
 resource "aws_appsync_function" "this" {
-  for_each = var.create_graphql_api ? var.functions : {}
+  for_each = { for k, v in var.functions : k => v if var.create_graphql_api == true }
 
   api_id           = aws_appsync_graphql_api.this[0].id
   data_source      = lookup(each.value, "data_source", null)
   name             = each.key
   description      = lookup(each.value, "description", null)
-  function_version = lookup(each.value, "function_version", "2018-05-29")
+  function_version = lookup(each.value, "function_version", try(each.value.code == null, false) ? "2018-05-29" : null)
+  max_batch_size   = lookup(each.value, "max_batch_size", null)
 
-  request_mapping_template  = lookup(each.value, "request_mapping_template", null)
-  response_mapping_template = lookup(each.value, "response_mapping_template", null)
+  request_mapping_template  = lookup(each.value, "request_mapping_template", try(each.value.runtime.name == "APPSYNC_JS", false) ? null : "{}")
+  response_mapping_template = lookup(each.value, "response_mapping_template", try(each.value.runtime.name == "APPSYNC_JS", false) ? null : "{}")
+
+  code = try(each.value.code, null)
+
+  dynamic "sync_config" {
+    for_each = try([each.value.sync_config], [])
+
+    content {
+      conflict_detection = try(sync_config.value.conflict_detection, "NONE")
+      conflict_handler   = try(sync_config.value.conflict_handler, "NONE")
+
+      dynamic "lambda_conflict_handler_config" {
+        for_each = try([each.value.sync_config.lambda_conflict_handler_config], [])
+        content {
+          lambda_conflict_handler_arn = try(lambda_conflict_handler_config.value.lambda_conflict_handler_arn, null)
+        }
+      }
+    }
+  }
+
+  dynamic "runtime" {
+    for_each = try([each.value.runtime], [])
+
+    content {
+      name            = runtime.value.name
+      runtime_version = try(runtime.value.runtime_version, "1.0.0")
+    }
+  }
 
   depends_on = [aws_appsync_datasource.this]
 }

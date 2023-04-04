@@ -46,7 +46,7 @@ resource "aws_route53_zone" "this" {
 }
 
 resource "aws_route53_record" "api" {
-  zone_id = data.aws_route53_zone.this[0].zone_id
+  zone_id = try(data.aws_route53_zone.this[0].zone_id, aws_route53_zone.this[0].zone_id)
   name    = "api.${local.domain}"
   type    = "CNAME"
   ttl     = "300"
@@ -141,15 +141,25 @@ module "appsync" {
 
   functions = {
     None = {
-      kind                      = "PIPELINE"
-      type                      = "Query"
-      data_source               = "None"
-      request_mapping_template  = <<EOF
-{
-    "payload": $util.toJson($context.args)
-}
-EOF
+      kind                     = "PIPELINE"
+      type                     = "Query"
+      data_source              = "None"
+      request_mapping_template = <<EOF
+      {
+          "payload": $util.toJson($context.args)
+      }
+      EOF
+
       response_mapping_template = "$util.toJson($context.result)"
+    }
+
+    Javascript = {
+      data_source    = "lambda1"
+      max_batch_size = 10
+      runtime = {
+        name = "APPSYNC_JS"
+      }
+      code = file("src/function.js")
     }
   }
 
@@ -262,6 +272,19 @@ EOF
         "None",
       ]
     }
+
+    "Query.user" = {
+      kind  = "PIPELINE"
+      type  = "Query"
+      field = "user"
+      runtime = {
+        name = "APPSYNC_JS"
+      }
+      code = file("src/function.js")
+      functions = [
+        "Javascript",
+      ]
+    }
   }
 }
 
@@ -275,6 +298,13 @@ resource "random_pet" "this" {
 
 resource "aws_cognito_user_pool" "this" {
   name = "user-pool-${random_pet.this.id}"
+
+  account_recovery_setting {
+    recovery_mechanism {
+      name     = "verified_email"
+      priority = 1
+    }
+  }
 }
 
 resource "aws_cognito_user_pool_client" "this" {
