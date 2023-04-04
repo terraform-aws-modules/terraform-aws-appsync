@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.7.0...v1.8.0) (2023-04-04)
+
+
+### Features
+
+* Adds support for JavaScript AppSync Functions ([#49](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/49)) ([265095a](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/265095a3618e48539356c803daccd1eb8d62c06c))
+
 ## [1.7.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.6.2...v1.7.0) (2023-03-11)
 
 
