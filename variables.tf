@@ -39,6 +39,20 @@ variable "schema" {
   default     = ""
 }
 
+variable "visibility" {
+  description = "The API visibility. Valid values: GLOBAL, PRIVATE."
+  type        = string
+  default     = "GLOBAL"
+
+  validation {
+    condition = contains([
+      "GLOBAL",
+      "PRIVATE"
+    ], var.visibility)
+    error_message = "Allowed values for input_parameter are \"GLOBAL\", or \"PRIVATE\"."
+  }
+}
+
 variable "authentication_type" {
   description = "The authentication type to use by GraphQL API"
   type        = string

@@ -13,6 +13,7 @@ resource "aws_appsync_graphql_api" "this" {
   authentication_type = var.authentication_type
   schema              = var.schema
   xray_enabled        = var.xray_enabled
+  visibility          = var.visibility
 
   dynamic "log_config" {
     for_each = var.logging_enabled ? [true] : []
