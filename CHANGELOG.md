@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.8.0...v2.0.0) (2023-06-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* Added appsync visibility option, bump AWS provider version to 5.x (#50)
+
+### Features
+
+* Added appsync visibility option, bump AWS provider version to 5.x ([#50](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/50)) ([6fd4bb4](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/6fd4bb473f88ee6718543640b50e1352811189af))
+
 ## [1.8.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.7.0...v1.8.0) (2023-04-04)
 
 
