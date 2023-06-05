@@ -15,6 +15,7 @@ variable "domain_name_association_enabled" {
   type        = bool
   default     = false
 }
+
 variable "caching_enabled" {
   description = "Whether caching with Elasticache is enabled."
   type        = bool
@@ -42,15 +43,7 @@ variable "schema" {
 variable "visibility" {
   description = "The API visibility. Valid values: GLOBAL, PRIVATE."
   type        = string
-  default     = "GLOBAL"
-
-  validation {
-    condition = contains([
-      "GLOBAL",
-      "PRIVATE"
-    ], var.visibility)
-    error_message = "Allowed values for input_parameter are \"GLOBAL\", or \"PRIVATE\"."
-  }
+  default     = null
 }
 
 variable "authentication_type" {

@@ -114,14 +114,14 @@ $ terraform apply
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.1.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.1 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.1.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.1 |
 
 ## Modules
 
@@ -190,7 +190,7 @@ No modules.
 | <a name="input_schema"></a> [schema](#input\_schema) | The schema definition, in GraphQL schema language format. Terraform cannot perform drift detection of this configuration. | `string` | `""` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to add to all GraphQL resources created by this module | `map(string)` | `{}` | no |
 | <a name="input_user_pool_config"></a> [user\_pool\_config](#input\_user\_pool\_config) | The Amazon Cognito User Pool configuration. | `map(string)` | `{}` | no |
-| <a name="input_visibility"></a> [visibility](#input\_visibility) | The API visibility. Valid values: GLOBAL, PRIVATE. | `string` | `"GLOBAL"` | no |
+| <a name="input_visibility"></a> [visibility](#input\_visibility) | The API visibility. Valid values: GLOBAL, PRIVATE. | `string` | `null` | no |
 | <a name="input_xray_enabled"></a> [xray\_enabled](#input\_xray\_enabled) | Whether tracing with X-ray is enabled. | `bool` | `false` | no |
 
 ## Outputs
