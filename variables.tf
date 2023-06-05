@@ -15,6 +15,7 @@ variable "domain_name_association_enabled" {
   type        = bool
   default     = false
 }
+
 variable "caching_enabled" {
   description = "Whether caching with Elasticache is enabled."
   type        = bool
@@ -37,6 +38,12 @@ variable "schema" {
   description = "The schema definition, in GraphQL schema language format. Terraform cannot perform drift detection of this configuration."
   type        = string
   default     = ""
+}
+
+variable "visibility" {
+  description = "The API visibility. Valid values: GLOBAL, PRIVATE."
+  type        = string
+  default     = null
 }
 
 variable "authentication_type" {

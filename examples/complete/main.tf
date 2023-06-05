@@ -85,6 +85,8 @@ module "appsync" {
 
   schema = file("schema.graphql")
 
+  visibility = "GLOBAL"
+
   domain_name_association_enabled = true
   caching_enabled                 = true
 
