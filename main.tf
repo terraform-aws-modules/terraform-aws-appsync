@@ -83,6 +83,15 @@ resource "aws_appsync_graphql_api" "this" {
           aws_region          = lookup(user_pool_config.value, "aws_region", null)
         }
       }
+      dynamic "lambda_authorizer_config" {
+        for_each = length(keys(lookup(additional_authentication_provider.value, "lambda_authorizer_config", {}))) == 0 ? [] : [additional_authentication_provider.value.lambda_authorizer_config]
+
+        content {
+          authorizer_uri                   = lambda_authorizer_config.value.authorizer_uri
+          authorizer_result_ttl_in_seconds = lookup(lambda_authorizer_config.value, "authorizer_result_ttl_in_seconds", null)
+          identity_validation_expression   = lookup(lambda_authorizer_config.value, "identity_validation_expression", null)
+        }
+      }
     }
   }
 
