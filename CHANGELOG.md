@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.1.0...v2.2.0) (2023-08-10)
+
+
+### Features
+
+* Added wrappers for for_each/terragrunt ([#53](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/53)) ([99c1108](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/99c11083bd0aafb6e62baa4422ec39acf2900d2e))
+
 ## [2.1.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.0.0...v2.1.0) (2023-08-10)
 
 
