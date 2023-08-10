@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.0.0...v2.1.0) (2023-08-10)
+
+
+### Features
+
+* Add lambda as additional auth provider ([#52](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/52)) ([9d641a4](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/9d641a415af9834fb3bf305fb4e6c635fdd60ddf))
+
 ## [2.0.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v1.8.0...v2.0.0) (2023-06-05)
 
 
