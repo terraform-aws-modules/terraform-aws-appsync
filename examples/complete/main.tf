@@ -139,6 +139,13 @@ module "appsync" {
         app_id_client_regex = aws_cognito_user_pool_client.this.id
       }
     }
+
+    lambda = {
+      authentication_type = "AWS_LAMBDA"
+      lambda_authorizer_config = {
+        authorizer_uri = "arn:aws:lambda:eu-west-1:835367859851:function:appsync_auth_2"
+      }
+    }
   }
 
   functions = {
