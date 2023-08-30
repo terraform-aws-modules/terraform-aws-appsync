@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.2.1](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.2.0...v2.2.1) (2023-08-30)
+
+
+### Bug Fixes
+
+* Fixed APPSYNC_JS resolvers for both kinds (UNIT and PIPELINE) ([#55](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/55)) ([9d3e9b0](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/9d3e9b0beb0d91b518c47771e51bd49768755db0))
+
 ## [2.2.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.1.0...v2.2.0) (2023-08-10)
 
 
