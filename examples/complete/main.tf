@@ -269,6 +269,18 @@ EOF
       ]
     }
 
+    "Query.singleComment" = {
+      kind  = "UNIT"
+      type  = "Query"
+      field = "singleComment"
+      code  = file("src/function.js")
+      runtime = {
+        name            = "APPSYNC_JS"
+        runtime_version = "1.0.0"
+      }
+      data_source = "dynamodb1"
+    }
+
     "Query.user" = {
       kind  = "PIPELINE"
       type  = "Query"

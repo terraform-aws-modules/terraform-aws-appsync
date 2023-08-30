@@ -203,8 +203,8 @@ resource "aws_appsync_resolver" "this" {
   # code is required when runtime is APPSYNC_JS
   code = try(each.value.runtime.name == "APPSYNC_JS", false) ? each.value.code : null
 
-  request_template  = lookup(each.value, "request_template", tobool(lookup(each.value, "direct_lambda", false)) ? var.direct_lambda_request_template : try(each.value.kind == "PIPELINE" && each.value.runtime.name == "APPSYNC_JS", false) ? null : "{}")
-  response_template = lookup(each.value, "response_template", tobool(lookup(each.value, "direct_lambda", false)) ? var.direct_lambda_response_template : try(each.value.kind == "PIPELINE" && each.value.runtime.name == "APPSYNC_JS", false) ? null : "{}")
+  request_template  = lookup(each.value, "request_template", tobool(lookup(each.value, "direct_lambda", false)) ? var.direct_lambda_request_template : try(each.value.runtime.name == "APPSYNC_JS", false) ? null : "{}")
+  response_template = lookup(each.value, "response_template", tobool(lookup(each.value, "direct_lambda", false)) ? var.direct_lambda_response_template : try(each.value.runtime.name == "APPSYNC_JS", false) ? null : "{}")
 
   data_source = lookup(each.value, "data_source", null) != null ? aws_appsync_datasource.this[each.value.data_source].name : lookup(each.value, "data_source_arn", null)
 
