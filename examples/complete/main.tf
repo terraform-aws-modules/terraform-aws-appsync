@@ -213,6 +213,15 @@ module "appsync" {
       endpoint = "https://search-my-domain.eu-west-1.es.amazonaws.com"
       region   = "eu-west-1"
     }
+
+    # Opensearch Service support has not been finished & tested
+    opensearchservice1 = {
+      type = "AMAZON_OPENSEARCH_SERVICE"
+
+      # Note: dynamic references (module.opensearchservice1.id) do not work do not work unless you create this resource in advance
+      endpoint = "https://search-my-domain-2.eu-west-1.es.amazonaws.com"
+      region   = "eu-west-1"
+    }
   }
 
   resolvers = {

@@ -1,7 +1,7 @@
 data "aws_partition" "this" {}
 
 locals {
-  service_roles_with_policies = var.create_graphql_api ? { for k, v in var.datasources : k => v if contains(["AWS_LAMBDA", "AMAZON_DYNAMODB", "AMAZON_ELASTICSEARCH"], v.type) && tobool(lookup(v, "create_service_role", true)) } : {}
+  service_roles_with_policies = var.create_graphql_api ? { for k, v in var.datasources : k => v if contains(["AWS_LAMBDA", "AMAZON_DYNAMODB", "AMAZON_ELASTICSEARCH", "AMAZON_OPENSEARCH_SERVICE"], v.type) && tobool(lookup(v, "create_service_role", true)) } : {}
 
   service_roles_with_policies_lambda = { for k, v in local.service_roles_with_policies : k => merge(v,
     {
@@ -39,10 +39,23 @@ locals {
     }
   ) if v.type == "AMAZON_ELASTICSEARCH" }
 
+  service_roles_with_policies_opensearchservice = { for k, v in local.service_roles_with_policies : k => merge(v,
+    {
+      policy_statements = {
+        opensearchservice = {
+          effect    = "Allow"
+          actions   = lookup(v, "policy_actions", null) == null ? var.opensearchservice_allowed_actions : v.policy_actions
+          resources = [format("arn:${data.aws_partition.this.partition}:es:%v::domain/%v/*", v.region, v.endpoint)]
+        }
+      }
+    }
+  ) if v.type == "AMAZON_OPENSEARCH_SERVICE" }
+
   service_roles_with_specific_policies = merge(
     local.service_roles_with_policies_lambda,
     local.service_roles_with_policies_dynamodb,
     local.service_roles_with_policies_elasticsearch,
+    local.service_roles_with_policies_opensearchservice,
   )
 }
 

@@ -36,6 +36,7 @@ module "wrapper" {
   lambda_allowed_actions             = try(each.value.lambda_allowed_actions, var.defaults.lambda_allowed_actions, ["lambda:invokeFunction"])
   dynamodb_allowed_actions           = try(each.value.dynamodb_allowed_actions, var.defaults.dynamodb_allowed_actions, ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:DeleteItem", "dynamodb:UpdateItem", "dynamodb:Query", "dynamodb:Scan", "dynamodb:BatchGetItem", "dynamodb:BatchWriteItem"])
   elasticsearch_allowed_actions      = try(each.value.elasticsearch_allowed_actions, var.defaults.elasticsearch_allowed_actions, ["es:ESHttpDelete", "es:ESHttpHead", "es:ESHttpGet", "es:ESHttpPost", "es:ESHttpPut"])
+  opensearchservice_allowed_actions  = try(each.value.opensearchservice_allowed_actions, var.defaults.opensearchservice_allowed_actions, ["es:ESHttpDelete", "es:ESHttpHead", "es:ESHttpGet", "es:ESHttpPost", "es:ESHttpPut"])
   iam_permissions_boundary           = try(each.value.iam_permissions_boundary, var.defaults.iam_permissions_boundary, null)
   direct_lambda_request_template = try(each.value.direct_lambda_request_template, var.defaults.direct_lambda_request_template, <<-EOF
   {
