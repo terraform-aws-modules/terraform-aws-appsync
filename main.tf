@@ -144,7 +144,7 @@ resource "aws_appsync_datasource" "this" {
   name             = each.key
   type             = each.value.type
   description      = lookup(each.value, "description", null)
-  service_role_arn = lookup(each.value, "service_role_arn", tobool(lookup(each.value, "create_service_role", contains(["AWS_LAMBDA", "AMAZON_DYNAMODB", "AMAZON_ELASTICSEARCH", "AMAZON_OPENSEARCH_SERVICE"], each.value.type))) ? aws_iam_role.service_role[each.key].arn : null)
+  service_role_arn = lookup(each.value, "service_role_arn", tobool(lookup(each.value, "create_service_role", contains(["AWS_LAMBDA", "AMAZON_DYNAMODB", "AMAZON_ELASTICSEARCH", "AMAZON_OPENSEARCH_SERVICE", "AMAZON_EVENTBRIDGE"], each.value.type))) ? aws_iam_role.service_role[each.key].arn : null)
 
   dynamic "http_config" {
     for_each = each.value.type == "HTTP" ? [true] : []
@@ -187,6 +187,14 @@ resource "aws_appsync_datasource" "this" {
     content {
       endpoint = each.value.endpoint
       region   = lookup(each.value, "region", null)
+    }
+  }
+
+  dynamic "event_bridge_config" {
+    for_each = each.value.type == "AMAZON_EVENTBRIDGE" ? [true] : []
+
+    content {
+      event_bus_arn = each.value.event_bus_arn
     }
   }
 }

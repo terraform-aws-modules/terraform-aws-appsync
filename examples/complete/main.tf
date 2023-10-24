@@ -222,6 +222,12 @@ module "appsync" {
       endpoint = "https://search-my-domain-2.eu-west-1.es.amazonaws.com"
       region   = "eu-west-1"
     }
+
+    eventbridge1 = {
+      type = "AMAZON_EVENTBRIDGE"
+
+      event_bus_arn = "aws:arn:events:us-west-1:135367859850:event-bus/eventbridge1"
+    }
   }
 
   resolvers = {
