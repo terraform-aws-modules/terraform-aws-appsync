@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.2.1...v2.3.0) (2023-10-24)
+
+
+### Features
+
+* Add support for opensearch and eventbridge datasources ([#57](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/57)) ([bd9f700](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/bd9f700313ae6cdbf0b3f16f60465c1f2a423796))
+
 ### [2.2.1](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.2.0...v2.2.1) (2023-08-30)
 
 
