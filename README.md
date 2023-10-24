@@ -59,6 +59,17 @@ module "appsync" {
       endpoint = "https://search-my-domain.eu-west-1.es.amazonaws.com"
       region   = "eu-west-1"
     }
+
+    opensearchservice1 = {
+      type     = "AMAZON_OPENSEARCH_SERVICE"
+      endpoint = "https://opensearch-my-domain.eu-west-1.es.amazonaws.com"
+      region   = "eu-west-1"
+    }
+
+    eventbridge1 = {
+      type     = "AMAZON_EVENTBRIDGE"
+      event_bus_arn = "aws:arn:events:us-west-1:135367859850:event-bus/eventbridge1"
+    }
   }
 
   resolvers = {
@@ -172,6 +183,7 @@ No modules.
 | <a name="input_domain_name_description"></a> [domain\_name\_description](#input\_domain\_name\_description) | A description of the Domain Name. | `string` | `null` | no |
 | <a name="input_dynamodb_allowed_actions"></a> [dynamodb\_allowed\_actions](#input\_dynamodb\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_DYNAMODB | `list(string)` | <pre>[<br>  "dynamodb:GetItem",<br>  "dynamodb:PutItem",<br>  "dynamodb:DeleteItem",<br>  "dynamodb:UpdateItem",<br>  "dynamodb:Query",<br>  "dynamodb:Scan",<br>  "dynamodb:BatchGetItem",<br>  "dynamodb:BatchWriteItem"<br>]</pre> | no |
 | <a name="input_elasticsearch_allowed_actions"></a> [elasticsearch\_allowed\_actions](#input\_elasticsearch\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_ELASTICSEARCH | `list(string)` | <pre>[<br>  "es:ESHttpDelete",<br>  "es:ESHttpHead",<br>  "es:ESHttpGet",<br>  "es:ESHttpPost",<br>  "es:ESHttpPut"<br>]</pre> | no |
+| <a name="input_eventbridge_allowed_actions"></a> [eventbridge\_allowed\_actions](#input\_eventbridge\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_EVENTBRIDGE | `list(string)` | <pre>[<br>  "events:PutEvents"<br>]</pre> | no |
 | <a name="input_functions"></a> [functions](#input\_functions) | Map of functions to create | `any` | `{}` | no |
 | <a name="input_graphql_api_tags"></a> [graphql\_api\_tags](#input\_graphql\_api\_tags) | Map of tags to add to GraphQL API | `map(string)` | `{}` | no |
 | <a name="input_iam_permissions_boundary"></a> [iam\_permissions\_boundary](#input\_iam\_permissions\_boundary) | ARN for iam permissions boundary | `string` | `null` | no |
@@ -185,6 +197,7 @@ No modules.
 | <a name="input_logs_role_tags"></a> [logs\_role\_tags](#input\_logs\_role\_tags) | Map of tags to add to Cloudwatch logs IAM role | `map(string)` | `{}` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of GraphQL API | `string` | `""` | no |
 | <a name="input_openid_connect_config"></a> [openid\_connect\_config](#input\_openid\_connect\_config) | Nested argument containing OpenID Connect configuration. | `map(string)` | `{}` | no |
+| <a name="input_opensearchservice_allowed_actions"></a> [opensearchservice\_allowed\_actions](#input\_opensearchservice\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_OPENSEARCH\_SERVICE | `list(string)` | <pre>[<br>  "es:ESHttpDelete",<br>  "es:ESHttpHead",<br>  "es:ESHttpGet",<br>  "es:ESHttpPost",<br>  "es:ESHttpPut"<br>]</pre> | no |
 | <a name="input_resolver_caching_ttl"></a> [resolver\_caching\_ttl](#input\_resolver\_caching\_ttl) | Default caching TTL for resolvers when caching is enabled | `number` | `60` | no |
 | <a name="input_resolvers"></a> [resolvers](#input\_resolvers) | Map of resolvers to create | `any` | `{}` | no |
 | <a name="input_schema"></a> [schema](#input\_schema) | The schema definition, in GraphQL schema language format. Terraform cannot perform drift detection of this configuration. | `string` | `""` | no |

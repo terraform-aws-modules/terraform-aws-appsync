@@ -230,6 +230,18 @@ variable "elasticsearch_allowed_actions" {
   default     = ["es:ESHttpDelete", "es:ESHttpHead", "es:ESHttpGet", "es:ESHttpPost", "es:ESHttpPut"]
 }
 
+variable "opensearchservice_allowed_actions" {
+  description = "List of allowed IAM actions for datasources type AMAZON_OPENSEARCH_SERVICE"
+  type        = list(string)
+  default     = ["es:ESHttpDelete", "es:ESHttpHead", "es:ESHttpGet", "es:ESHttpPost", "es:ESHttpPut"]
+}
+
+variable "eventbridge_allowed_actions" {
+  description = "List of allowed IAM actions for datasources type AMAZON_EVENTBRIDGE"
+  type        = list(string)
+  default     = ["events:PutEvents"]
+}
+
 variable "iam_permissions_boundary" {
   description = "ARN for iam permissions boundary"
   type        = string
