@@ -67,8 +67,8 @@ module "appsync" {
     }
 
     eventbridge1 = {
-      type     = "AMAZON_EVENTBRIDGE"
-      event_bus_arn = "aws:arn:events:us-west-1:135367859850:event-bus/eventbridge1"
+      type          = "AMAZON_EVENTBRIDGE"
+      event_bus_arn = "arn:aws:events:us-west-1:135367859850:event-bus/eventbridge1"
     }
 
     rds1 = {
