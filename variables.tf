@@ -242,6 +242,18 @@ variable "eventbridge_allowed_actions" {
   default     = ["events:PutEvents"]
 }
 
+variable "relational_database_allowed_actions" {
+  description = "List of allowed IAM actions for datasources type RELATIONAL_DATABASE"
+  type        = list(string)
+  default     = ["rds-data:BatchExecuteStatement", "rds-data:BeginTransaction", "rds-data:CommitTransaction", "rds-data:ExecuteStatement", "rds-data:RollbackTransaction"]
+}
+
+variable "secrets_manager_allowed_actions" {
+  description = "List of allowed IAM actions for secrets manager datasources type RELATIONAL_DATABASE"
+  type        = list(string)
+  default     = ["secretsmanager:GetSecretValue"]
+}
+
 variable "iam_permissions_boundary" {
   description = "ARN for iam permissions boundary"
   type        = string
