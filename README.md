@@ -70,6 +70,14 @@ module "appsync" {
       type     = "AMAZON_EVENTBRIDGE"
       event_bus_arn = "aws:arn:events:us-west-1:135367859850:event-bus/eventbridge1"
     }
+
+    rds1 = {
+      type          = "RELATIONAL_DATABASE"
+      cluster_arn   = "arn:aws:rds:us-west-1:135367859850:cluster:rds1"
+      secret_arn    = "arn:aws:secretsmanager:us-west-1:135367859850:secret:rds-secret1"
+      database_name = "mydb"
+      schema        = "myschema"
+    }
   }
 
   resolvers = {
@@ -198,9 +206,11 @@ No modules.
 | <a name="input_name"></a> [name](#input\_name) | Name of GraphQL API | `string` | `""` | no |
 | <a name="input_openid_connect_config"></a> [openid\_connect\_config](#input\_openid\_connect\_config) | Nested argument containing OpenID Connect configuration. | `map(string)` | `{}` | no |
 | <a name="input_opensearchservice_allowed_actions"></a> [opensearchservice\_allowed\_actions](#input\_opensearchservice\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_OPENSEARCH\_SERVICE | `list(string)` | <pre>[<br>  "es:ESHttpDelete",<br>  "es:ESHttpHead",<br>  "es:ESHttpGet",<br>  "es:ESHttpPost",<br>  "es:ESHttpPut"<br>]</pre> | no |
+| <a name="input_relational_database_allowed_actions"></a> [relational\_database\_allowed\_actions](#input\_relational\_database\_allowed\_actions) | List of allowed IAM actions for datasources type RELATIONAL\_DATABASE | `list(string)` | <pre>[<br>  "rds-data:BatchExecuteStatement",<br>  "rds-data:BeginTransaction",<br>  "rds-data:CommitTransaction",<br>  "rds-data:ExecuteStatement",<br>  "rds-data:RollbackTransaction"<br>]</pre> | no |
 | <a name="input_resolver_caching_ttl"></a> [resolver\_caching\_ttl](#input\_resolver\_caching\_ttl) | Default caching TTL for resolvers when caching is enabled | `number` | `60` | no |
 | <a name="input_resolvers"></a> [resolvers](#input\_resolvers) | Map of resolvers to create | `any` | `{}` | no |
 | <a name="input_schema"></a> [schema](#input\_schema) | The schema definition, in GraphQL schema language format. Terraform cannot perform drift detection of this configuration. | `string` | `""` | no |
+| <a name="input_secrets_manager_allowed_actions"></a> [secrets\_manager\_allowed\_actions](#input\_secrets\_manager\_allowed\_actions) | List of allowed IAM actions for secrets manager datasources type RELATIONAL\_DATABASE | `list(string)` | <pre>[<br>  "secretsmanager:GetSecretValue"<br>]</pre> | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to add to all GraphQL resources created by this module | `map(string)` | `{}` | no |
 | <a name="input_user_pool_config"></a> [user\_pool\_config](#input\_user\_pool\_config) | The Amazon Cognito User Pool configuration. | `map(string)` | `{}` | no |
 | <a name="input_visibility"></a> [visibility](#input\_visibility) | The API visibility. Valid values: GLOBAL, PRIVATE. | `string` | `null` | no |

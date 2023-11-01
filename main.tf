@@ -144,7 +144,7 @@ resource "aws_appsync_datasource" "this" {
   name             = each.key
   type             = each.value.type
   description      = lookup(each.value, "description", null)
-  service_role_arn = lookup(each.value, "service_role_arn", tobool(lookup(each.value, "create_service_role", contains(["AWS_LAMBDA", "AMAZON_DYNAMODB", "AMAZON_ELASTICSEARCH", "AMAZON_OPENSEARCH_SERVICE", "AMAZON_EVENTBRIDGE"], each.value.type))) ? aws_iam_role.service_role[each.key].arn : null)
+  service_role_arn = lookup(each.value, "service_role_arn", tobool(lookup(each.value, "create_service_role", contains(["AWS_LAMBDA", "AMAZON_DYNAMODB", "AMAZON_ELASTICSEARCH", "AMAZON_OPENSEARCH_SERVICE", "AMAZON_EVENTBRIDGE", "RELATIONAL_DATABASE"], each.value.type))) ? aws_iam_role.service_role[each.key].arn : null)
 
   dynamic "http_config" {
     for_each = each.value.type == "HTTP" ? [true] : []
@@ -195,6 +195,22 @@ resource "aws_appsync_datasource" "this" {
 
     content {
       event_bus_arn = each.value.event_bus_arn
+    }
+  }
+
+  dynamic "relational_database_config" {
+    for_each = each.value.type == "RELATIONAL_DATABASE" ? [true] : []
+
+    content {
+      source_type = lookup(each.value, "source_type", "RDS_HTTP_ENDPOINT")
+
+      http_endpoint_config {
+        db_cluster_identifier = each.value.cluster_arn
+        aws_secret_store_arn  = each.value.secret_arn
+        database_name         = lookup(each.value, "database_name", null)
+        region                = split(":", each.value.cluster_arn)[3]
+        schema                = lookup(each.value, "schema", null)
+      }
     }
   }
 }

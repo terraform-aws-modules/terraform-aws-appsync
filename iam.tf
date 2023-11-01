@@ -1,7 +1,7 @@
 data "aws_partition" "this" {}
 
 locals {
-  service_roles_with_policies = var.create_graphql_api ? { for k, v in var.datasources : k => v if contains(["AWS_LAMBDA", "AMAZON_DYNAMODB", "AMAZON_ELASTICSEARCH", "AMAZON_OPENSEARCH_SERVICE", "AMAZON_EVENTBRIDGE"], v.type) && tobool(lookup(v, "create_service_role", true)) } : {}
+  service_roles_with_policies = var.create_graphql_api ? { for k, v in var.datasources : k => v if contains(["AWS_LAMBDA", "AMAZON_DYNAMODB", "AMAZON_ELASTICSEARCH", "AMAZON_OPENSEARCH_SERVICE", "AMAZON_EVENTBRIDGE", "RELATIONAL_DATABASE"], v.type) && tobool(lookup(v, "create_service_role", true)) } : {}
 
   service_roles_with_policies_lambda = { for k, v in local.service_roles_with_policies : k => merge(v,
     {
@@ -63,12 +63,30 @@ locals {
     }
   ) if v.type == "AMAZON_EVENTBRIDGE" }
 
+  service_roles_with_policies_relational_database = { for k, v in local.service_roles_with_policies : k => merge(v,
+    {
+      policy_statements = {
+        relational_database = {
+          effect    = "Allow"
+          actions   = lookup(v, "policy_actions", null) == null ? var.relational_database_allowed_actions : v.policy_actions
+          resources = [v.cluster_arn]
+        }
+        secrets_manager = {
+          effect    = "Allow"
+          actions   = lookup(v, "policy_actions", null) == null ? var.secrets_manager_allowed_actions : v.policy_actions
+          resources = [v.secret_arn]
+        }
+      }
+    }
+  ) if v.type == "RELATIONAL_DATABASE" }
+
   service_roles_with_specific_policies = merge(
     local.service_roles_with_policies_lambda,
     local.service_roles_with_policies_dynamodb,
     local.service_roles_with_policies_elasticsearch,
     local.service_roles_with_policies_opensearchservice,
     local.service_roles_with_policies_eventbridge,
+    local.service_roles_with_policies_relational_database,
   )
 }
 

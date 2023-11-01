@@ -228,6 +228,14 @@ module "appsync" {
 
       event_bus_arn = "aws:arn:events:us-west-1:135367859850:event-bus/eventbridge1"
     }
+
+    rds1 = {
+      type          = "RELATIONAL_DATABASE"
+      cluster_arn   = "arn:aws:rds:us-west-1:135367859850:cluster:rds1"
+      secret_arn    = "arn:aws:secretsmanager:us-west-1:135367859850:secret:rds-secret1"
+      database_name = "mydb"
+      schema        = "myschema"
+    }
   }
 
   resolvers = {
