@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.4.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.3.0...v2.4.0) (2023-11-01)
+
+
+### Features
+
+* Add support for relational database datasources ([#58](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/58)) ([87ff09b](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/87ff09be76d97ada08fa3483055a4b96d37ea8a3))
+
 ## [2.3.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.2.1...v2.3.0) (2023-10-24)
 
 
