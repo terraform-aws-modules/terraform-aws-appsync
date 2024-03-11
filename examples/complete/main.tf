@@ -90,6 +90,10 @@ module "appsync" {
   domain_name_association_enabled = true
   caching_enabled                 = true
 
+  introspection_config = "DISABLED"
+  query_depth_limit    = 10
+  resolver_count_limit = 25
+
   domain_name             = "api.${local.domain}"
   domain_name_description = "My ${random_pet.this.id} AppSync Domain"
   certificate_arn         = module.acm.acm_certificate_arn

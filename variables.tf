@@ -321,3 +321,35 @@ variable "functions" {
   type        = any
   default     = {}
 }
+variable "introspection_config" {
+  description = "Whether to enable or disable introspection of the GraphQL API."
+  type        = string
+  default     = "ENABLED"
+
+  validation {
+    condition     = var.introspection_config == "DISABLED" || var.introspection_config == "ENABLED"
+    error_message = "The introspection_config must be either 'DISABLED' or 'ENABLED'."
+  }
+}
+
+variable "query_depth_limit" {
+  description = "The maximum depth a query can have in a single request."
+  type        = number
+  default     = 0
+
+  validation {
+    condition     = var.query_depth_limit >= 0 && var.query_depth_limit <= 75 && floor(var.query_depth_limit) == var.query_depth_limit
+    error_message = "The query depth limit must be an integer between 0 and 75."
+  }
+}
+
+variable "resolver_count_limit" {
+  description = "The maximum number of resolvers that can be invoked in a single request."
+  type        = number
+  default     = 0
+
+  validation {
+    condition     = var.resolver_count_limit >= 0 && var.resolver_count_limit <= 10000 && floor(var.resolver_count_limit) == var.resolver_count_limit
+    error_message = "The resolver count limit must be an integer between 0 and 10000."
+  }
+}
