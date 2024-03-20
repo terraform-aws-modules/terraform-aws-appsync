@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.4.1...v2.5.0) (2024-03-20)
+
+
+### Features
+
+* Add appsync arguments to support appsync security features ([#61](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/61)) ([355de62](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/355de62bbe08bfc38e6e504d103082ca14a85a77))
+
 ## [2.4.1](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.4.0...v2.4.1) (2024-03-07)
 
 
