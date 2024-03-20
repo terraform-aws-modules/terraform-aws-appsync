@@ -321,3 +321,20 @@ variable "functions" {
   type        = any
   default     = {}
 }
+variable "introspection_config" {
+  description = "Whether to enable or disable introspection of the GraphQL API."
+  type        = string
+  default     = null
+}
+
+variable "query_depth_limit" {
+  description = "The maximum depth a query can have in a single request."
+  type        = number
+  default     = null
+}
+
+variable "resolver_count_limit" {
+  description = "The maximum number of resolvers that can be invoked in a single request."
+  type        = number
+  default     = null
+}

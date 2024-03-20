@@ -15,6 +15,10 @@ resource "aws_appsync_graphql_api" "this" {
   xray_enabled        = var.xray_enabled
   visibility          = var.visibility
 
+  introspection_config = var.introspection_config
+  query_depth_limit    = var.query_depth_limit
+  resolver_count_limit = var.resolver_count_limit
+
   dynamic "log_config" {
     for_each = var.logging_enabled ? [true] : []
 

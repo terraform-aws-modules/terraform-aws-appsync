@@ -133,13 +133,13 @@ $ terraform apply
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.1 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.37.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.1 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.37.0 |
 
 ## Modules
 
@@ -194,6 +194,7 @@ No modules.
 | <a name="input_functions"></a> [functions](#input\_functions) | Map of functions to create | `any` | `{}` | no |
 | <a name="input_graphql_api_tags"></a> [graphql\_api\_tags](#input\_graphql\_api\_tags) | Map of tags to add to GraphQL API | `map(string)` | `{}` | no |
 | <a name="input_iam_permissions_boundary"></a> [iam\_permissions\_boundary](#input\_iam\_permissions\_boundary) | ARN for iam permissions boundary | `string` | `null` | no |
+| <a name="input_introspection_config"></a> [introspection\_config](#input\_introspection\_config) | Whether to enable or disable introspection of the GraphQL API. | `string` | `null` | no |
 | <a name="input_lambda_allowed_actions"></a> [lambda\_allowed\_actions](#input\_lambda\_allowed\_actions) | List of allowed IAM actions for datasources type AWS\_LAMBDA | `list(string)` | <pre>[<br>  "lambda:invokeFunction"<br>]</pre> | no |
 | <a name="input_lambda_authorizer_config"></a> [lambda\_authorizer\_config](#input\_lambda\_authorizer\_config) | Nested argument containing Lambda authorizer configuration. | `map(string)` | `{}` | no |
 | <a name="input_log_cloudwatch_logs_role_arn"></a> [log\_cloudwatch\_logs\_role\_arn](#input\_log\_cloudwatch\_logs\_role\_arn) | Amazon Resource Name of the service role that AWS AppSync will assume to publish to Amazon CloudWatch logs in your account. | `string` | `null` | no |
@@ -205,8 +206,10 @@ No modules.
 | <a name="input_name"></a> [name](#input\_name) | Name of GraphQL API | `string` | `""` | no |
 | <a name="input_openid_connect_config"></a> [openid\_connect\_config](#input\_openid\_connect\_config) | Nested argument containing OpenID Connect configuration. | `map(string)` | `{}` | no |
 | <a name="input_opensearchservice_allowed_actions"></a> [opensearchservice\_allowed\_actions](#input\_opensearchservice\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_OPENSEARCH\_SERVICE | `list(string)` | <pre>[<br>  "es:ESHttpDelete",<br>  "es:ESHttpHead",<br>  "es:ESHttpGet",<br>  "es:ESHttpPost",<br>  "es:ESHttpPut"<br>]</pre> | no |
+| <a name="input_query_depth_limit"></a> [query\_depth\_limit](#input\_query\_depth\_limit) | The maximum depth a query can have in a single request. | `number` | `null` | no |
 | <a name="input_relational_database_allowed_actions"></a> [relational\_database\_allowed\_actions](#input\_relational\_database\_allowed\_actions) | List of allowed IAM actions for datasources type RELATIONAL\_DATABASE | `list(string)` | <pre>[<br>  "rds-data:BatchExecuteStatement",<br>  "rds-data:BeginTransaction",<br>  "rds-data:CommitTransaction",<br>  "rds-data:ExecuteStatement",<br>  "rds-data:RollbackTransaction"<br>]</pre> | no |
 | <a name="input_resolver_caching_ttl"></a> [resolver\_caching\_ttl](#input\_resolver\_caching\_ttl) | Default caching TTL for resolvers when caching is enabled | `number` | `60` | no |
+| <a name="input_resolver_count_limit"></a> [resolver\_count\_limit](#input\_resolver\_count\_limit) | The maximum number of resolvers that can be invoked in a single request. | `number` | `null` | no |
 | <a name="input_resolvers"></a> [resolvers](#input\_resolvers) | Map of resolvers to create | `any` | `{}` | no |
 | <a name="input_schema"></a> [schema](#input\_schema) | The schema definition, in GraphQL schema language format. Terraform cannot perform drift detection of this configuration. | `string` | `""` | no |
 | <a name="input_secrets_manager_allowed_actions"></a> [secrets\_manager\_allowed\_actions](#input\_secrets\_manager\_allowed\_actions) | List of allowed IAM actions for secrets manager datasources type RELATIONAL\_DATABASE | `list(string)` | <pre>[<br>  "secretsmanager:GetSecretValue"<br>]</pre> | no |
