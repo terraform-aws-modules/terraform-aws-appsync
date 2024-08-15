@@ -211,6 +211,7 @@ No modules.
 | <a name="input_resolver_caching_ttl"></a> [resolver\_caching\_ttl](#input\_resolver\_caching\_ttl) | Default caching TTL for resolvers when caching is enabled | `number` | `60` | no |
 | <a name="input_resolver_count_limit"></a> [resolver\_count\_limit](#input\_resolver\_count\_limit) | The maximum number of resolvers that can be invoked in a single request. | `number` | `null` | no |
 | <a name="input_resolvers"></a> [resolvers](#input\_resolvers) | Map of resolvers to create | `any` | `{}` | no |
+| <a name="input_role_suffix"></a> [role\_suffix](#input\_role\_suffix) | Suffix to append to generated role names | `string` | `""` | no |
 | <a name="input_schema"></a> [schema](#input\_schema) | The schema definition, in GraphQL schema language format. Terraform cannot perform drift detection of this configuration. | `string` | `""` | no |
 | <a name="input_secrets_manager_allowed_actions"></a> [secrets\_manager\_allowed\_actions](#input\_secrets\_manager\_allowed\_actions) | List of allowed IAM actions for secrets manager datasources type RELATIONAL\_DATABASE | `list(string)` | <pre>[<br>  "secretsmanager:GetSecretValue"<br>]</pre> | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to add to all GraphQL resources created by this module | `map(string)` | `{}` | no |
