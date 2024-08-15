@@ -341,6 +341,6 @@ variable "resolver_count_limit" {
 
 variable "role_suffix" {
   description = "value to append to the role name"
-  type       = string
-  default    = ""
+  type        = string
+  default     = ""
 }

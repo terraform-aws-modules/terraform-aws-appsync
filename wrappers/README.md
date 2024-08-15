@@ -12,9 +12,9 @@ This wrapper does not implement any extra functionality.
 
 ```hcl
 terraform {
-  source = "tfr:///terraform-aws-modules/appsync/aws//wrappers"
+  source = "tfr:///terraform-aws-modules/lint/aws//wrappers"
   # Alternative source:
-  # source = "git::git@github.com:terraform-aws-modules/terraform-aws-appsync.git//wrappers?ref=master"
+  # source = "git::git@github.com:terraform-aws-modules/terraform-aws-lint.git//wrappers?ref=master"
 }
 
 inputs = {
@@ -42,7 +42,7 @@ inputs = {
 
 ```hcl
 module "wrapper" {
-  source = "terraform-aws-modules/appsync/aws//wrappers"
+  source = "terraform-aws-modules/lint/aws//wrappers"
 
   defaults = { # Default values
     create = true

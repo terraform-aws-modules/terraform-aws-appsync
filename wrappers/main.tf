@@ -68,6 +68,7 @@ module "wrapper" {
   resolver_caching_ttl                = try(each.value.resolver_caching_ttl, var.defaults.resolver_caching_ttl, 60)
   resolver_count_limit                = try(each.value.resolver_count_limit, var.defaults.resolver_count_limit, null)
   resolvers                           = try(each.value.resolvers, var.defaults.resolvers, {})
+  role_suffix                         = try(each.value.role_suffix, var.defaults.role_suffix, "")
   schema                              = try(each.value.schema, var.defaults.schema, "")
   secrets_manager_allowed_actions     = try(each.value.secrets_manager_allowed_actions, var.defaults.secrets_manager_allowed_actions, ["secretsmanager:GetSecretValue"])
   tags                                = try(each.value.tags, var.defaults.tags, {})
