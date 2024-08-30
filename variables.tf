@@ -304,8 +304,34 @@ variable "resolver_caching_ttl" {
 # Datasources
 variable "datasources" {
   description = "Map of datasources to create"
-  type        = any
-  default     = {}
+  description = <<EOF
+  Map of datasources to create. The key is the name of the datasource and the value is a map of the datasource configuration. The configuration map must contain the following keys:
+  - type: The type of the datasource. Valid values are: AWS_LAMBDA, AMAZON_DYNAMODB, AMAZON_ELASTICSEARCH, AMAZON_OPENSEARCH_SERVICE, AMAZON_EVENTBRIDGE, RELATIONAL_DATABASE
+  - service_role_name: The name of the service role, to override default.
+  - endpoint: The endpoint of the datasource. Required for AWS_LAMBDA, AMAZON_ELASTICSEARCH, AMAZON_OPENSEARCH_SERVICE
+  - region: The region of the datasource. Required for AMAZON_DYNAMODB, AMAZON_ELASTICSEARCH, AMAZON_OPENSEARCH_SERVICE
+  - table_name: The name of the table. Required for AMAZON_DYNAMODB
+  - event_bus_name: The name of the event bus. Required for AMAZON_EVENTBRIDGE
+  - cluster_arn: The ARN of the cluster. Required for RELATIONAL_DATABASE
+  - secret_arn: The ARN of the secret. Required for RELATIONAL_DATABASE
+  - database_name: The name of the database. Required for RELATIONAL_DATABASE
+  - schema: The schema of the database. Required for RELATIONAL_DATABASE
+EOF
+  type = object({
+    name = object({
+      type              = string
+      endpoint          = optional(string)
+      region            = optional(string)
+      table_name        = optional(string)
+      event_bus_name    = optional(string)
+      cluster_arn       = optional(string)
+      secret_arn        = optional(string)
+      database_name     = optional(string)
+      schema            = optional(string)
+      service_role_name = optional(string)
+    })
+  })
+  default = {}
 }
 
 # Resolvers
