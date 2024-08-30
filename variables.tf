@@ -303,11 +303,11 @@ variable "resolver_caching_ttl" {
 
 # Datasources
 variable "datasources" {
-  description = "Map of datasources to create"
   description = <<EOF
   Map of datasources to create. The key is the name of the datasource and the value is a map of the datasource configuration. The configuration map must contain the following keys:
   - type: The type of the datasource. Valid values are: AWS_LAMBDA, AMAZON_DYNAMODB, AMAZON_ELASTICSEARCH, AMAZON_OPENSEARCH_SERVICE, AMAZON_EVENTBRIDGE, RELATIONAL_DATABASE
   - service_role_name: The name of the service role, to override default.
+  - service_role_arn: The ARN of an existing service role
   - endpoint: The endpoint of the datasource. Required for AWS_LAMBDA, AMAZON_ELASTICSEARCH, AMAZON_OPENSEARCH_SERVICE
   - region: The region of the datasource. Required for AMAZON_DYNAMODB, AMAZON_ELASTICSEARCH, AMAZON_OPENSEARCH_SERVICE
   - table_name: The name of the table. Required for AMAZON_DYNAMODB
@@ -329,6 +329,7 @@ EOF
       database_name     = optional(string)
       schema            = optional(string)
       service_role_name = optional(string)
+      service_role_arn  = optional(string)
     })
   })
   default = {}

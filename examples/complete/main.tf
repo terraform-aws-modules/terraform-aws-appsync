@@ -199,6 +199,7 @@ module "appsync" {
       # Note: dynamic references (module.aws_lambda_function2.lambda_function_arn) do not work unless you create this resource in advance
       function_arn = "arn:aws:lambda:eu-west-1:835367859851:function:index_2"
       # service_role_arn = "arn:aws:iam::835367859851:role/lambda1-service"
+      service_role_name = "lambda2-custom-name-service-role"
     }
 
     dynamodb1 = {
