@@ -106,6 +106,12 @@ variable "additional_authentication_provider" {
   default     = {}
 }
 
+variable "enhanced_metrics_config" {
+  description = "Nested argument containing Lambda Ehanced metrics configuration."
+  type        = map(string)
+  default     = {}
+}
+
 variable "graphql_api_tags" {
   description = "Map of tags to add to GraphQL API"
   type        = map(string)

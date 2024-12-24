@@ -47,6 +47,7 @@ module "wrapper" {
   domain_name_description             = try(each.value.domain_name_description, var.defaults.domain_name_description, null)
   dynamodb_allowed_actions            = try(each.value.dynamodb_allowed_actions, var.defaults.dynamodb_allowed_actions, ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:DeleteItem", "dynamodb:UpdateItem", "dynamodb:Query", "dynamodb:Scan", "dynamodb:BatchGetItem", "dynamodb:BatchWriteItem"])
   elasticsearch_allowed_actions       = try(each.value.elasticsearch_allowed_actions, var.defaults.elasticsearch_allowed_actions, ["es:ESHttpDelete", "es:ESHttpHead", "es:ESHttpGet", "es:ESHttpPost", "es:ESHttpPut"])
+  enhanced_metrics_config             = try(each.value.enhanced_metrics_config, var.defaults.enhanced_metrics_config, {})
   eventbridge_allowed_actions         = try(each.value.eventbridge_allowed_actions, var.defaults.eventbridge_allowed_actions, ["events:PutEvents"])
   functions                           = try(each.value.functions, var.defaults.functions, {})
   graphql_api_tags                    = try(each.value.graphql_api_tags, var.defaults.graphql_api_tags, {})

@@ -99,6 +99,16 @@ resource "aws_appsync_graphql_api" "this" {
     }
   }
 
+  dynamic "enhanced_metrics_config" {
+    for_each = length(keys(var.enhanced_metrics_config)) == 0 ? [] : [true]
+
+    content {
+      data_source_level_metrics_behavior = lookup(var.enhanced_metrics_config, "data_source_level_metrics_behavior", null)
+      operation_level_metrics_config     = lookup(var.enhanced_metrics_config, "operation_level_metrics_config", null)
+      resolver_level_metrics_behavior    = lookup(var.enhanced_metrics_config, "resolver_level_metrics_behavior", null)
+    }
+  }
+
   tags = merge({ Name = var.name }, var.graphql_api_tags)
 }
 
