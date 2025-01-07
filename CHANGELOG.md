@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.6.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.5.1...v2.6.0) (2025-01-07)
+
+
+### Features
+
+* Add enhanced_metrics_config ([#68](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/68)) ([c18861e](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/c18861e27772195ffa019204c2dd7c6d96ba64f4))
+
 ## [2.5.1](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.5.0...v2.5.1) (2024-10-11)
 
 
