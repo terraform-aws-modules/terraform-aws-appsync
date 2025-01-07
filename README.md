@@ -133,13 +133,13 @@ $ terraform apply
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.37.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.61.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.37.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.61.0 |
 
 ## Modules
 
@@ -190,6 +190,7 @@ No modules.
 | <a name="input_domain_name_description"></a> [domain\_name\_description](#input\_domain\_name\_description) | A description of the Domain Name. | `string` | `null` | no |
 | <a name="input_dynamodb_allowed_actions"></a> [dynamodb\_allowed\_actions](#input\_dynamodb\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_DYNAMODB | `list(string)` | <pre>[<br/>  "dynamodb:GetItem",<br/>  "dynamodb:PutItem",<br/>  "dynamodb:DeleteItem",<br/>  "dynamodb:UpdateItem",<br/>  "dynamodb:Query",<br/>  "dynamodb:Scan",<br/>  "dynamodb:BatchGetItem",<br/>  "dynamodb:BatchWriteItem"<br/>]</pre> | no |
 | <a name="input_elasticsearch_allowed_actions"></a> [elasticsearch\_allowed\_actions](#input\_elasticsearch\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_ELASTICSEARCH | `list(string)` | <pre>[<br/>  "es:ESHttpDelete",<br/>  "es:ESHttpHead",<br/>  "es:ESHttpGet",<br/>  "es:ESHttpPost",<br/>  "es:ESHttpPut"<br/>]</pre> | no |
+| <a name="input_enhanced_metrics_config"></a> [enhanced\_metrics\_config](#input\_enhanced\_metrics\_config) | Nested argument containing Lambda Ehanced metrics configuration. | `map(string)` | `{}` | no |
 | <a name="input_eventbridge_allowed_actions"></a> [eventbridge\_allowed\_actions](#input\_eventbridge\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_EVENTBRIDGE | `list(string)` | <pre>[<br/>  "events:PutEvents"<br/>]</pre> | no |
 | <a name="input_functions"></a> [functions](#input\_functions) | Map of functions to create | `any` | `{}` | no |
 | <a name="input_graphql_api_tags"></a> [graphql\_api\_tags](#input\_graphql\_api\_tags) | Map of tags to add to GraphQL API | `map(string)` | `{}` | no |

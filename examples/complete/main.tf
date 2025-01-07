@@ -333,6 +333,12 @@ EOF
       ]
     }
   }
+
+  enhanced_metrics_config = {
+    data_source_level_metrics_behavior = "PER_DATA_SOURCE_METRICS"
+    operation_level_metrics_config     = "ENABLED"
+    resolver_level_metrics_behavior    = "FULL_REQUEST_RESOLVER_METRICS"
+  }
 }
 
 ##################
