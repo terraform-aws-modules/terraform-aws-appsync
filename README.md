@@ -132,7 +132,7 @@ $ terraform apply
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.2 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.61.0 |
 
 ## Providers
@@ -149,7 +149,7 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_appsync_api_cache.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_cache) | resource |
+| [aws_appsync_api_cache.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_cache) | resource |
 | [aws_appsync_api_key.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_key) | resource |
 | [aws_appsync_datasource.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_datasource) | resource |
 | [aws_appsync_domain_name.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_domain_name) | resource |
@@ -188,15 +188,15 @@ No modules.
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | The domain name that AppSync gets associated with. | `string` | `""` | no |
 | <a name="input_domain_name_association_enabled"></a> [domain\_name\_association\_enabled](#input\_domain\_name\_association\_enabled) | Whether to enable domain name association on GraphQL API | `bool` | `false` | no |
 | <a name="input_domain_name_description"></a> [domain\_name\_description](#input\_domain\_name\_description) | A description of the Domain Name. | `string` | `null` | no |
-| <a name="input_dynamodb_allowed_actions"></a> [dynamodb\_allowed\_actions](#input\_dynamodb\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_DYNAMODB | `list(string)` | <pre>[<br/>  "dynamodb:GetItem",<br/>  "dynamodb:PutItem",<br/>  "dynamodb:DeleteItem",<br/>  "dynamodb:UpdateItem",<br/>  "dynamodb:Query",<br/>  "dynamodb:Scan",<br/>  "dynamodb:BatchGetItem",<br/>  "dynamodb:BatchWriteItem"<br/>]</pre> | no |
-| <a name="input_elasticsearch_allowed_actions"></a> [elasticsearch\_allowed\_actions](#input\_elasticsearch\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_ELASTICSEARCH | `list(string)` | <pre>[<br/>  "es:ESHttpDelete",<br/>  "es:ESHttpHead",<br/>  "es:ESHttpGet",<br/>  "es:ESHttpPost",<br/>  "es:ESHttpPut"<br/>]</pre> | no |
+| <a name="input_dynamodb_allowed_actions"></a> [dynamodb\_allowed\_actions](#input\_dynamodb\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_DYNAMODB | `list(string)` | <pre>[<br>  "dynamodb:GetItem",<br>  "dynamodb:PutItem",<br>  "dynamodb:DeleteItem",<br>  "dynamodb:UpdateItem",<br>  "dynamodb:Query",<br>  "dynamodb:Scan",<br>  "dynamodb:BatchGetItem",<br>  "dynamodb:BatchWriteItem"<br>]</pre> | no |
+| <a name="input_elasticsearch_allowed_actions"></a> [elasticsearch\_allowed\_actions](#input\_elasticsearch\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_ELASTICSEARCH | `list(string)` | <pre>[<br>  "es:ESHttpDelete",<br>  "es:ESHttpHead",<br>  "es:ESHttpGet",<br>  "es:ESHttpPost",<br>  "es:ESHttpPut"<br>]</pre> | no |
 | <a name="input_enhanced_metrics_config"></a> [enhanced\_metrics\_config](#input\_enhanced\_metrics\_config) | Nested argument containing Lambda Ehanced metrics configuration. | `map(string)` | `{}` | no |
-| <a name="input_eventbridge_allowed_actions"></a> [eventbridge\_allowed\_actions](#input\_eventbridge\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_EVENTBRIDGE | `list(string)` | <pre>[<br/>  "events:PutEvents"<br/>]</pre> | no |
+| <a name="input_eventbridge_allowed_actions"></a> [eventbridge\_allowed\_actions](#input\_eventbridge\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_EVENTBRIDGE | `list(string)` | <pre>[<br>  "events:PutEvents"<br>]</pre> | no |
 | <a name="input_functions"></a> [functions](#input\_functions) | Map of functions to create | `any` | `{}` | no |
 | <a name="input_graphql_api_tags"></a> [graphql\_api\_tags](#input\_graphql\_api\_tags) | Map of tags to add to GraphQL API | `map(string)` | `{}` | no |
 | <a name="input_iam_permissions_boundary"></a> [iam\_permissions\_boundary](#input\_iam\_permissions\_boundary) | ARN for iam permissions boundary | `string` | `null` | no |
 | <a name="input_introspection_config"></a> [introspection\_config](#input\_introspection\_config) | Whether to enable or disable introspection of the GraphQL API. | `string` | `null` | no |
-| <a name="input_lambda_allowed_actions"></a> [lambda\_allowed\_actions](#input\_lambda\_allowed\_actions) | List of allowed IAM actions for datasources type AWS\_LAMBDA | `list(string)` | <pre>[<br/>  "lambda:invokeFunction"<br/>]</pre> | no |
+| <a name="input_lambda_allowed_actions"></a> [lambda\_allowed\_actions](#input\_lambda\_allowed\_actions) | List of allowed IAM actions for datasources type AWS\_LAMBDA | `list(string)` | <pre>[<br>  "lambda:invokeFunction"<br>]</pre> | no |
 | <a name="input_lambda_authorizer_config"></a> [lambda\_authorizer\_config](#input\_lambda\_authorizer\_config) | Nested argument containing Lambda authorizer configuration. | `map(string)` | `{}` | no |
 | <a name="input_log_cloudwatch_logs_role_arn"></a> [log\_cloudwatch\_logs\_role\_arn](#input\_log\_cloudwatch\_logs\_role\_arn) | Amazon Resource Name of the service role that AWS AppSync will assume to publish to Amazon CloudWatch logs in your account. | `string` | `null` | no |
 | <a name="input_log_exclude_verbose_content"></a> [log\_exclude\_verbose\_content](#input\_log\_exclude\_verbose\_content) | Set to TRUE to exclude sections that contain information such as headers, context, and evaluated mapping templates, regardless of logging level. | `bool` | `false` | no |
@@ -206,14 +206,14 @@ No modules.
 | <a name="input_logs_role_tags"></a> [logs\_role\_tags](#input\_logs\_role\_tags) | Map of tags to add to Cloudwatch logs IAM role | `map(string)` | `{}` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of GraphQL API | `string` | `""` | no |
 | <a name="input_openid_connect_config"></a> [openid\_connect\_config](#input\_openid\_connect\_config) | Nested argument containing OpenID Connect configuration. | `map(string)` | `{}` | no |
-| <a name="input_opensearchservice_allowed_actions"></a> [opensearchservice\_allowed\_actions](#input\_opensearchservice\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_OPENSEARCH\_SERVICE | `list(string)` | <pre>[<br/>  "es:ESHttpDelete",<br/>  "es:ESHttpHead",<br/>  "es:ESHttpGet",<br/>  "es:ESHttpPost",<br/>  "es:ESHttpPut"<br/>]</pre> | no |
+| <a name="input_opensearchservice_allowed_actions"></a> [opensearchservice\_allowed\_actions](#input\_opensearchservice\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_OPENSEARCH\_SERVICE | `list(string)` | <pre>[<br>  "es:ESHttpDelete",<br>  "es:ESHttpHead",<br>  "es:ESHttpGet",<br>  "es:ESHttpPost",<br>  "es:ESHttpPut"<br>]</pre> | no |
 | <a name="input_query_depth_limit"></a> [query\_depth\_limit](#input\_query\_depth\_limit) | The maximum depth a query can have in a single request. | `number` | `null` | no |
-| <a name="input_relational_database_allowed_actions"></a> [relational\_database\_allowed\_actions](#input\_relational\_database\_allowed\_actions) | List of allowed IAM actions for datasources type RELATIONAL\_DATABASE | `list(string)` | <pre>[<br/>  "rds-data:BatchExecuteStatement",<br/>  "rds-data:BeginTransaction",<br/>  "rds-data:CommitTransaction",<br/>  "rds-data:ExecuteStatement",<br/>  "rds-data:RollbackTransaction"<br/>]</pre> | no |
+| <a name="input_relational_database_allowed_actions"></a> [relational\_database\_allowed\_actions](#input\_relational\_database\_allowed\_actions) | List of allowed IAM actions for datasources type RELATIONAL\_DATABASE | `list(string)` | <pre>[<br>  "rds-data:BatchExecuteStatement",<br>  "rds-data:BeginTransaction",<br>  "rds-data:CommitTransaction",<br>  "rds-data:ExecuteStatement",<br>  "rds-data:RollbackTransaction"<br>]</pre> | no |
 | <a name="input_resolver_caching_ttl"></a> [resolver\_caching\_ttl](#input\_resolver\_caching\_ttl) | Default caching TTL for resolvers when caching is enabled | `number` | `60` | no |
 | <a name="input_resolver_count_limit"></a> [resolver\_count\_limit](#input\_resolver\_count\_limit) | The maximum number of resolvers that can be invoked in a single request. | `number` | `null` | no |
 | <a name="input_resolvers"></a> [resolvers](#input\_resolvers) | Map of resolvers to create | `any` | `{}` | no |
 | <a name="input_schema"></a> [schema](#input\_schema) | The schema definition, in GraphQL schema language format. Terraform cannot perform drift detection of this configuration. | `string` | `""` | no |
-| <a name="input_secrets_manager_allowed_actions"></a> [secrets\_manager\_allowed\_actions](#input\_secrets\_manager\_allowed\_actions) | List of allowed IAM actions for secrets manager datasources type RELATIONAL\_DATABASE | `list(string)` | <pre>[<br/>  "secretsmanager:GetSecretValue"<br/>]</pre> | no |
+| <a name="input_secrets_manager_allowed_actions"></a> [secrets\_manager\_allowed\_actions](#input\_secrets\_manager\_allowed\_actions) | List of allowed IAM actions for secrets manager datasources type RELATIONAL\_DATABASE | `list(string)` | <pre>[<br>  "secretsmanager:GetSecretValue"<br>]</pre> | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to add to all GraphQL resources created by this module | `map(string)` | `{}` | no |
 | <a name="input_user_pool_config"></a> [user\_pool\_config](#input\_user\_pool\_config) | The Amazon Cognito User Pool configuration. | `map(string)` | `{}` | no |
 | <a name="input_visibility"></a> [visibility](#input\_visibility) | The API visibility. Valid values: GLOBAL, PRIVATE. | `string` | `null` | no |
