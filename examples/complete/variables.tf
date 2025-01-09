@@ -1,25 +1,29 @@
-variable "main_region" {
+variable "region" {
+  description = "AWS region where resources will be created"
   type        = string
-  description = "AWS main region"
   default     = "eu-west-1"
 }
 
-variable "existing_route53_zone" {
-  type = object({
-    # Use existing zone (via data source) or create new one (will fail validation, if zone is not reachable)
-    use         = optional(bool, true)
-    domain_name = optional(string, "terraform-aws-modules.modules.tf")
-  })
-  description = "Override this value to use an existing Route 53 zone"
-  default     = {}
+variable "use_existing_route53_zone" {
+  description = "Whether to use an existing Route 53 zone"
+  type        = bool
+  default     = true
 }
 
-variable "existing_acm_certificate" {
-  type = object({
-    # Use existing certificate (via data source) or create new one
-    use         = optional(bool, false)
-    domain_name = optional(string)
-  })
-  description = "Override this value to use an existing ACM certificate"
-  default     = {}
+variable "route53_domain_name" {
+  description = "Existing Route 53 domain name"
+  type        = string
+  default     = "terraform-aws-modules.modules.tf"
+}
+
+variable "use_existing_acm_certificate" {
+  description = "Whether to use an existing ACM certificate"
+  type        = bool
+  default     = false
+}
+
+variable "existing_acm_certificate_domain_name" {
+  description = "Existing ACM certificate domain name"
+  type        = string
+  default     = "terraform-aws-modules.modules.tf"
 }

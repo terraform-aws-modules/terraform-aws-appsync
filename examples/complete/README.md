@@ -36,7 +36,7 @@ Note that this example may create resources which cost money. Run `terraform des
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_acm"></a> [acm](#module\_acm) | terraform-aws-modules/acm/aws | ~> 3.0 |
+| <a name="module_acm"></a> [acm](#module\_acm) | terraform-aws-modules/acm/aws | ~> 5.0 |
 | <a name="module_appsync"></a> [appsync](#module\_appsync) | ../../ | n/a |
 | <a name="module_disabled"></a> [disabled](#module\_disabled) | ../../ | n/a |
 
@@ -51,15 +51,18 @@ Note that this example may create resources which cost money. Run `terraform des
 | [random_pet.this](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) | resource |
 | [aws_acm_certificate.existing_certificate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/acm_certificate) | data source |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 | [aws_route53_zone.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_existing_acm_certificate"></a> [existing\_acm\_certificate](#input\_existing\_acm\_certificate) | Override this value to use an existing ACM certificate | <pre>object({<br>    # Use existing certificate (via data source) or create new one<br>    use         = optional(bool, false)<br>    domain_name = optional(string)<br>  })</pre> | `{}` | no |
-| <a name="input_existing_route53_zone"></a> [existing\_route53\_zone](#input\_existing\_route53\_zone) | Override this value to use an existing Route 53 zone | <pre>object({<br>    # Use existing zone (via data source) or create new one (will fail validation, if zone is not reachable)<br>    use         = optional(bool, true)<br>    domain_name = optional(string, "terraform-aws-modules.modules.tf")<br>  })</pre> | <pre>{<br>  "domain_name": "pat-poc.edf.fr"<br>}</pre> | no |
-| <a name="input_main_region"></a> [main\_region](#input\_main\_region) | AWS main region | `string` | `"eu-west-1"` | no |
+| <a name="input_existing_acm_certificate_domain_name"></a> [existing\_acm\_certificate\_domain\_name](#input\_existing\_acm\_certificate\_domain\_name) | Existing ACM certificate domain name | `string` | `"terraform-aws-modules.modules.tf"` | no |
+| <a name="input_region"></a> [region](#input\_region) | AWS region where resources will be created | `string` | `"eu-west-1"` | no |
+| <a name="input_route53_domain_name"></a> [route53\_domain\_name](#input\_route53\_domain\_name) | Existing Route 53 domain name | `string` | `"terraform-aws-modules.modules.tf"` | no |
+| <a name="input_use_existing_acm_certificate"></a> [use\_existing\_acm\_certificate](#input\_use\_existing\_acm\_certificate) | Whether to use an existing ACM certificate | `bool` | `false` | no |
+| <a name="input_use_existing_route53_zone"></a> [use\_existing\_route53\_zone](#input\_use\_existing\_route53\_zone) | Whether to use an existing Route 53 zone | `bool` | `true` | no |
 
 ## Outputs
 
