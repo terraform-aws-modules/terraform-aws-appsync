@@ -29,13 +29,14 @@ Note that this example may create resources which cost money. Run `terraform des
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.1 |
+| <a name="provider_aws.us-east-1"></a> [aws.us-east-1](#provider\_aws.us-east-1) | >= 5.1 |
 | <a name="provider_random"></a> [random](#provider\_random) | >= 2.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_acm"></a> [acm](#module\_acm) | terraform-aws-modules/acm/aws | ~> 3 |
+| <a name="module_acm"></a> [acm](#module\_acm) | terraform-aws-modules/acm/aws | ~> 5.0 |
 | <a name="module_appsync"></a> [appsync](#module\_appsync) | ../../ | n/a |
 | <a name="module_disabled"></a> [disabled](#module\_disabled) | ../../ | n/a |
 
@@ -48,11 +49,20 @@ Note that this example may create resources which cost money. Run `terraform des
 | [aws_route53_record.api](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_zone.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
 | [random_pet.this](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) | resource |
+| [aws_acm_certificate.existing_certificate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/acm_certificate) | data source |
+| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 | [aws_route53_zone.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_existing_acm_certificate_domain_name"></a> [existing\_acm\_certificate\_domain\_name](#input\_existing\_acm\_certificate\_domain\_name) | Existing ACM certificate domain name | `string` | `"terraform-aws-modules.modules.tf"` | no |
+| <a name="input_region"></a> [region](#input\_region) | AWS region where resources will be created | `string` | `"eu-west-1"` | no |
+| <a name="input_route53_domain_name"></a> [route53\_domain\_name](#input\_route53\_domain\_name) | Existing Route 53 domain name | `string` | `"terraform-aws-modules.modules.tf"` | no |
+| <a name="input_use_existing_acm_certificate"></a> [use\_existing\_acm\_certificate](#input\_use\_existing\_acm\_certificate) | Whether to use an existing ACM certificate | `bool` | `false` | no |
+| <a name="input_use_existing_route53_zone"></a> [use\_existing\_route53\_zone](#input\_use\_existing\_route53\_zone) | Whether to use an existing Route 53 zone | `bool` | `true` | no |
 
 ## Outputs
 

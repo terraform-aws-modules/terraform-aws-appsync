@@ -129,7 +129,7 @@ resource "aws_appsync_domain_name_api_association" "this" {
 }
 
 # API Cache
-resource "aws_appsync_api_cache" "example" {
+resource "aws_appsync_api_cache" "this" {
   count = var.create_graphql_api && var.caching_enabled ? 1 : 0
 
   api_id = aws_appsync_graphql_api.this[0].id

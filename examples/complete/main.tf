@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = var.region
 
   # Make it faster by skipping something
   skip_metadata_api_check     = true
@@ -24,59 +24,70 @@ provider "aws" {
 }
 
 locals {
-  # Use existing (via data source) or create new zone (will fail validation, if zone is not reachable)
-  use_existing_route53_zone = true
-
-  domain = "terraform-aws-modules.modules.tf"
-
   # Removing trailing dot from domain - just to be sure :)
-  domain_name = trimsuffix(local.domain, ".")
+  route53_domain_name = trimsuffix(var.route53_domain_name, ".")
 }
 
 data "aws_route53_zone" "this" {
-  count = local.use_existing_route53_zone ? 1 : 0
+  count = var.use_existing_route53_zone ? 1 : 0
 
-  name         = local.domain_name
+  name         = local.route53_domain_name
   private_zone = false
 }
 
 resource "aws_route53_zone" "this" {
-  count = !local.use_existing_route53_zone ? 1 : 0
-  name  = local.domain_name
+  count = !var.use_existing_route53_zone ? 1 : 0
+
+  name = local.route53_domain_name
 }
 
 resource "aws_route53_record" "api" {
   zone_id = try(data.aws_route53_zone.this[0].zone_id, aws_route53_zone.this[0].zone_id)
-  name    = "api.${local.domain}"
+  name    = "api.${var.route53_domain_name}"
   type    = "CNAME"
   ttl     = "300"
   records = [module.appsync.appsync_domain_name]
 }
 
-module "acm" {
-  source  = "terraform-aws-modules/acm/aws"
-  version = "~> 3"
+data "aws_acm_certificate" "existing_certificate" {
+  count = var.use_existing_acm_certificate ? 1 : 0
 
-  domain_name = local.domain_name
+  domain = var.existing_acm_certificate_domain_name
+
+  provider = aws.us-east-1
+}
+
+module "acm" {
+  count = var.use_existing_acm_certificate ? 0 : 1
+
+  source  = "terraform-aws-modules/acm/aws"
+  version = "~> 5.0"
+
+  domain_name = local.route53_domain_name
   zone_id     = try(data.aws_route53_zone.this[0].zone_id, aws_route53_zone.this[0].zone_id)
 
   subject_alternative_names = [
-    "*.alerts.${local.domain_name}",
-    "new.sub.${local.domain_name}",
-    "*.${local.domain_name}",
-    "alerts.${local.domain_name}",
+    "*.alerts.${local.route53_domain_name}",
+    "new.sub.${local.route53_domain_name}",
+    "*.${local.route53_domain_name}",
+    "alerts.${local.route53_domain_name}",
   ]
 
   wait_for_validation = true
 
+  validation_method = "DNS"
+
   tags = {
-    Name = local.domain_name
+    Name = local.route53_domain_name
   }
 
   providers = {
     aws = aws.us-east-1
   }
 }
+
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
 
 module "appsync" {
   source = "../../"
@@ -94,9 +105,9 @@ module "appsync" {
   query_depth_limit    = 10
   resolver_count_limit = 25
 
-  domain_name             = "api.${local.domain}"
+  domain_name             = "api.${var.route53_domain_name}"
   domain_name_description = "My ${random_pet.this.id} AppSync Domain"
-  certificate_arn         = module.acm.acm_certificate_arn
+  certificate_arn         = var.use_existing_acm_certificate ? data.aws_acm_certificate.existing_certificate[0].arn : module.acm[0].acm_certificate_arn
 
   caching_behavior                 = "PER_RESOLVER_CACHING"
   cache_type                       = "SMALL"
@@ -147,7 +158,7 @@ module "appsync" {
     lambda = {
       authentication_type = "AWS_LAMBDA"
       lambda_authorizer_config = {
-        authorizer_uri = "arn:aws:lambda:eu-west-1:835367859851:function:appsync_auth_2"
+        authorizer_uri = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:appsync_auth_2"
       }
     }
   }

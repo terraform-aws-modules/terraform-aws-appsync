@@ -132,7 +132,7 @@ $ terraform apply
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.2 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.61.0 |
 
 ## Providers
@@ -149,7 +149,7 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_appsync_api_cache.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_cache) | resource |
+| [aws_appsync_api_cache.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_cache) | resource |
 | [aws_appsync_api_key.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_key) | resource |
 | [aws_appsync_datasource.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_datasource) | resource |
 | [aws_appsync_domain_name.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_domain_name) | resource |
