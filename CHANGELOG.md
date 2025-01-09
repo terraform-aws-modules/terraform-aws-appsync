@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.6.0...v3.0.0) (2025-01-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* Rename resource aws_appsync_api_cache (#70)
+
+### Miscellaneous Chores
+
+* Rename resource aws_appsync_api_cache ([#70](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/70)) ([4b7f0b1](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/4b7f0b1e5d940d4059e29ca7fc408978bfe85842))
+
 ## [2.6.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.5.1...v2.6.0) (2025-01-07)
 
 
