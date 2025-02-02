@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v3.0.0...v3.1.0) (2025-02-02)
+
+
+### Features
+
+* Add support for configurable logs role description ([#71](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/71)) ([f05674b](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/f05674b00e37bb98641598f8ca2eb635acc2920a))
+
 ## [3.0.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v2.6.0...v3.0.0) (2025-01-09)
 
 
