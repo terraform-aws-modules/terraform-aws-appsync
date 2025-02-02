@@ -109,6 +109,7 @@ resource "aws_iam_role" "logs" {
   count = var.logging_enabled && var.create_logs_role ? 1 : 0
 
   name                 = coalesce(var.logs_role_name, "${var.name}-logs")
+  description          = var.logs_role_description
   assume_role_policy   = data.aws_iam_policy_document.assume_role.json
   permissions_boundary = var.iam_permissions_boundary
 
