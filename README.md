@@ -202,6 +202,7 @@ No modules.
 | <a name="input_log_exclude_verbose_content"></a> [log\_exclude\_verbose\_content](#input\_log\_exclude\_verbose\_content) | Set to TRUE to exclude sections that contain information such as headers, context, and evaluated mapping templates, regardless of logging level. | `bool` | `false` | no |
 | <a name="input_log_field_log_level"></a> [log\_field\_log\_level](#input\_log\_field\_log\_level) | Field logging level. Valid values: ALL, ERROR, NONE. | `string` | `null` | no |
 | <a name="input_logging_enabled"></a> [logging\_enabled](#input\_logging\_enabled) | Whether to enable Cloudwatch logging on GraphQL API | `bool` | `false` | no |
+| <a name="input_logs_role_description"></a> [logs\_role\_description](#input\_logs\_role\_description) | Description for the IAM role to create for Cloudwatch logs | `string` | `null` | no |
 | <a name="input_logs_role_name"></a> [logs\_role\_name](#input\_logs\_role\_name) | Name of IAM role to create for Cloudwatch logs | `string` | `null` | no |
 | <a name="input_logs_role_tags"></a> [logs\_role\_tags](#input\_logs\_role\_tags) | Map of tags to add to Cloudwatch logs IAM role | `map(string)` | `{}` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of GraphQL API | `string` | `""` | no |

@@ -64,6 +64,12 @@ variable "logs_role_name" {
   default     = null
 }
 
+variable "logs_role_description" {
+  description = "Description for the IAM role to create for Cloudwatch logs"
+  type        = string
+  default     = null
+}
+
 variable "log_cloudwatch_logs_role_arn" {
   description = "Amazon Resource Name of the service role that AWS AppSync will assume to publish to Amazon CloudWatch logs in your account."
   type        = string
