@@ -350,3 +350,9 @@ variable "resolver_count_limit" {
   type        = number
   default     = null
 }
+
+variable "region" {
+  description = "Region where the resource(s) will be managed. Defaults to the region set in the provider configuration"
+  type        = string
+  default     = null
+}
