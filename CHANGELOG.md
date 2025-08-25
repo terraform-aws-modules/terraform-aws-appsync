@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v3.1.0...v4.0.0) (2025-08-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* Upgrade AWS provider and min required Terraform version to 6.0 and 1.5.7 respectively (#73)
+
+### Features
+
+* Upgrade AWS provider and min required Terraform version to 6.0 and 1.5.7 respectively ([#73](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/73)) ([86028cd](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/86028cd7b58dd8f31cf533c245108fe07d39b977))
+
 ## [3.1.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v3.0.0...v3.1.0) (2025-02-02)
 
 
