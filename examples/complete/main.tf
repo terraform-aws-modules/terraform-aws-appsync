@@ -10,19 +10,6 @@ provider "aws" {
   skip_requesting_account_id = false
 }
 
-provider "aws" {
-  region = "us-east-1"
-  alias  = "us-east-1"
-
-  # Make it faster by skipping something
-  skip_metadata_api_check     = true
-  skip_region_validation      = true
-  skip_credentials_validation = true
-
-  # skip_requesting_account_id should be disabled to generate valid ARN in apigatewayv2_api_execution_arn
-  skip_requesting_account_id = false
-}
-
 locals {
   # Removing trailing dot from domain - just to be sure :)
   route53_domain_name = trimsuffix(var.route53_domain_name, ".")
@@ -52,16 +39,18 @@ resource "aws_route53_record" "api" {
 data "aws_acm_certificate" "existing_certificate" {
   count = var.use_existing_acm_certificate ? 1 : 0
 
-  domain = var.existing_acm_certificate_domain_name
+  region = "us-east-1"
 
-  provider = aws.us-east-1
+  domain = var.existing_acm_certificate_domain_name
 }
 
 module "acm" {
   count = var.use_existing_acm_certificate ? 0 : 1
 
+  region = "us-east-1"
+
   source  = "terraform-aws-modules/acm/aws"
-  version = "~> 5.0"
+  version = "~> 6.0"
 
   domain_name = local.route53_domain_name
   zone_id     = try(data.aws_route53_zone.this[0].zone_id, aws_route53_zone.this[0].zone_id)
@@ -79,10 +68,6 @@ module "acm" {
 
   tags = {
     Name = local.route53_domain_name
-  }
-
-  providers = {
-    aws = aws.us-east-1
   }
 }
 
@@ -158,7 +143,7 @@ module "appsync" {
     lambda = {
       authentication_type = "AWS_LAMBDA"
       lambda_authorizer_config = {
-        authorizer_uri = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:appsync_auth_2"
+        authorizer_uri = "arn:aws:lambda:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:function:appsync_auth_2"
       }
     }
   }

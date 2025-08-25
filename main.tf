@@ -9,6 +9,8 @@ locals {
 resource "aws_appsync_graphql_api" "this" {
   count = var.create_graphql_api ? 1 : 0
 
+  region = var.region
+
   name                = var.name
   authentication_type = var.authentication_type
   schema              = var.schema
@@ -116,6 +118,8 @@ resource "aws_appsync_graphql_api" "this" {
 resource "aws_appsync_domain_name" "this" {
   count = var.create_graphql_api && var.domain_name_association_enabled ? 1 : 0
 
+  region = var.region
+
   domain_name     = var.domain_name
   description     = var.domain_name_description
   certificate_arn = var.certificate_arn
@@ -124,6 +128,8 @@ resource "aws_appsync_domain_name" "this" {
 resource "aws_appsync_domain_name_api_association" "this" {
   count = var.create_graphql_api && var.domain_name_association_enabled ? 1 : 0
 
+  region = var.region
+
   api_id      = aws_appsync_graphql_api.this[0].id
   domain_name = aws_appsync_domain_name.this[0].domain_name
 }
@@ -131,6 +137,8 @@ resource "aws_appsync_domain_name_api_association" "this" {
 # API Cache
 resource "aws_appsync_api_cache" "this" {
   count = var.create_graphql_api && var.caching_enabled ? 1 : 0
+
+  region = var.region
 
   api_id = aws_appsync_graphql_api.this[0].id
 
@@ -145,6 +153,8 @@ resource "aws_appsync_api_cache" "this" {
 resource "aws_appsync_api_key" "this" {
   for_each = var.create_graphql_api && var.authentication_type == "API_KEY" ? var.api_keys : {}
 
+  region = var.region
+
   api_id      = aws_appsync_graphql_api.this[0].id
   description = each.key
   expires     = each.value
@@ -153,6 +163,8 @@ resource "aws_appsync_api_key" "this" {
 # Datasource
 resource "aws_appsync_datasource" "this" {
   for_each = var.create_graphql_api ? var.datasources : {}
+
+  region = var.region
 
   api_id           = aws_appsync_graphql_api.this[0].id
   name             = each.key
@@ -233,6 +245,8 @@ resource "aws_appsync_datasource" "this" {
 resource "aws_appsync_resolver" "this" {
   for_each = local.resolvers
 
+  region = var.region
+
   api_id = aws_appsync_graphql_api.this[0].id
   type   = each.value.type
   field  = each.value.field
@@ -279,6 +293,8 @@ resource "aws_appsync_resolver" "this" {
 # Functions
 resource "aws_appsync_function" "this" {
   for_each = { for k, v in var.functions : k => v if var.create_graphql_api == true }
+
+  region = var.region
 
   api_id           = aws_appsync_graphql_api.this[0].id
   data_source      = lookup(each.value, "data_source", null)

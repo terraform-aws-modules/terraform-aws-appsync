@@ -132,14 +132,14 @@ $ terraform apply
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.2 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.61.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.7 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.61.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.0 |
 
 ## Modules
 
@@ -209,6 +209,7 @@ No modules.
 | <a name="input_openid_connect_config"></a> [openid\_connect\_config](#input\_openid\_connect\_config) | Nested argument containing OpenID Connect configuration. | `map(string)` | `{}` | no |
 | <a name="input_opensearchservice_allowed_actions"></a> [opensearchservice\_allowed\_actions](#input\_opensearchservice\_allowed\_actions) | List of allowed IAM actions for datasources type AMAZON\_OPENSEARCH\_SERVICE | `list(string)` | <pre>[<br/>  "es:ESHttpDelete",<br/>  "es:ESHttpHead",<br/>  "es:ESHttpGet",<br/>  "es:ESHttpPost",<br/>  "es:ESHttpPut"<br/>]</pre> | no |
 | <a name="input_query_depth_limit"></a> [query\_depth\_limit](#input\_query\_depth\_limit) | The maximum depth a query can have in a single request. | `number` | `null` | no |
+| <a name="input_region"></a> [region](#input\_region) | Region where the resource(s) will be managed. Defaults to the region set in the provider configuration | `string` | `null` | no |
 | <a name="input_relational_database_allowed_actions"></a> [relational\_database\_allowed\_actions](#input\_relational\_database\_allowed\_actions) | List of allowed IAM actions for datasources type RELATIONAL\_DATABASE | `list(string)` | <pre>[<br/>  "rds-data:BatchExecuteStatement",<br/>  "rds-data:BeginTransaction",<br/>  "rds-data:CommitTransaction",<br/>  "rds-data:ExecuteStatement",<br/>  "rds-data:RollbackTransaction"<br/>]</pre> | no |
 | <a name="input_resolver_caching_ttl"></a> [resolver\_caching\_ttl](#input\_resolver\_caching\_ttl) | Default caching TTL for resolvers when caching is enabled | `number` | `60` | no |
 | <a name="input_resolver_count_limit"></a> [resolver\_count\_limit](#input\_resolver\_count\_limit) | The maximum number of resolvers that can be invoked in a single request. | `number` | `null` | no |
