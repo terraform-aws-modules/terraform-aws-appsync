@@ -1,8 +1,41 @@
+# Validation: Enforce mutual exclusivity between GraphQL and Event APIs
+resource "null_resource" "validate_api_mutual_exclusivity" {
+  count = var.create_graphql_api || var.create_websocket_api ? 1 : 0
+
+  lifecycle {
+    precondition {
+      condition     = !(var.create_graphql_api && var.create_websocket_api)
+      error_message = "Cannot enable both GraphQL and Event APIs in the same module instance. Set either create_graphql_api or create_websocket_api to true, not both."
+    }
+  }
+}
+
 locals {
   resolvers = { for k, v in var.resolvers : k => merge(v, {
     type  = split(".", k)[0]
     field = join(".", slice(split(".", k), 1, length(split(".", k))))
   }) if var.create_graphql_api }
+
+  # Event API datasource type restrictions
+  websocket_allowed_datasource_types = ["HTTP", "AWS_LAMBDA"]
+
+  # Identify invalid datasources when Event API is enabled
+  invalid_event_api_datasources = var.create_websocket_api ? {
+    for k, v in var.datasources : k => v.type
+    if !contains(local.websocket_allowed_datasource_types, v.type)
+  } : {}
+}
+
+# Validation: Prevent unsupported datasource types with Event APIs
+resource "null_resource" "validate_event_api_datasources" {
+  count = var.create_websocket_api && length(var.datasources) > 0 ? 1 : 0
+
+  lifecycle {
+    precondition {
+      condition     = length(local.invalid_event_api_datasources) == 0
+      error_message = "Event APIs only support HTTP and AWS_LAMBDA datasources. The following datasources use unsupported types: ${join(", ", [for k, v in local.invalid_event_api_datasources : "${k} (${v})"])}. Supported types: HTTP, AWS_LAMBDA."
+    }
+  }
 }
 
 # GraphQL API
@@ -114,9 +147,187 @@ resource "aws_appsync_graphql_api" "this" {
   tags = merge({ Name = var.name }, var.graphql_api_tags)
 }
 
+# Event API (WebSocket)
+resource "aws_appsync_api" "this" {
+  count = var.create_websocket_api ? 1 : 0
+
+  name = var.name
+
+  event_config {
+    # Auth provider configuration
+    auth_provider {
+      auth_type = var.event_config != null ? var.event_config.auth_provider.auth_type : "API_KEY"
+
+      # Cognito configuration (optional)
+      dynamic "cognito_config" {
+        for_each = var.event_config != null && var.event_config.auth_provider.cognito_config != null ? [var.event_config.auth_provider.cognito_config] : []
+
+        content {
+          user_pool_id        = cognito_config.value.user_pool_id
+          aws_region          = cognito_config.value.aws_region
+          app_id_client_regex = cognito_config.value.app_id_client_regex
+        }
+      }
+
+      # Lambda authorizer configuration (optional)
+      dynamic "lambda_authorizer_config" {
+        for_each = var.event_config != null && var.event_config.auth_provider.lambda_authorizer_config != null ? [var.event_config.auth_provider.lambda_authorizer_config] : []
+
+        content {
+          authorizer_uri                   = lambda_authorizer_config.value.authorizer_uri
+          authorizer_result_ttl_in_seconds = lambda_authorizer_config.value.authorizer_result_ttl_in_seconds
+          identity_validation_expression   = lambda_authorizer_config.value.identity_validation_expression
+        }
+      }
+
+      # OpenID Connect configuration (optional)
+      dynamic "openid_connect_config" {
+        for_each = var.event_config != null && var.event_config.auth_provider.oidc_config != null ? [var.event_config.auth_provider.oidc_config] : []
+
+        content {
+          issuer    = openid_connect_config.value.issuer
+          client_id = openid_connect_config.value.client_id
+          auth_ttl  = openid_connect_config.value.auth_ttl
+          iat_ttl   = openid_connect_config.value.iat_ttl
+        }
+      }
+    }
+
+    # Connection authentication modes
+    dynamic "connection_auth_mode" {
+      for_each = var.event_config != null ? var.event_config.connection_auth_modes : []
+
+      content {
+        auth_type = connection_auth_mode.value.auth_type
+      }
+    }
+
+    # Default publish authentication modes
+    dynamic "default_publish_auth_mode" {
+      for_each = var.event_config != null ? var.event_config.default_publish_auth_modes : []
+
+      content {
+        auth_type = default_publish_auth_mode.value.auth_type
+      }
+    }
+
+    # Default subscribe authentication modes
+    dynamic "default_subscribe_auth_mode" {
+      for_each = var.event_config != null ? var.event_config.default_subscribe_auth_modes : []
+
+      content {
+        auth_type = default_subscribe_auth_mode.value.auth_type
+      }
+    }
+
+    # CloudWatch Logs configuration
+    dynamic "log_config" {
+      for_each = var.logging_enabled ? [true] : []
+
+      content {
+        cloudwatch_logs_role_arn = var.create_logs_role ? aws_iam_role.logs[0].arn : var.log_cloudwatch_logs_role_arn
+        log_level                = var.log_field_log_level
+      }
+    }
+  }
+
+  tags = merge(
+    var.tags,
+    { Name = var.name }
+  )
+}
+# Channel Namespaces
+resource "aws_appsync_channel_namespace" "this" {
+  for_each = var.create_websocket_api ? var.channel_namespaces : {}
+
+  api_id = aws_appsync_api.this[0].api_id
+  name   = each.key
+
+  # JavaScript code handlers (simple string attribute)
+  code_handlers = each.value.code_handlers
+
+  # Lambda integration handlers
+  dynamic "handler_configs" {
+    for_each = each.value.handler_configs != null ? [each.value.handler_configs] : []
+
+    content {
+      dynamic "on_publish" {
+        for_each = handler_configs.value.on_publish != null ? [handler_configs.value.on_publish] : []
+
+        content {
+          behavior = on_publish.value.behavior
+
+          dynamic "integration" {
+            for_each = on_publish.value.integration != null ? [on_publish.value.integration] : []
+
+            content {
+              data_source_name = integration.value.data_source_name
+
+              dynamic "lambda_config" {
+                for_each = integration.value.lambda_config != null ? [integration.value.lambda_config] : []
+
+                content {
+                  invoke_type = lambda_config.value.invoke_type
+                }
+              }
+            }
+          }
+        }
+      }
+
+      dynamic "on_subscribe" {
+        for_each = handler_configs.value.on_subscribe != null ? [handler_configs.value.on_subscribe] : []
+
+        content {
+          behavior = on_subscribe.value.behavior
+
+          dynamic "integration" {
+            for_each = on_subscribe.value.integration != null ? [on_subscribe.value.integration] : []
+
+            content {
+              data_source_name = integration.value.data_source_name
+
+              dynamic "lambda_config" {
+                for_each = integration.value.lambda_config != null ? [integration.value.lambda_config] : []
+
+                content {
+                  invoke_type = lambda_config.value.invoke_type
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  # Publish authentication modes
+  dynamic "publish_auth_mode" {
+    for_each = each.value.publish_auth_modes
+
+    content {
+      auth_type = publish_auth_mode.value.auth_type
+    }
+  }
+
+  # Subscribe authentication modes
+  dynamic "subscribe_auth_mode" {
+    for_each = each.value.subscribe_auth_modes
+
+    content {
+      auth_type = subscribe_auth_mode.value.auth_type
+    }
+  }
+
+  tags = merge(
+    var.tags,
+    each.value.tags
+  )
+}
+
 # API Association & Domain Name
 resource "aws_appsync_domain_name" "this" {
-  count = var.create_graphql_api && var.domain_name_association_enabled ? 1 : 0
+  count = (var.create_graphql_api || var.create_websocket_api) && var.domain_name_association_enabled ? 1 : 0
 
   region = var.region
 
@@ -131,6 +342,15 @@ resource "aws_appsync_domain_name_api_association" "this" {
   region = var.region
 
   api_id      = aws_appsync_graphql_api.this[0].id
+  domain_name = aws_appsync_domain_name.this[0].domain_name
+}
+
+resource "aws_appsync_domain_name_api_association" "event" {
+  count = var.create_websocket_api && var.domain_name_association_enabled ? 1 : 0
+
+  region = var.region
+
+  api_id      = aws_appsync_api.this[0].api_id
   domain_name = aws_appsync_domain_name.this[0].domain_name
 }
 
@@ -162,11 +382,11 @@ resource "aws_appsync_api_key" "this" {
 
 # Datasource
 resource "aws_appsync_datasource" "this" {
-  for_each = var.create_graphql_api ? var.datasources : {}
+  for_each = (var.create_graphql_api || var.create_websocket_api) ? var.datasources : {}
 
   region = var.region
 
-  api_id           = aws_appsync_graphql_api.this[0].id
+  api_id           = var.create_graphql_api ? aws_appsync_graphql_api.this[0].id : aws_appsync_api.this[0].api_id
   name             = each.key
   type             = each.value.type
   description      = lookup(each.value, "description", null)

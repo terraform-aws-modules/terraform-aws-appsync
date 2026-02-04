@@ -13,8 +13,10 @@ module "wrapper" {
   caching_behavior                   = try(each.value.caching_behavior, var.defaults.caching_behavior, "FULL_REQUEST_CACHING")
   caching_enabled                    = try(each.value.caching_enabled, var.defaults.caching_enabled, false)
   certificate_arn                    = try(each.value.certificate_arn, var.defaults.certificate_arn, "")
+  channel_namespaces                 = try(each.value.channel_namespaces, var.defaults.channel_namespaces, {})
   create_graphql_api                 = try(each.value.create_graphql_api, var.defaults.create_graphql_api, true)
   create_logs_role                   = try(each.value.create_logs_role, var.defaults.create_logs_role, true)
+  create_websocket_api               = try(each.value.create_websocket_api, var.defaults.create_websocket_api, false)
   datasources                        = try(each.value.datasources, var.defaults.datasources, {})
   direct_lambda_request_template = try(each.value.direct_lambda_request_template, var.defaults.direct_lambda_request_template, <<-EOF
   {
@@ -48,6 +50,7 @@ module "wrapper" {
   dynamodb_allowed_actions            = try(each.value.dynamodb_allowed_actions, var.defaults.dynamodb_allowed_actions, ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:DeleteItem", "dynamodb:UpdateItem", "dynamodb:Query", "dynamodb:Scan", "dynamodb:BatchGetItem", "dynamodb:BatchWriteItem"])
   elasticsearch_allowed_actions       = try(each.value.elasticsearch_allowed_actions, var.defaults.elasticsearch_allowed_actions, ["es:ESHttpDelete", "es:ESHttpHead", "es:ESHttpGet", "es:ESHttpPost", "es:ESHttpPut"])
   enhanced_metrics_config             = try(each.value.enhanced_metrics_config, var.defaults.enhanced_metrics_config, {})
+  event_config                        = try(each.value.event_config, var.defaults.event_config, null)
   eventbridge_allowed_actions         = try(each.value.eventbridge_allowed_actions, var.defaults.eventbridge_allowed_actions, ["events:PutEvents"])
   functions                           = try(each.value.functions, var.defaults.functions, {})
   graphql_api_tags                    = try(each.value.graphql_api_tags, var.defaults.graphql_api_tags, {})

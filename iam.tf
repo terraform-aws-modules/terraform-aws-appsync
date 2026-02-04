@@ -1,7 +1,7 @@
 data "aws_partition" "this" {}
 
 locals {
-  service_roles_with_policies = var.create_graphql_api ? { for k, v in var.datasources : k => v if contains(["AWS_LAMBDA", "AMAZON_DYNAMODB", "AMAZON_ELASTICSEARCH", "AMAZON_OPENSEARCH_SERVICE", "AMAZON_EVENTBRIDGE", "RELATIONAL_DATABASE"], v.type) && tobool(lookup(v, "create_service_role", true)) } : {}
+  service_roles_with_policies = (var.create_graphql_api || var.create_websocket_api) ? { for k, v in var.datasources : k => v if contains(["AWS_LAMBDA", "AMAZON_DYNAMODB", "AMAZON_ELASTICSEARCH", "AMAZON_OPENSEARCH_SERVICE", "AMAZON_EVENTBRIDGE", "RELATIONAL_DATABASE"], v.type) && tobool(lookup(v, "create_service_role", true)) } : {}
 
   service_roles_with_policies_lambda = { for k, v in local.service_roles_with_policies : k => merge(v,
     {
@@ -106,7 +106,7 @@ data "aws_iam_policy_document" "assume_role" {
 
 # Logs
 resource "aws_iam_role" "logs" {
-  count = var.logging_enabled && var.create_logs_role ? 1 : 0
+  count = (var.create_graphql_api || var.create_websocket_api) && var.logging_enabled && var.create_logs_role ? 1 : 0
 
   name                 = coalesce(var.logs_role_name, "${var.name}-logs")
   description          = var.logs_role_description
@@ -117,7 +117,7 @@ resource "aws_iam_role" "logs" {
 }
 
 resource "aws_iam_role_policy_attachment" "logs" {
-  count = var.logging_enabled && var.create_logs_role ? 1 : 0
+  count = (var.create_graphql_api || var.create_websocket_api) && var.logging_enabled && var.create_logs_role ? 1 : 0
 
   policy_arn = "arn:${data.aws_partition.this.partition}:iam::aws:policy/service-role/AWSAppSyncPushToCloudWatchLogs"
   role       = aws_iam_role.logs[0].name

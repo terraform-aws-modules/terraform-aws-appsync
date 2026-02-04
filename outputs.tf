@@ -14,6 +14,28 @@ output "appsync_graphql_api_uris" {
   value       = try(aws_appsync_graphql_api.this[0].uris, null)
 }
 
+# Event API (WebSocket)
+output "event_api_id" {
+  description = "ID of Event API"
+  value       = try(aws_appsync_api.this[0].api_id, null)
+}
+
+output "event_api_arn" {
+  description = "ARN of Event API"
+  value       = try(aws_appsync_api.this[0].api_arn, null)
+}
+
+output "event_api_endpoint" {
+  description = "Event API WebSocket endpoint URL"
+  value       = try(aws_appsync_api.this[0].dns, null)
+}
+
+# Channel Namespace
+output "channel_namespace_arns" {
+  description = "Map of channel namespace ARNs keyed by namespace name. Returns empty map when no channel namespaces are configured."
+  value       = { for k, v in aws_appsync_channel_namespace.this : k => v.channel_namespace_arn }
+}
+
 # API Key
 output "appsync_api_key_id" {
   description = "Map of API Key ID (Formatted as ApiId:Key)"
@@ -68,6 +90,12 @@ output "appsync_domain_name" {
 output "appsync_domain_hosted_zone_id" {
   description = "The ID of your Amazon Route 53 hosted zone."
   value       = try(aws_appsync_domain_name.this[0].hosted_zone_id, null)
+}
+
+# Event API Domain Association
+output "event_api_custom_domain_name" {
+  description = "The domain name associated with the Event API. Returns the AppSync-provided domain name when Event API domain association is enabled. Use this value to configure DNS records (CNAME or ALIAS) pointing your custom domain to the AppSync endpoint."
+  value       = var.create_websocket_api && var.domain_name_association_enabled ? try(aws_appsync_domain_name.this[0].appsync_domain_name, null) : null
 }
 
 # Extra
