@@ -45,7 +45,7 @@ All notable changes to this project will be documented in this file.
 - **Mutual Exclusivity**: `create_graphql_api` and `create_websocket_api` are mutually exclusive - only one can be `true` at a time.
 - **X-Ray Limitation**: AWS X-Ray tracing is not supported for Event APIs. The `xray_enabled` variable only applies to GraphQL APIs.
 - **Enhanced Metrics Limitation**: Enhanced metrics configuration is not supported for Event APIs.
-- **Minimum Requirements**: Requires AWS Provider >= 6.28 (Event API resources introduced in 6.30.0 for production use).
+- **Minimum Requirements**: Requires AWS Provider >= 6.28 (Event API resources introduced in 6.9.0 for production use).
 
 ## [4.1.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v4.0.1...v4.1.0) (2026-01-08)
 
