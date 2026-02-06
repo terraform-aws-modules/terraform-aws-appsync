@@ -5,6 +5,7 @@ This example demonstrates **all features** of the AWS AppSync Event API (WebSock
 ## Features Demonstrated
 
 ### ✅ Authentication Types
+
 - **API_KEY** - Simple API key authentication
 - **AWS_IAM** - IAM-based authentication with SigV4
 - **AWS_COGNITO_USER_POOLS** - Cognito User Pool authentication (optional)
@@ -12,20 +13,24 @@ This example demonstrates **all features** of the AWS AppSync Event API (WebSock
 - **AWS_LAMBDA** - Custom Lambda authorizer (optional)
 
 ### ✅ Channel Namespaces
+
 - **chat** - Chat channels with JavaScript code handlers
 - **notifications** - Notification channels with Lambda or JavaScript handlers
 - **presence** - Presence tracking with JavaScript handlers
 
 ### ✅ Datasources
+
 - **Lambda** - AWS Lambda datasource with auto-generated IAM role
 - **HTTP** - HTTP endpoint datasource with IAM SigV4 signing
 
 ### ✅ CloudWatch Logs
+
 - Logging enabled with `ALL` log level
 - Auto-generated IAM role with `AWSAppSyncPushToCloudWatchLogs` policy
 - Captures connection, publish, and subscribe events
 
 ### ✅ Custom Domain (Optional)
+
 - Custom domain name association
 - ACM certificate integration
 - CloudFront-backed distribution
@@ -42,22 +47,26 @@ This example demonstrates **all features** of the AWS AppSync Event API (WebSock
 ## Quick Start
 
 ### 1. Clone and Navigate
+
 ```bash
 git clone <repository>
 cd terraform-aws-appsync/examples/event-api-complete
 ```
 
 ### 2. Initialize Terraform
+
 ```bash
 terraform init
 ```
 
 ### 3. Deploy (Minimal Configuration)
+
 ```bash
 terraform apply
 ```
 
 This deploys an Event API with:
+
 - API Key authentication
 - 3 channel namespaces (chat, notifications, presence)
 - JavaScript code handlers
@@ -65,11 +74,13 @@ This deploys an Event API with:
 - No custom domain
 
 ### 4. Get API Key
+
 ```bash
 terraform output -raw api_key
 ```
 
 ### 5. Test WebSocket Connection
+
 ```bash
 # Install wscat (WebSocket CLI tool)
 npm install -g wscat
@@ -82,12 +93,14 @@ wscat -c "$(terraform output -raw event_api_realtime_url)" \
 ## Advanced Configuration
 
 ### Enable Cognito Authentication
+
 ```bash
 terraform apply \
   -var="cognito_user_pool_id=us-east-1_ABC123456"
 ```
 
 ### Enable OIDC Authentication
+
 ```bash
 terraform apply \
   -var="oidc_issuer=https://accounts.google.com" \
@@ -95,12 +108,14 @@ terraform apply \
 ```
 
 ### Enable Lambda Authorizer
+
 ```bash
 terraform apply \
   -var="lambda_authorizer_arn=arn:aws:lambda:us-east-1:123456789012:function:authorizer"
 ```
 
 ### Configure Custom Domain
+
 ```bash
 terraform apply \
   -var="certificate_arn=arn:aws:acm:us-east-1:123456789012:certificate/abc-123" \
@@ -108,6 +123,7 @@ terraform apply \
 ```
 
 ### Full Configuration
+
 ```bash
 terraform apply \
   -var="cognito_user_pool_id=us-east-1_ABC123456" \
@@ -122,6 +138,7 @@ terraform apply \
 ## Testing the Event API
 
 ### 1. WebSocket Connection (wscat)
+
 ```bash
 # Get connection details
 REALTIME_URL=$(terraform output -raw event_api_realtime_url)
@@ -139,6 +156,7 @@ wscat -c "$REALTIME_URL" -H "x-api-key: $API_KEY"
 ```
 
 ### 2. HTTP API Publishing
+
 ```bash
 HTTP_URL=$(terraform output -raw event_api_http_url)
 API_KEY=$(terraform output -raw api_key)
@@ -153,6 +171,7 @@ curl -X POST "$HTTP_URL" \
 ```
 
 ### 3. IAM Authentication (AWS CLI)
+
 ```bash
 # Create connection with IAM credentials
 aws appsync-realtime connect \
@@ -161,6 +180,7 @@ aws appsync-realtime connect \
 ```
 
 ### 4. Check CloudWatch Logs
+
 ```bash
 # Get log group name
 EVENT_API_ID=$(terraform output -raw event_api_id)
@@ -173,6 +193,7 @@ aws logs tail "$LOG_GROUP" --follow
 ## Channel Namespace Structure
 
 ### Chat Namespace (`/chat/*`)
+
 ```
 /chat/general       - General chat channel
 /chat/room-123      - Specific chat room
@@ -180,12 +201,14 @@ aws logs tail "$LOG_GROUP" --follow
 ```
 
 ### Notifications Namespace (`/notifications/*`)
+
 ```
 /notifications/user-123    - User-specific notifications
 /notifications/broadcast   - Global notifications
 ```
 
 ### Presence Namespace (`/presence/*`)
+
 ```
 /presence/room-123    - User presence in a room
 /presence/global      - Global user presence
@@ -199,6 +222,7 @@ JavaScript handlers are located in `handlers/` directory:
 - **`onSubscribe.js`** - Handles subscribe events (authorization, channel access control)
 
 ### Handler Capabilities
+
 - ✅ Event filtering based on content
 - ✅ Data transformation and enrichment
 - ✅ Authorization logic
@@ -244,34 +268,10 @@ See `handlers/README.md` for detailed documentation.
     └─────────┘ └────────┘ └─────────┘
 ```
 
-## Cost Estimate
-
-**Minimal Configuration (without custom domain):**
-- AppSync Event API: $0.08/million messages
-- CloudWatch Logs: ~$0.50/GB ingested
-- Data Transfer: $0.09/GB (after 1GB free tier)
-
-**Estimated Monthly Cost for Low-Traffic Application:**
-- 1M messages/month: ~$1
-- 1GB logs/month: ~$1
-- **Total: ~$2/month**
-
-**Note:** Custom domain adds CloudFront distribution costs (~$0.60/month + data transfer).
-
-## Security Best Practices
-
-1. **API Keys**: Rotate regularly, use environment-specific keys
-2. **IAM**: Follow principle of least privilege
-3. **Cognito**: Use MFA where possible
-4. **OIDC**: Validate token issuers
-5. **Lambda Authorizers**: Implement caching for performance
-6. **CloudWatch Logs**: Review logs regularly for suspicious activity
-7. **Custom Domain**: Use TLS 1.2+ only
-8. **Handler Code**: Validate and sanitize all inputs
-
 ## Troubleshooting
 
 ### Connection Issues
+
 ```bash
 # Check API ID and region
 terraform output event_api_id
@@ -284,6 +284,7 @@ aws logs tail /aws/appsync/apis/$(terraform output -raw event_api_id) --follow
 ```
 
 ### Authentication Errors
+
 - **API Key**: Ensure key is not expired
 - **IAM**: Verify SigV4 signing is correct
 - **Cognito**: Check User Pool ID and region
@@ -291,6 +292,7 @@ aws logs tail /aws/appsync/apis/$(terraform output -raw event_api_id) --follow
 - **Lambda**: Check authorizer function logs
 
 ### Handler Errors
+
 ```bash
 # View handler execution logs
 aws logs tail /aws/appsync/apis/$(terraform output -raw event_api_id) \
