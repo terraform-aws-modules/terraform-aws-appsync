@@ -13,7 +13,7 @@ output "event_api_arn" {
 }
 
 output "event_api_endpoint" {
-  description = "The WebSocket endpoint URL for the Event API"
+  description = "The endpoint URL for the Event API"
   value       = module.event_api_complete.event_api_endpoint
 }
 
@@ -75,7 +75,7 @@ output "testing_instructions" {
   1. Get API Key:
      terraform output -raw api_key
 
-  2. WebSocket Endpoint:
+  2. Event API Endpoint:
      ${module.event_api_complete.event_api_endpoint}
 
   3. Event API ID:
@@ -86,7 +86,7 @@ output "testing_instructions" {
      - notifications
      - presence
 
-  5. Test WebSocket Connection:
+  5. Test Event API Connection:
      Use wscat or similar tool:
      wscat -c "wss://${module.event_api_complete.event_api_endpoint}" \
        -H "x-api-key: YOUR_API_KEY"

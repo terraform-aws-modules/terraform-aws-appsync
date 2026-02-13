@@ -4,21 +4,21 @@ variable "create_graphql_api" {
   default     = true
 }
 
-variable "create_websocket_api" {
+variable "create_event_api" {
   description = <<-EOT
-    Whether to create an Event API (WebSocket) for real-time pub/sub messaging.
+    Whether to create an Event API for real-time pub/sub messaging.
 
     Mutually exclusive with create_graphql_api - set only one to true.
 
     Event APIs enable:
-    - Real-time WebSocket connections
+    - Real-time Event API connections
     - Channel-based pub/sub messaging
     - JavaScript handlers for message processing
     - Event-driven architectures (chat, notifications, presence)
 
     Example:
-      create_websocket_api = true
-      create_graphql_api   = false
+      create_event_api   = true
+      create_graphql_api = false
 
     Security Note: Always configure authentication via event_config when true.
   EOT
@@ -28,7 +28,7 @@ variable "create_websocket_api" {
 
 variable "event_config" {
   description = <<-EOT
-    Event API authentication configuration. Required when create_websocket_api is true.
+    Event API authentication configuration. Required when create_event_api is true.
 
     Authentication Types (auth_provider.auth_type):
     - API_KEY: Simple API key authentication (default, least secure, good for development)
@@ -38,7 +38,7 @@ variable "event_config" {
     - AWS_LAMBDA: Custom Lambda authorizer (flexible, custom validation logic)
 
     Authentication Scopes:
-    - connection_auth_modes: Authenticate WebSocket connection establishment
+    - connection_auth_modes: Authenticate Event API connection establishment
     - default_publish_auth_modes: Authenticate publishing events to channels
     - default_subscribe_auth_modes: Authenticate subscribing to channels
 
@@ -114,7 +114,7 @@ variable "event_config" {
       }))
     })
 
-    # Authentication modes for WebSocket connection establishment
+    # Authentication modes for Event API connection establishment
     connection_auth_modes = list(object({
       auth_type = string
     }))
@@ -134,6 +134,10 @@ variable "event_config" {
 
 variable "channel_namespaces" {
   description = <<-EOT
+    NOTE: Handlers (code_handlers and handler_configs) are optional. When no handlers are
+    specified, AWS provides default handlers that approve all publish and subscribe operations.
+    See: https://docs.aws.amazon.com/appsync/latest/eventapi/event-handlers-overview.html
+
     Map of channel namespace configurations for Event APIs. Key is the namespace name.
 
     Channel namespaces organize pub/sub channels and define event handlers for message processing.

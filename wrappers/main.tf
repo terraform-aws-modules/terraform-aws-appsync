@@ -14,9 +14,9 @@ module "wrapper" {
   caching_enabled                    = try(each.value.caching_enabled, var.defaults.caching_enabled, false)
   certificate_arn                    = try(each.value.certificate_arn, var.defaults.certificate_arn, "")
   channel_namespaces                 = try(each.value.channel_namespaces, var.defaults.channel_namespaces, {})
+  create_event_api                   = try(each.value.create_event_api, var.defaults.create_event_api, false)
   create_graphql_api                 = try(each.value.create_graphql_api, var.defaults.create_graphql_api, true)
   create_logs_role                   = try(each.value.create_logs_role, var.defaults.create_logs_role, true)
-  create_websocket_api               = try(each.value.create_websocket_api, var.defaults.create_websocket_api, false)
   datasources                        = try(each.value.datasources, var.defaults.datasources, {})
   direct_lambda_request_template = try(each.value.direct_lambda_request_template, var.defaults.direct_lambda_request_template, <<-EOF
   {

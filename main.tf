@@ -1,11 +1,11 @@
 # Validation: Enforce mutual exclusivity between GraphQL and Event APIs
 resource "null_resource" "validate_api_mutual_exclusivity" {
-  count = var.create_graphql_api || var.create_websocket_api ? 1 : 0
+  count = var.create_graphql_api || var.create_event_api ? 1 : 0
 
   lifecycle {
     precondition {
-      condition     = !(var.create_graphql_api && var.create_websocket_api)
-      error_message = "Cannot enable both GraphQL and Event APIs in the same module instance. Set either create_graphql_api or create_websocket_api to true, not both."
+      condition     = !(var.create_graphql_api && var.create_event_api)
+      error_message = "Cannot enable both GraphQL and Event APIs in the same module instance. Set either create_graphql_api or create_event_api to true, not both."
     }
   }
 }
@@ -17,18 +17,18 @@ locals {
   }) if var.create_graphql_api }
 
   # Event API datasource type restrictions
-  websocket_allowed_datasource_types = ["HTTP", "AWS_LAMBDA"]
+  event_api_allowed_datasource_types = ["HTTP", "AWS_LAMBDA"]
 
   # Identify invalid datasources when Event API is enabled
-  invalid_event_api_datasources = var.create_websocket_api ? {
+  invalid_event_api_datasources = var.create_event_api ? {
     for k, v in var.datasources : k => v.type
-    if !contains(local.websocket_allowed_datasource_types, v.type)
+    if !contains(local.event_api_allowed_datasource_types, v.type)
   } : {}
 }
 
 # Validation: Prevent unsupported datasource types with Event APIs
 resource "null_resource" "validate_event_api_datasources" {
-  count = var.create_websocket_api && length(var.datasources) > 0 ? 1 : 0
+  count = var.create_event_api && length(var.datasources) > 0 ? 1 : 0
 
   lifecycle {
     precondition {
@@ -147,9 +147,9 @@ resource "aws_appsync_graphql_api" "this" {
   tags = merge({ Name = var.name }, var.graphql_api_tags)
 }
 
-# Event API (WebSocket)
+# Event API
 resource "aws_appsync_api" "this" {
-  count = var.create_websocket_api ? 1 : 0
+  count = var.create_event_api ? 1 : 0
 
   name = var.name
 
@@ -238,7 +238,7 @@ resource "aws_appsync_api" "this" {
 }
 # Channel Namespaces
 resource "aws_appsync_channel_namespace" "this" {
-  for_each = var.create_websocket_api ? var.channel_namespaces : {}
+  for_each = var.create_event_api ? var.channel_namespaces : {}
 
   api_id = aws_appsync_api.this[0].api_id
   name   = each.key
@@ -327,7 +327,7 @@ resource "aws_appsync_channel_namespace" "this" {
 
 # API Association & Domain Name
 resource "aws_appsync_domain_name" "this" {
-  count = (var.create_graphql_api || var.create_websocket_api) && var.domain_name_association_enabled ? 1 : 0
+  count = (var.create_graphql_api || var.create_event_api) && var.domain_name_association_enabled ? 1 : 0
 
   region = var.region
 
@@ -346,7 +346,7 @@ resource "aws_appsync_domain_name_api_association" "this" {
 }
 
 resource "aws_appsync_domain_name_api_association" "event" {
-  count = var.create_websocket_api && var.domain_name_association_enabled ? 1 : 0
+  count = var.create_event_api && var.domain_name_association_enabled ? 1 : 0
 
   region = var.region
 
@@ -371,18 +371,18 @@ resource "aws_appsync_api_cache" "this" {
 
 # API Key
 resource "aws_appsync_api_key" "this" {
-  for_each = var.create_graphql_api && var.authentication_type == "API_KEY" ? var.api_keys : {}
+  for_each = (var.create_graphql_api || var.create_event_api) && var.authentication_type == "API_KEY" ? var.api_keys : {}
 
   region = var.region
 
-  api_id      = aws_appsync_graphql_api.this[0].id
+  api_id      = var.create_event_api ? aws_appsync_api.this[0].api_id : aws_appsync_graphql_api.this[0].id
   description = each.key
   expires     = each.value
 }
 
 # Datasource
 resource "aws_appsync_datasource" "this" {
-  for_each = (var.create_graphql_api || var.create_websocket_api) ? var.datasources : {}
+  for_each = (var.create_graphql_api || var.create_event_api) ? var.datasources : {}
 
   region = var.region
 

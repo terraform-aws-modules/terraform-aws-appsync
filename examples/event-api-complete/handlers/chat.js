@@ -6,163 +6,138 @@
  *
  * Runtime: APPSYNC_JS 1.0.0
  * Use Case: Multi-room chat with user authentication and content moderation
+ *
+ * @see https://docs.aws.amazon.com/appsync/latest/eventapi/channel-namespace-handlers.html
  */
+
+import { util } from "@aws-appsync/utils";
 
 /**
  * Handle message publishing to chat channels
  *
- * Event Structure:
- * {
- *   data: {
- *     message: string,
- *     type: "text" | "image" | "file",
- *     replyTo: string (optional)
- *   }
- * }
+ * Receives ctx.events (array of { id, payload }) and returns the processed
+ * events array. Use util.error() to reject the entire publish operation.
+ * Return per-event error objects to reject individual events.
  *
  * @param {Object} ctx - Context object
- * @param {Object} ctx.args - Publish arguments
- * @param {Object} ctx.args.data - Message data
+ * @param {Array} ctx.events - Array of events being published, each with { id, payload }
  * @param {Object} ctx.identity - Publisher identity
- * @param {Object} ctx.info - Channel information
- * @returns {Object} Response with action and optionally transformed data
+ * @param {Object} ctx.info - Channel and namespace information
+ * @returns {Array} Processed events array to broadcast to subscribers
  */
 export function onPublish(ctx) {
-  const { data } = ctx.args;
-  const { identity, info } = ctx;
+  const { events, identity, info } = ctx;
 
   // Extract channel information
   // Example channel: /chat/room-123
-  const channelParts = info.channelName.split('/');
+  const channelParts = info.channel.path.split("/");
   const roomId = channelParts[channelParts.length - 1];
-
-  console.log(`[CHAT] Publish attempt by ${identity.sub} to room ${roomId}`);
 
   // 1. Authorization: Check if user is member of this chat room
   if (!isUserInRoom(identity, roomId)) {
-    console.warn(`[CHAT] User ${identity.sub} not authorized for room ${roomId}`);
-    return {
-      action: "DENY",
-      reason: "You must be a member of this chat room to send messages"
-    };
+    util.error("You must be a member of this chat room to send messages");
   }
 
-  // 2. Rate Limiting: Prevent spam
+  // 2. Rate Limiting: Prevent spam (rejects entire publish)
   if (isRateLimited(identity.sub, roomId)) {
-    console.warn(`[CHAT] Rate limit exceeded for user ${identity.sub}`);
-    return {
-      action: "DENY",
-      reason: "You are sending messages too quickly. Please slow down."
-    };
+    util.error("You are sending messages too quickly. Please slow down.");
   }
 
-  // 3. Content Validation: Check message structure
-  if (!data.message || typeof data.message !== 'string') {
+  // 3. Process each event individually
+  return events.map((event) => {
+    const data = event.payload;
+
+    // Content Validation: Check message structure
+    if (!data.message || typeof data.message !== "string") {
+      return {
+        id: event.id,
+        error: "Message content is required and must be a string",
+      };
+    }
+
+    // Content Moderation: Filter inappropriate content
+    if (containsProfanity(data.message)) {
+      return {
+        id: event.id,
+        error: "Message contains inappropriate content",
+      };
+    }
+
+    // Size Validation: Enforce message limits
+    const maxLength = data.type === "text" ? 2000 : 500;
+    if (data.message.length > maxLength) {
+      return {
+        id: event.id,
+        error: `Message exceeds maximum length of ${maxLength} characters`,
+      };
+    }
+
+    // Data Transformation: Enrich message with metadata
     return {
-      action: "DENY",
-      reason: "Message content is required and must be a string"
+      id: event.id,
+      payload: {
+        ...data,
+        messageId: generateMessageId(),
+        userId: identity.sub,
+        username:
+          identity.username || identity.email?.split("@")[0] || "Anonymous",
+        roomId: roomId,
+        timestamp: util.time.nowISO8601(),
+        edited: false,
+      },
     };
-  }
-
-  // 4. Content Moderation: Filter inappropriate content
-  if (containsProfanity(data.message)) {
-    console.warn(`[CHAT] Profanity detected in message from ${identity.sub}`);
-    return {
-      action: "DENY",
-      reason: "Message contains inappropriate content"
-    };
-  }
-
-  // 5. Size Validation: Enforce message limits
-  const maxLength = data.type === 'text' ? 2000 : 500; // URLs can be shorter
-  if (data.message.length > maxLength) {
-    return {
-      action: "DENY",
-      reason: `Message exceeds maximum length of ${maxLength} characters`
-    };
-  }
-
-  // 6. Data Transformation: Enrich message with metadata
-  const enrichedMessage = {
-    ...data,
-    messageId: generateMessageId(),
-    userId: identity.sub,
-    username: identity.username || identity.email?.split('@')[0] || 'Anonymous',
-    roomId: roomId,
-    timestamp: new Date().toISOString(),
-    edited: false
-  };
-
-  // 7. Success: Allow publication with enriched data
-  console.log(`[CHAT] Message ${enrichedMessage.messageId} published successfully`);
-  return {
-    action: "ALLOW",
-    data: enrichedMessage
-  };
+  });
 }
 
 /**
  * Handle subscription requests to chat channels
  *
+ * To deny a subscription, call util.unauthorized() which returns a subscribe_error
+ * with an Unauthorized error type (HTTP 401 for HTTP connections).
+ * To allow a subscription, return null.
+ *
  * @param {Object} ctx - Context object
+ * @param {Object} ctx.args - Subscribe arguments
  * @param {string} ctx.args.channelName - Channel name being subscribed to
  * @param {Object} ctx.identity - Subscriber identity
- * @param {Object} ctx.info - Channel information
- * @returns {Object} Response with action
+ * @param {Object} ctx.info - Channel and namespace information
  */
 export function onSubscribe(ctx) {
   const { channelName } = ctx.args;
-  const { identity, info } = ctx;
+  const { identity } = ctx;
 
   // Extract room ID from channel name
   // Example channel: /chat/room-123
-  const channelParts = channelName.split('/');
+  const channelParts = channelName.split("/");
   const roomId = channelParts[channelParts.length - 1];
-
-  console.log(`[CHAT] Subscribe attempt by ${identity.sub} to room ${roomId}`);
 
   // 1. Authentication Check: Ensure user is logged in
   if (!identity.sub && !identity.username) {
-    console.warn(`[CHAT] Unauthenticated subscription attempt to room ${roomId}`);
-    return {
-      action: "DENY",
-      reason: "You must be logged in to join chat rooms"
-    };
+    util.unauthorized();
+    return;
   }
 
   // 2. Authorization: Check room membership
   if (!isUserInRoom(identity, roomId)) {
-    console.warn(`[CHAT] User ${identity.sub} not member of room ${roomId}`);
-    return {
-      action: "DENY",
-      reason: "You must be invited to this chat room"
-    };
+    util.unauthorized();
+    return;
   }
 
   // 3. Concurrent Connection Limit
   const activeConnections = getUserConnectionCount(identity.sub);
   if (activeConnections >= 5) {
-    console.warn(`[CHAT] Connection limit reached for user ${identity.sub}`);
-    return {
-      action: "DENY",
-      reason: "Maximum concurrent chat connections reached (5)"
-    };
+    util.unauthorized();
+    return;
   }
 
   // 4. Private Room Check
   if (isPrivateRoom(roomId) && !hasPrivateAccess(identity, roomId)) {
-    console.warn(`[CHAT] Private room access denied for ${identity.sub}`);
-    return {
-      action: "DENY",
-      reason: "This is a private chat room"
-    };
+    util.unauthorized();
+    return;
   }
 
-  // 5. Success: Allow subscription
-  console.log(`[CHAT] User ${identity.sub} subscribed to room ${roomId}`);
-  return {
-    action: "ALLOW"
-  };
+  // 5. Subscription allowed - return null to permit
+  return null;
 }
 
 // ========================================
@@ -197,9 +172,9 @@ function isRateLimited(userId, roomId) {
  */
 function containsProfanity(message) {
   // Simple word list check (production would use ML-based detection)
-  const bannedWords = ['spam', 'badword1', 'badword2'];
+  const bannedWords = ["spam", "badword1", "badword2"];
   const lowerMessage = message.toLowerCase();
-  return bannedWords.some(word => lowerMessage.includes(word));
+  return bannedWords.some((word) => lowerMessage.includes(word));
 }
 
 /**
@@ -224,7 +199,7 @@ function getUserConnectionCount(userId) {
  */
 function isPrivateRoom(roomId) {
   // Check if room ID starts with 'private-'
-  return roomId.startsWith('private-');
+  return roomId.startsWith("private-");
 }
 
 /**
@@ -233,6 +208,6 @@ function isPrivateRoom(roomId) {
 function hasPrivateAccess(identity, roomId) {
   // In production: Check permissions table
   // For demo: Admins have access
-  const userRoles = identity.claims?.['cognito:groups'] || [];
-  return userRoles.includes('admin') || userRoles.includes('moderator');
+  const userRoles = identity.claims?.["cognito:groups"] || [];
+  return userRoles.includes("admin") || userRoles.includes("moderator");
 }

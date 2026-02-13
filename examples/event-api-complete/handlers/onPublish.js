@@ -1,77 +1,81 @@
 /**
  * AppSync Event API - onPublish Handler Example
  *
- * This handler is invoked when a message is published to a channel.
- * It can filter, transform, or authorize publish operations.
+ * This handler is invoked when events are published to a channel.
+ * It can filter, transform, or reject publish operations.
+ *
+ * The handler receives ctx.events (an array of events) and must return
+ * the events array (modified or filtered) or call util.error() to reject.
  *
  * Runtime: APPSYNC_JS 1.0.0
+ *
+ * @see https://docs.aws.amazon.com/appsync/latest/eventapi/channel-namespace-handlers.html
  */
+
+import { util } from "@aws-appsync/utils";
 
 /**
- * Main handler function for publish events
+ * onPublish handler for Event API publish operations
  *
  * @param {Object} ctx - Context object containing event information
- * @param {Object} ctx.args - Arguments passed to the publish operation
- * @param {Object} ctx.args.data - The message data being published
+ * @param {Array} ctx.events - Array of events being published, each with { id, payload }
  * @param {Object} ctx.identity - Identity of the publisher
  * @param {Object} ctx.info - Channel and namespace information
- * @returns {Object} Response with action (ALLOW or DENY) and optional modified data
+ * @param {Object} ctx.channelNamespace - Channel namespace details
+ * @returns {Array} Processed events array to broadcast to subscribers
  */
-export function handler(ctx) {
-  const { data } = ctx.args;
-  const { identity, info } = ctx;
+export function onPublish(ctx) {
+  const { events, identity, info, channelNamespace } = ctx;
 
-  // Example 1: Authorization - Check if user can publish to this channel
-  if (!isAuthorized(identity, info.channelNamespace, info.channelName)) {
-    return {
-      action: "DENY",
-      reason: "User not authorized to publish to this channel"
-    };
+  // Example 1: Authorization - Reject entire publish if user is not authorized
+  if (!isAuthorized(identity, channelNamespace.name, info.channel.path)) {
+    util.error("User not authorized to publish to this channel");
   }
 
-  // Example 2: Content Filtering - Block messages with inappropriate content
-  if (containsInappropriateContent(data)) {
-    return {
-      action: "DENY",
-      reason: "Message contains inappropriate content"
-    };
-  }
-
-  // Example 3: Data Transformation - Enrich message with metadata
-  const enrichedData = {
-    ...data,
-    publishedAt: new Date().toISOString(),
-    publishedBy: identity.sub || identity.username,
-    channelInfo: {
-      namespace: info.channelNamespace,
-      channel: info.channelName
+  // Example 2: Process each event - filter, transform, and validate
+  return events.map((event) => {
+    // Content Filtering - Mark events with inappropriate content as errors
+    if (containsInappropriateContent(event.payload)) {
+      return {
+        id: event.id,
+        error: "Message contains inappropriate content",
+      };
     }
-  };
 
-  // Example 4: Size Validation - Enforce message size limits
-  const messageSize = JSON.stringify(enrichedData).length;
-  if (messageSize > 32768) { // 32 KB limit
+    // Size Validation - Enforce message size limits
+    const messageSize = JSON.stringify(event.payload).length;
+    if (messageSize > 32768) {
+      // 32 KB limit
+      return {
+        id: event.id,
+        error: "Message size exceeds 32 KB limit",
+      };
+    }
+
+    // Data Transformation - Enrich event payload with metadata
     return {
-      action: "DENY",
-      reason: "Message size exceeds 32 KB limit"
+      id: event.id,
+      payload: {
+        ...event.payload,
+        publishedAt: util.time.nowISO8601(),
+        publishedBy: identity.sub || identity.username,
+        channelInfo: {
+          namespace: channelNamespace.name,
+          channel: info.channel.path,
+        },
+      },
     };
-  }
-
-  // Allow the publish operation with transformed data
-  return {
-    action: "ALLOW",
-    data: enrichedData
-  };
+  });
 }
 
 /**
  * Check if the identity is authorized to publish
  * @param {Object} identity - User identity
  * @param {string} namespace - Channel namespace
- * @param {string} channel - Channel name
+ * @param {string} channelPath - Full channel path
  * @returns {boolean} True if authorized
  */
-function isAuthorized(identity, namespace, channel) {
+function isAuthorized(identity, namespace, channelPath) {
   // Example: Check user roles or permissions
   const userRoles = identity.claims?.["cognito:groups"] || [];
 
@@ -81,7 +85,7 @@ function isAuthorized(identity, namespace, channel) {
   }
 
   // Check channel-specific permissions
-  if (channel.startsWith("private-") && !userRoles.includes("premium")) {
+  if (channelPath.startsWith("/private") && !userRoles.includes("premium")) {
     return false;
   }
 
@@ -90,13 +94,13 @@ function isAuthorized(identity, namespace, channel) {
 
 /**
  * Check if data contains inappropriate content
- * @param {Object} data - Message data
+ * @param {Object} payload - Event payload data
  * @returns {boolean} True if inappropriate content detected
  */
-function containsInappropriateContent(data) {
+function containsInappropriateContent(payload) {
   // Example: Simple content filtering
   const bannedWords = ["spam", "abuse"];
-  const messageText = JSON.stringify(data).toLowerCase();
+  const messageText = JSON.stringify(payload).toLowerCase();
 
-  return bannedWords.some(word => messageText.includes(word));
+  return bannedWords.some((word) => messageText.includes(word));
 }

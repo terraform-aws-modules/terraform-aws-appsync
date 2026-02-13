@@ -67,8 +67,8 @@ module "event_api_complete" {
   source = "../.."
 
   # Create Event API only (not GraphQL)
-  create_graphql_api   = false
-  create_websocket_api = true
+  create_graphql_api = false
+  create_event_api   = true
 
   name   = var.name
   region = var.region
@@ -115,6 +115,22 @@ module "event_api_complete" {
     # Namespace 3: Presence tracking with JavaScript handlers
     "presence" = {
       code_handlers = "${local.on_publish_code}\n\n${local.on_subscribe_code}"
+    }
+
+    # Namespace 4: Announcements channel — no handlers defined.
+    # When no code_handlers or handler_configs are specified, AWS AppSync
+    # provides default handlers that approve all publish and subscribe
+    # operations. This is useful for simple broadcast channels that need
+    # no custom filtering, validation, or transformation logic.
+    # See: https://docs.aws.amazon.com/appsync/latest/eventapi/event-handlers-overview.html
+    "announcements" = {
+      publish_auth_modes = [
+        { auth_type = "AWS_IAM" },
+      ]
+      subscribe_auth_modes = [
+        { auth_type = "API_KEY" },
+        { auth_type = "AWS_IAM" },
+      ]
     }
   }
 
