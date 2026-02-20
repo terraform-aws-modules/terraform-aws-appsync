@@ -3,6 +3,7 @@ module "wrapper" {
 
   for_each = var.items
 
+  additional_auth_providers          = try(each.value.additional_auth_providers, var.defaults.additional_auth_providers, [])
   additional_authentication_provider = try(each.value.additional_authentication_provider, var.defaults.additional_authentication_provider, {})
   api_keys                           = try(each.value.api_keys, var.defaults.api_keys, {})
   authentication_type                = try(each.value.authentication_type, var.defaults.authentication_type, "API_KEY")

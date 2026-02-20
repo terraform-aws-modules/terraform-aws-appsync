@@ -513,9 +513,10 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_auth_providers"></a> [additional\_auth\_providers](#input\_additional\_auth\_providers) | Additional auth providers for the Event API, beyond the primary auth\_provider.<br/><br/>Use this to register extra auth types (e.g. API\_KEY alongside AWS\_LAMBDA) so they can<br/>be referenced in connection\_auth\_modes, default\_publish\_auth\_modes,<br/>default\_subscribe\_auth\_modes, or channel namespace publish/subscribe auth overrides.<br/><br/>Each auth type used anywhere in the event\_config or channel\_namespaces MUST appear in<br/>either auth\_provider or additional\_auth\_providers.<br/><br/>Example - API\_KEY publish + AWS\_LAMBDA subscribe:<br/>  additional\_auth\_providers = [<br/>    { auth\_type = "API\_KEY" }<br/>  ] | <pre>list(object({<br/>    auth_type = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_additional_authentication_provider"></a> [additional\_authentication\_provider](#input\_additional\_authentication\_provider) | One or more additional authentication providers for the GraphqlApi. | `any` | `{}` | no |
 | <a name="input_api_keys"></a> [api\_keys](#input\_api\_keys) | Map of API keys to create | `map(string)` | `{}` | no |
-| <a name="input_authentication_type"></a> [authentication\_type](#input\_authentication\_type) | The authentication type to use by GraphQL API | `string` | `"API_KEY"` | no |
+| <a name="input_authentication_type"></a> [authentication\_type](#input\_authentication\_type) | The authentication type to use by Service Deployment | `string` | `"API_KEY"` | no |
 | <a name="input_cache_at_rest_encryption_enabled"></a> [cache\_at\_rest\_encryption\_enabled](#input\_cache\_at\_rest\_encryption\_enabled) | At-rest encryption flag for cache. | `bool` | `false` | no |
 | <a name="input_cache_transit_encryption_enabled"></a> [cache\_transit\_encryption\_enabled](#input\_cache\_transit\_encryption\_enabled) | Transit encryption flag when connecting to cache. | `bool` | `false` | no |
 | <a name="input_cache_ttl"></a> [cache\_ttl](#input\_cache\_ttl) | TTL in seconds for cache entries | `number` | `1` | no |

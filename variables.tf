@@ -132,6 +132,28 @@ variable "event_config" {
   default = null
 }
 
+variable "additional_auth_providers" {
+  description = <<-EOT
+    Additional auth providers for the Event API, beyond the primary auth_provider.
+
+    Use this to register extra auth types (e.g. API_KEY alongside AWS_LAMBDA) so they can
+    be referenced in connection_auth_modes, default_publish_auth_modes,
+    default_subscribe_auth_modes, or channel namespace publish/subscribe auth overrides.
+
+    Each auth type used anywhere in the event_config or channel_namespaces MUST appear in
+    either auth_provider or additional_auth_providers.
+
+    Example - API_KEY publish + AWS_LAMBDA subscribe:
+      additional_auth_providers = [
+        { auth_type = "API_KEY" }
+      ]
+  EOT
+  type = list(object({
+    auth_type = string
+  }))
+  default = []
+}
+
 variable "channel_namespaces" {
   description = <<-EOT
     NOTE: Handlers (code_handlers and handler_configs) are optional. When no handlers are
@@ -318,7 +340,7 @@ variable "visibility" {
 }
 
 variable "authentication_type" {
-  description = "The authentication type to use by GraphQL API"
+  description = "The authentication type to use by Service Deployment"
   type        = string
   default     = "API_KEY"
 }

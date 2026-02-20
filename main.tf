@@ -193,6 +193,16 @@ resource "aws_appsync_api" "this" {
       }
     }
 
+    # Additional auth providers (e.g. API_KEY alongside AWS_LAMBDA)
+    dynamic "auth_provider" {
+      for_each = var.additional_auth_providers
+
+      content {
+        auth_type = auth_provider.value.auth_type
+      }
+    }
+
+
     # Connection authentication modes
     dynamic "connection_auth_mode" {
       for_each = var.event_config != null ? var.event_config.connection_auth_modes : []
@@ -371,7 +381,7 @@ resource "aws_appsync_api_cache" "this" {
 
 # API Key
 resource "aws_appsync_api_key" "this" {
-  for_each = (var.create_graphql_api || var.create_event_api) && var.authentication_type == "API_KEY" ? var.api_keys : {}
+  for_each = (var.create_graphql_api && var.authentication_type == "API_KEY") || (var.create_event_api && var.api_keys != null) ? var.api_keys : {}
 
   region = var.region
 
