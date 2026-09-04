@@ -43,6 +43,20 @@ module "appsync" {
       endpoint = "https://registry.terraform.io"
     }
 
+    api_gateway = {
+      type             = "HTTP"
+      endpoint         = "https://xysabcxyz.execute-api.eu-west-1.amazonaws.com"
+      service_role_arn = "arn:aws:iam::135367859850:role/appsync-api-gateway-role"
+
+      authorization_config = {
+        authorization_type = "AWS_IAM"
+        aws_iam_config = {
+          signing_region       = "eu-west-1"
+          signing_service_name = "execute-api"
+        }
+      }
+    }
+
     lambda_create_zip = {
       type         = "AWS_LAMBDA"
       function_arn = "arn:aws:lambda:eu-west-1:135367859850:function:index_1"
