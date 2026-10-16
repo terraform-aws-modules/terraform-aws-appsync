@@ -177,6 +177,23 @@ resource "aws_appsync_datasource" "this" {
 
     content {
       endpoint = each.value.endpoint
+
+      dynamic "authorization_config" {
+        for_each = lookup(each.value, "authorization_config", null) != null ? [each.value.authorization_config] : []
+
+        content {
+          authorization_type = lookup(authorization_config.value, "authorization_type", null)
+
+          dynamic "aws_iam_config" {
+            for_each = lookup(authorization_config.value, "aws_iam_config", null) != null ? [authorization_config.value.aws_iam_config] : []
+
+            content {
+              signing_region       = lookup(aws_iam_config.value, "signing_region", null)
+              signing_service_name = lookup(aws_iam_config.value, "signing_service_name", null)
+            }
+          }
+        }
+      }
     }
   }
 
