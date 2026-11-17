@@ -162,7 +162,7 @@ resource "aws_appsync_api_key" "this" {
 
 # Datasource
 resource "aws_appsync_datasource" "this" {
-  for_each = var.create_graphql_api ? var.datasources : {}
+  for_each = { for k, v in var.datasources : k => v if var.create_graphql_api }
 
   region = var.region
 
