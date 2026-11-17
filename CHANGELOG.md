@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.2.0](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v4.1.1...v4.2.0) (2026-11-17)
+
+### Features
+
+* Add authorization_config for http datasources ([#80](https://github.com/terraform-aws-modules/terraform-aws-appsync/issues/80)) ([c18cda9](https://github.com/terraform-aws-modules/terraform-aws-appsync/commit/c18cda96d1f7f4f5e017192a4cb63457af79dbce))
+
 ## [4.1.1](https://github.com/terraform-aws-modules/terraform-aws-appsync/compare/v4.1.0...v4.1.1) (2026-08-26)
 
 ### Bug Fixes
